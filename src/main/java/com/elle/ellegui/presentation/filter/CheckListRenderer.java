@@ -1,10 +1,18 @@
 package com.elle.ellegui.presentation.filter;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Rectangle;
+import java.io.Serializable;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.io.Serializable;
 
 public class CheckListRenderer extends JCheckBox implements ListCellRenderer, Serializable {
 

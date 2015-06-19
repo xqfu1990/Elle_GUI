@@ -38,12 +38,11 @@ class FilterTableHeaderRenderer extends TableHeaderRenderer {
     
     private Icon getFilterIcon() {
 
-//        if (icon == null) {
-//            icon = new ImageIcon( getClass().getResource("funnel.png"));
-//            icon = new ImageIcon( icon.getImage().getScaledInstance( 12, 12, Image.SCALE_SMOOTH  ));
-//        }
-//        return icon;
-        return null;
+        if (icon == null) {
+            icon = new ImageIcon( getClass().getResource("funnel.png"));
+            icon = new ImageIcon( icon.getImage().getScaledInstance( 12, 12, Image.SCALE_SMOOTH  ));
+        }
+        return icon;
 
     }
 

@@ -1,14 +1,14 @@
 package com.elle.ellegui.presentation.filter;
 
-
 import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
 
-public final class TableRowFilterSupport{
+public final class TableRowFilterSupport {
 
     private boolean searchable = false;
     private IListFilter searchFilter = CheckListFilterType.CONTAINS;
@@ -86,7 +86,7 @@ public final class TableRowFilterSupport{
         return this;
     }
 
-    public ITableFilter<?> apply() {
+    public JTable apply() {
 
         final TableFilterColumnPopup filterPopup = new TableFilterColumnPopup(filter);
         filterPopup.setEnabled(true);
@@ -98,7 +98,7 @@ public final class TableRowFilterSupport{
 
         setupTableHeader();
         
-        return filter;
+        return filter.getTable();
     }
 
     private void setupTableHeader() {
@@ -114,8 +114,23 @@ public final class TableRowFilterSupport{
                 table.getModel().getRowCount();
             }
         });
+        
+
         // make sure that search component is reset after table model changes
         setupHeaderRenderers(table.getModel(), true );
+//        table.addPropertyChangeListener("model", new PropertyChangeListener() {
+//
+//            public void propertyChange(PropertyChangeEvent evt) {
+//
+//                FilterTableHeaderRenderer headerRenderer = new FilterTableHeaderRenderer(filter);
+//                filter.modelChanged((TableModel) evt.getNewValue());
+//
+//                for( TableColumn c:  Collections.list( filter.getTable().getColumnModel().getColumns()) ) {
+//                    c.setHeaderRenderer( headerRenderer );
+//                }
+//            }}
+//
+//        );
     }
 
     private void setupHeaderRenderers( TableModel newModel, boolean fullSetup ) {
@@ -128,7 +143,7 @@ public final class TableRowFilterSupport{
         filter.modelChanged( newModel );
 
         for( TableColumn c:  Collections.list( table.getColumnModel().getColumns()) ) {
-            c.setHeaderRenderer( headerRenderer );
+            c.setHeaderRenderer((TableCellRenderer) headerRenderer);
         }
 
         if ( !fullSetup ) return;

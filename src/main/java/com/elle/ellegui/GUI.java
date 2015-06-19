@@ -6,7 +6,6 @@
 package com.elle.ellegui;
 
 import com.elle.ellegui.presentation.filter.CreateDocumentFilter;
-import com.elle.ellegui.presentation.filter.TableRowFilterSupport;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -732,9 +731,9 @@ public class GUI extends javax.swing.JFrame {
         doNotHighlightButtons();
         int index_symbol = createTable.table.getColumnModel()
                 .getColumnIndex("Symbol");
-        TableRowFilterSupport.forTable(createTable.table).actions(true).apply().apply(index_symbol, jTSymbol.getText());
-        
-        monitorTableChange(index_symbol, createTable.table);
+//        TableRowFilterSupport.forTable(createTable.table).actions(true).apply().apply(index_symbol, jTSymbol.getText());
+//
+        monitorTableChange(index_symbol);
 
 //        createTable.setFilteredTable(createTable.createTable);
     }
@@ -754,7 +753,7 @@ public class GUI extends javax.swing.JFrame {
                 break;
             }
         }
-        monitorTableChange(index_date + 1, createTable.table);
+        monitorTableChange(index_date + 1);
     }
 
     private void jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnterActionPerformed
@@ -817,7 +816,7 @@ public class GUI extends javax.swing.JFrame {
         } else {
             createTable.clearFilter(createTable.sorter);
             createTable.table.setRowSorter(createTable.sorter);
-            monitorTableChange(-1, createTable.table);
+            monitorTableChange(-1);
         }
     }//GEN-LAST:event_jCDateRangeActionPerformed
 
@@ -827,14 +826,14 @@ public class GUI extends javax.swing.JFrame {
         } else {
             createTable.clearFilter(createTable.sorter);
             createTable.table.setRowSorter(createTable.sorter);
-            GUI.monitorTableChange(-1, createTable.table);
+            GUI.monitorTableChange(-1);
         }
     }//GEN-LAST:event_jCSymbolActionPerformed
 
     private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
         createTable.clearFilter(createTable.sorter);
         createTable.table.setRowSorter(createTable.sorter);
-        GUI.monitorTableChange(-1, createTable.table);
+        GUI.monitorTableChange(-1);
 
     }//GEN-LAST:event_clearAllFiltersActionPerformed
 
@@ -962,8 +961,8 @@ public class GUI extends javax.swing.JFrame {
 
     }
 
-    public static void monitorTableChange(int columnIndex, JTable table) {
-        int numOfRow = table.getRowCount();
+    public static void monitorTableChange(int columnIndex) {
+        int numOfRow = createTable.table.getRowCount();
 
         JViewport view = new JViewport();
         JTable jt = new CreateTables(numOfRow).table;   // download data each time???
@@ -975,15 +974,15 @@ public class GUI extends javax.swing.JFrame {
             cellRenderer.setBackground(Color.GREEN);
             cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-            table.getColumnModel().getColumn(columnIndex)
+            createTable.table.getColumnModel().getColumn(columnIndex)
                     .setHeaderRenderer(cellRenderer);
 
-            createTable.setFilteredTable(table);
+            createTable.setFilteredTable(createTable.table);
             createTable.setFilteringStatus(true);
         } else {
-            for (int i = 1; i < table.getModel().getColumnCount() - 1; i++) {
-                table.getColumnModel().getColumn(i)
-                        .setHeaderRenderer(new HeaderRenderer(table));
+            for (int i = 1; i < createTable.table.getModel().getColumnCount() - 1; i++) {
+                createTable.table.getColumnModel().getColumn(i)
+                        .setHeaderRenderer(new HeaderRenderer(createTable.table));
             }
             createTable.setFilteringStatus(false);
         }

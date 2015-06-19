@@ -1,5 +1,6 @@
 package com.elle.ellegui.presentation.filter;
 
+
 import com.elle.ellegui.DistinctColumnItem;
 
 import javax.swing.*;
@@ -20,46 +21,39 @@ public interface ITableFilter<T extends JTable> extends Serializable {
      * @param column model column index
      * @return
      */
-    Collection<DistinctColumnItem> getDistinctColumnItems( int column );
+    Collection<DistinctColumnItem> getDistinctColumnItems(int column);
 
     /**
      *
      * @param column model column index
      * @return
      */
-    Collection<DistinctColumnItem> getFilterState( int column );
+    Collection<DistinctColumnItem> getFilterState(int column);
 
     /**
      * Checks if column is filtered
      * @param column model column index
      * @return true if column is filtered
      */
-    boolean isFiltered( int column );
+    boolean isFiltered(int column);
 
-    boolean includeRow( Row entry );
-  
+    boolean includeRow(Row entry);
+
     /**
      * Apply filter for specified column based on collection of distinct items
      * @param col
      * @param items
      * @return
      */
-    boolean apply( int col, Collection<DistinctColumnItem> items );
+    boolean apply(int col, Collection<DistinctColumnItem> items);
 
-    /**
-     * Apply filter for specified column base on symbol or date of main window search
-     * @param col
-     * @param selectField
-     * @return 
-     */
-    boolean apply(int col, Object selectField);
     public interface Row {
         int getValueCount();
-        Object getValue( int column );
+        Object getValue(int column);
     }
 
-    void addChangeListener( IFilterChangeListener listener );
-    void removeChangeListener( IFilterChangeListener listener );
+    void addChangeListener(IFilterChangeListener listener);
+    void removeChangeListener(IFilterChangeListener listener);
 
     /**
      * Clear the filter
@@ -70,6 +64,6 @@ public interface ITableFilter<T extends JTable> extends Serializable {
      * Describes what filter has to do when table model changes
      * @param model
      */
-    void modelChanged( TableModel model );
+    void modelChanged(TableModel model);
 
 }

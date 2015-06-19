@@ -1,6 +1,4 @@
 package com.elle.ellegui.presentation.filter;
-
-
 import javax.swing.*;
 import java.util.*;
 

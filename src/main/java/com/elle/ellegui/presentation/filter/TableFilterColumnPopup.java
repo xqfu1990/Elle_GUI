@@ -35,7 +35,7 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
     private final Map<Integer, ColumnAttrs> colAttrs = new HashMap<Integer, ColumnAttrs>();
     private static int mColumnIndex = -1;
 
-    private ITableFilter<?> filter;
+    private static ITableFilter<?> filter;
     private boolean searchable;
     private IListFilter searchFilter = CheckListFilterType.CONTAINS;
     private static IObjectToStringTranslator translator;
@@ -52,12 +52,14 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
 
         setupTableHeader();
         filter.getTable().addPropertyChangeListener("tableHeader", new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setupTableHeader();
             }
         }
         );
         filter.getTable().addPropertyChangeListener("model", new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 colAttrs.clear();
             }
@@ -175,31 +177,26 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
 
     }
 
-    public boolean applyColumnFilter() {    // Excel Filter
+    static boolean applyColumnFilter() {    // Excel Filter
         Collection<DistinctColumnItem> checked = filterList.getCheckedItems();
         ICheckListModel<DistinctColumnItem> model = filterList.getModel();
-        model.filter("", translator, CheckListFilterType.CONTAINS); // clear filter by "" to get true results
-        filter.apply(mColumnIndex-1, checked);
-        String title = filter.getTable().getColumnName(mColumnIndex - 1);
-        switch (title) {
-            case "Lot_Date":
-                // highlight the correct column
-                mColumnIndex = 5;
 
-                break;
-            case "OCE_Date":
-                mColumnIndex = 7;
-                break;
-        }
-        System.out.println("Number of rows"+filter.getTable().getRowCount());
-        GUI.monitorTableChange(mColumnIndex-1, filter.getTable());
+        model.filter("", translator, CheckListFilterType.CONTAINS); // clear filter by "" to get true results
+        filter.apply(mColumnIndex, checked);
         
+        String title = filter.getTable().getColumnName(mColumnIndex - 1);
+        if (title.equals("Lot_Date")) {     // highlight the correct column
+            mColumnIndex = 5;
+        } else if (title.equals("OCE_Date")) {
+            mColumnIndex = 7;
+        }
+        GUI.monitorTableChange(mColumnIndex-1);
         return true;
     }
 
     private boolean clearAllFilters() {
         filter.clear();
-        GUI.monitorTableChange(-1, filter.getTable());
+        GUI.monitorTableChange(-1);
         return true;
     }
 

@@ -1,5 +1,6 @@
 package com.elle.ellegui.presentation.filter;
 
+
 import com.elle.ellegui.DistinctColumnItem;
 
 import javax.swing.*;

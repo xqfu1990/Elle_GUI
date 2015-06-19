@@ -1,7 +1,7 @@
 package com.elle.ellegui.presentation.filter;
 
-
 import com.elle.ellegui.DistinctColumnItem;
+
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -35,6 +35,8 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
 
         drs.setRowFilter(filter);
         return true;
+
+
     }
 
     class TableRowFilter extends RowFilter<Object,Object> implements Serializable {
@@ -52,7 +54,7 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
         }
 
         @Override
-        public boolean include( final RowFilter.Entry<? extends Object, ? extends Object> entry) {
+        public boolean include( final Entry<? extends Object, ? extends Object> entry) {
 
             // use parent filter condition
             if ( parentFilter != null && !parentFilter.include(entry)) return false;

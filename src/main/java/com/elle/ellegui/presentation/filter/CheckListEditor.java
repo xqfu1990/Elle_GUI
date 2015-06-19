@@ -1,11 +1,12 @@
 package com.elle.ellegui.presentation.filter;
 
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+
+import javax.swing.JList;
+import javax.swing.SwingUtilities;
 
 
 /**

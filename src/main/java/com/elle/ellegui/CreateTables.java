@@ -179,9 +179,9 @@ public class CreateTables extends JPanel {
         table_2.setFillsViewportHeight(true);
 
         TableRowFilterSupport.forTable(table).searchable(true).actions(true)
-                .apply().getTable();
+                .apply();
         TableRowFilterSupport.forTable(table_2).searchable(true).actions(true)
-                .apply().getTable();
+                .apply();
 
         setRowSelected(table);
         setRowSelected(table_2);
@@ -375,14 +375,14 @@ public class CreateTables extends JPanel {
             public void mouseClicked(MouseEvent e) { // <-- mouse click event listener here!
                 if (e.getClickCount() == 2) {
                     if (isFiltering) {
-                        GUI.monitorTableChange(-1, table);
+                        GUI.monitorTableChange(-1);
                         int column = table.getSelectedColumn();
                         String columnName = table.getColumnName(column);
                         setMyRowFilter(e, sorter);      // <-- set row filter here!
                         table.setRowSorter(sorter);
                         int index = table.getColumnModel()
                                 .getColumnIndex(columnName);
-                        GUI.monitorTableChange(index, table);
+                        GUI.monitorTableChange(index);
                     } else {
                         int column = table.getSelectedColumn();
                         String columnName = table.getColumnName(column);
@@ -390,7 +390,7 @@ public class CreateTables extends JPanel {
                         table.setRowSorter(sorter);
                         int index = table.getColumnModel()
                                 .getColumnIndex(columnName);
-                        GUI.monitorTableChange(index, table);
+                        GUI.monitorTableChange(index);
                     }
                 }
 
@@ -489,7 +489,7 @@ public class CreateTables extends JPanel {
         }
 
         // TableRowFilterSupport is for pop up window and filter methods
-        TableRowFilterSupport.forTable(table).searchable(true).actions(true).apply().getTable();
+        TableRowFilterSupport.forTable(table).searchable(true).actions(true).apply();
 
         table.createDefaultColumnsFromModel();
         headColumn.createDefaultColumnsFromModel();
@@ -524,8 +524,8 @@ public class CreateTables extends JPanel {
 
     private void clearFilterDoubleClick(MouseEvent e, JTable table) {
         TableRowFilterSupport.forTable(table).searchable(true).actions(true)
-                .apply().getTable();
-        GUI.monitorTableChange(-1, table);// clean green background
+                .apply();
+        GUI.monitorTableChange(-1);// clean green background
 
     }
 

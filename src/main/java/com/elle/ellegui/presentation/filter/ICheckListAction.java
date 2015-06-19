@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface ICheckListAction<T> {
     
-    void check( ICheckListModel<T> model, boolean value );
+    void check(ICheckListModel<T> model, boolean value);
     
     public static class CheckAll<T> implements ICheckListAction<T> {
 
