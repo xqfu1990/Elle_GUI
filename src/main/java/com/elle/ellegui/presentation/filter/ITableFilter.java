@@ -47,6 +47,22 @@ public interface ITableFilter<T extends JTable> extends Serializable {
      */
     boolean apply(int col, Collection<DistinctColumnItem> items);
     boolean apply (int col, Object object);
+    /**
+     * Apply filter for specified column based on collection of distinct items get them from search text field.
+     * @param col
+     * @param symbolSelected
+     * @return
+     */
+    boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter);
+
+    /**
+     * Apply filter for specified column based on collection of distinct items get them from search text field.
+     * @param col
+     * @param dateInit
+     * @return
+     */
+    boolean applyFilterByDate(int col, String dateInit, String dateEnd, ITableFilter filter);
+
     public interface Row {
         int getValueCount();
         Object getValue(int column);

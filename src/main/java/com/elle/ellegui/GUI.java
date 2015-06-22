@@ -689,10 +689,11 @@ public class GUI extends javax.swing.JFrame {
     private void jMToolsReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMToolsReconcileActionPerformed
         reconcile = showTable(reconcile, "Reconcile");
     }//GEN-LAST:event_jMToolsReconcileActionPerformed
-    ITableFilter filter;
+    public ITableFilter filter;
     private void filterBySymbol() {         //Filter Main window
         jCSymbol.setSelected(true);
         jCSymbol.setEnabled(true);
+        String selectedSymbol = jTSymbol.getText();
         int column_index=0;
         for (int i=0; i<createTable.table.getColumnCount(); i++){
             if(createTable.table.getColumnName(i).equals("Symbol")){
@@ -701,26 +702,29 @@ public class GUI extends javax.swing.JFrame {
             }
         }
         filter = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
-        filter.apply(column_index, jTSymbol.getText());
-        GUI.monitorTableChange(column_index-1);
+
+        filter.applyFilterBySymbol(column_index, selectedSymbol, filter);
+        monitorTableChange(column_index-1);
     }
 
     private void filterByDate() {
-        jCDateRange.setSelected(true);                              //Filter by Date
+        jCDateRange.setSelected(true);                              //Filter by Date with same popup filter
         jCDateRange.setEnabled(true);
-        //        displayDateRange();
+
         doNotHighlightButtons();
-        createTable.setDateFilter(createTable.sorter, jTStartDate.getText(), jTEndDate.getText());
-        createTable.table.setRowSorter(createTable.sorter);
-        int col = createTable.table.getColumnModel().getColumnCount();
-        int i, index_date = -1; // pass -1 to monitorTableChange if date column could not be found
-        for (i = 0; i < col; i++) {
-            if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // find date column
-                index_date = i;
-                break;
+        int column = createTable.table.getColumnModel().getColumnCount();
+        int column_index =0;
+        for (int i = 0; i < column; i++) {
+            if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // select first column with *Time title
+                    column_index = i;
+                    break;
             }
         }
-        monitorTableChange(index_date + 1);
+        filter = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
+
+        filter.applyFilterByDate(19,jTStartDate.getText(), jTEndDate.getText(),filter);
+        monitorTableChange(column_index-1);
+
     }
 
     private void jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnterActionPerformed
@@ -763,7 +767,7 @@ public class GUI extends javax.swing.JFrame {
         if (jCDateRange.isSelected()) {
             filterByDate();
         } else {
-            showTable();
+            filter.clear();
             monitorTableChange(-1);
         }
     }//GEN-LAST:event_jCDateRangeActionPerformed

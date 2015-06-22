@@ -69,8 +69,8 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
     @Override
     public boolean apply(int col, Collection<DistinctColumnItem> items) {
         setFilterState(col, items);
-        boolean result = false;
-        if (result = execute(col, items)) {
+        boolean result = execute(col, items);
+        if (result) {
             fireFilterChange();
         }
         return result;
@@ -82,6 +82,43 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
         DistinctColumnItem distinctColumnItem = new DistinctColumnItem(objectSelected, col);
         item.add(distinctColumnItem);
         return apply(col, item);
+    }
+
+    @Override
+    public  boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter){
+        Collection<DistinctColumnItem> items = new ArrayList<>();
+        Collection<DistinctColumnItem> listItems = filter.getDistinctColumnItems(col);
+          for(DistinctColumnItem item: listItems){
+                   if(item.getValue().toString().startsWith(symbolSelected)){
+                      items.add(item);
+                   }
+          }
+           return apply(col,items);
+    }
+
+    @Override
+    public boolean applyFilterByDate(int col, String dateInit, String dateEnd, ITableFilter filter) {
+        Collection<DistinctColumnItem> items = new ArrayList<>();
+        Collection<DistinctColumnItem> listItems = filter.getDistinctColumnItems(col);
+        ArrayList<DistinctColumnItem> itemArrayList = new ArrayList<>(listItems);
+
+        for(int i=0; i<itemArrayList.size();i++){
+            if(itemArrayList.get(i).getValue().equals(dateInit)){
+                for(int j=i; j<itemArrayList.size();j++){
+                    if(!itemArrayList.get(j).getValue().equals(dateEnd)){
+                        items.add(itemArrayList.get(j));
+                    }
+                    else{
+                        items.add(itemArrayList.get(j));
+                        break;
+                    }
+                }
+            }
+            else {
+                continue;
+            }
+        }
+        return apply(col,items);
     }
 
     @Override
