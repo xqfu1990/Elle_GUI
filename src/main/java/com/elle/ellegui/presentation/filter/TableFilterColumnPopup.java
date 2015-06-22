@@ -35,7 +35,7 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
     private final Map<Integer, ColumnAttrs> colAttrs = new HashMap<Integer, ColumnAttrs>();
     private static int mColumnIndex = -1;
 
-    private static ITableFilter<?> filter;
+    private final ITableFilter<?> filter;
     private boolean searchable;
     private IListFilter searchFilter = CheckListFilterType.CONTAINS;
     private static IObjectToStringTranslator translator;
@@ -151,14 +151,6 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
                 return applyColumnFilter();
             }
         });
-//            apply.addActionListener(new ActionListener() {
-//            	public void actionPerformed(ActionEvent e) {
-//            		if (e.getSource() instanceof MouseEvent) {
-//            			int columnIndex = filter.getTable().getColumnModel().getColumnIndexAtX(((MouseEvent)e.getSource()).getX());
-//                		filter.getTable().getTableHeader().getHeaderRect(columnIndex);
-//            		}
-//            	}
-//            });
         commands.add(apply);
 
         commands.add(Box.createHorizontalStrut(5));
@@ -177,7 +169,7 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
 
     }
 
-    static boolean applyColumnFilter() {    // Excel Filter
+    public boolean applyColumnFilter() {    // Excel Filter
         Collection<DistinctColumnItem> checked = filterList.getCheckedItems();
         ICheckListModel<DistinctColumnItem> model = filterList.getModel();
 
@@ -185,10 +177,14 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
         filter.apply(mColumnIndex, checked);
         
         String title = filter.getTable().getColumnName(mColumnIndex - 1);
-        if (title.equals("Lot_Date")) {     // highlight the correct column
-            mColumnIndex = 5;
-        } else if (title.equals("OCE_Date")) {
-            mColumnIndex = 7;
+        switch (title) {
+            case "Lot_Date":
+                // highlight the correct column
+                mColumnIndex = 5;
+                break;
+            case "OCE_Date":
+                mColumnIndex = 7;
+                break;
         }
         GUI.monitorTableChange(mColumnIndex-1);
         return true;

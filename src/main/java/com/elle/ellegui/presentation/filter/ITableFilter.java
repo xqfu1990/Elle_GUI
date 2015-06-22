@@ -46,7 +46,7 @@ public interface ITableFilter<T extends JTable> extends Serializable {
      * @return
      */
     boolean apply(int col, Collection<DistinctColumnItem> items);
-
+    boolean apply (int col, Object object);
     public interface Row {
         int getValueCount();
         Object getValue(int column);

@@ -6,6 +6,10 @@
 package com.elle.ellegui;
 
 import com.elle.ellegui.presentation.filter.CreateDocumentFilter;
+import com.elle.ellegui.presentation.filter.ITableFilter;
+import com.elle.ellegui.presentation.filter.TableRowFilterSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -25,7 +29,7 @@ import java.sql.Statement;
  */
 public class GUI extends javax.swing.JFrame {
 
-    private JTable filterTableBySymbol;
+    private Logger log = LoggerFactory.getLogger(GUI.class);
 
     /**
      * Creates new form GUI2
@@ -674,46 +678,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMViewLoadsTableActionPerformed
 
     private void jMViewSqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewSqlActionPerformed
-//        if (jText.getMinimumSize().height != 1) {
-//            jEnter.setEnabled(false);
-//            jClear.setEnabled(false);
-//
-//            jScrollPane4.remove(jText);
-//            jText = text_copy;
-//            panel_total.add(text, setConstraintsOfText());
-//            text.setMinimumSize(new Dimension(1590, 1));
-//            text.setMaximumSize(new Dimension(1590, 1));
-//            text.setEnabled(false);
-//
-//            jEnter.setVisible(false);
-//            jClear.setVisible(false);
-//
-//            CreateTables table_copy = createTable;
-//            c.remove(createTable);
-//            createTable = table_copy;
-//            isSQLWindowClosed = true;
-//            c.add(createTable, setConstraintsOfTable(cons));
-//        } else {
-//            jEnter.setEnabled(true);
-//            jClear.setEnabled(true);
-//
-//            c.remove(text);
-//            text = text_copy;
-//            panel_total.add(text, setConstraintsOfText());
-//            text.setMinimumSize(new Dimension(1590, 170));
-//            text.setMaximumSize(new Dimension(1590, 170));
-//            text.setEnabled(true);
-//
-//            jEnter.setVisible(true);
-//            jClear.setVisible(true);
-//
-//            CreateTables table_copy = createTable;
-//            c.remove(createTable);
-//            createTable = table_copy;
-//            isSQLWindowClosed = false;
-//            c.add(createTable, setConstraintsOfTable(cons));
-//        }
-//        c.revalidate();
+
 
     }//GEN-LAST:event_jMViewSqlActionPerformed
 
@@ -724,18 +689,20 @@ public class GUI extends javax.swing.JFrame {
     private void jMToolsReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMToolsReconcileActionPerformed
         reconcile = showTable(reconcile, "Reconcile");
     }//GEN-LAST:event_jMToolsReconcileActionPerformed
-
+    ITableFilter filter;
     private void filterBySymbol() {         //Filter Main window
         jCSymbol.setSelected(true);
         jCSymbol.setEnabled(true);
-        doNotHighlightButtons();
-        int index_symbol = createTable.table.getColumnModel()
-                .getColumnIndex("Symbol");
-//        TableRowFilterSupport.forTable(createTable.table).actions(true).apply().apply(index_symbol, jTSymbol.getText());
-//
-        monitorTableChange(index_symbol);
-
-//        createTable.setFilteredTable(createTable.createTable);
+        int column_index=0;
+        for (int i=0; i<createTable.table.getColumnCount(); i++){
+            if(createTable.table.getColumnName(i).equals("Symbol")){
+              column_index = i + 1;
+              break;
+            }
+        }
+        filter = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
+        filter.apply(column_index, jTSymbol.getText());
+        GUI.monitorTableChange(column_index-1);
     }
 
     private void filterByDate() {
@@ -794,28 +761,9 @@ public class GUI extends javax.swing.JFrame {
 
     private void jCDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCDateRangeActionPerformed
         if (jCDateRange.isSelected()) {
-//            jCDateRange.setEnabled(true);
-//            if (tablefilter != null) {
-//                createTable.setDateFilter(createTable.sorter, jTStartDate.getText(), jTEndDate.getText());
-//                tablefilter.setRowSorter(createTable.sorter);
-//                int col = createTable.table.getColumnModel().getColumnCount();
-//                int i, index_date = -1; // pass -1 to monitorTableChange if date column could not be found
-//                for (i = 0; i < col; i++) {
-//                    if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // find date column
-//                        index_date = i;
-//                        break;
-//                    }
-//                }
-//                monitorTableChange(index_date + 1);
-//                doNotHighlightButtons();
-//            }
-//            
-//            else {
-//               createTable.table.setRowSorter(createTable.sorter);
-//            }
+            filterByDate();
         } else {
-            createTable.clearFilter(createTable.sorter);
-            createTable.table.setRowSorter(createTable.sorter);
+            showTable();
             monitorTableChange(-1);
         }
     }//GEN-LAST:event_jCDateRangeActionPerformed
@@ -824,8 +772,7 @@ public class GUI extends javax.swing.JFrame {
         if (jCSymbol.isSelected()) {
             filterBySymbol();
         } else {
-            createTable.clearFilter(createTable.sorter);
-            createTable.table.setRowSorter(createTable.sorter);
+            filter.clear();
             GUI.monitorTableChange(-1);
         }
     }//GEN-LAST:event_jCSymbolActionPerformed
@@ -836,7 +783,6 @@ public class GUI extends javax.swing.JFrame {
         GUI.monitorTableChange(-1);
 
     }//GEN-LAST:event_clearAllFiltersActionPerformed
-
     private void showTable(String showTable) {
         try {
             jPanel.remove(scrollPane);

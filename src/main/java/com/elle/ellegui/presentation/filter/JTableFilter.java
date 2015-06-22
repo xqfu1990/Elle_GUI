@@ -14,7 +14,7 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
 
     private final TableRowFilter filter = new TableRowFilter();
 
-    public JTableFilter( JTable table ) {
+    public JTableFilter(JTable table) {
         super(table);
     }
 
@@ -23,23 +23,22 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
 
         RowSorter<?> rs = getTable().getRowSorter();
 
-        if (!( rs instanceof DefaultRowSorter )) return false;
+        if (!(rs instanceof DefaultRowSorter)) {
+            return false;
+        }
 
         DefaultRowSorter<?, ?> drs = (DefaultRowSorter<?, ?>) rs;
 
         @SuppressWarnings("unchecked")
-        RowFilter<Object,Object> prevFilter = (RowFilter<Object, Object>) drs.getRowFilter();
-        if ( !(prevFilter instanceof TableRowFilter)) {
+        RowFilter<Object, Object> prevFilter = (RowFilter<Object, Object>) drs.getRowFilter();
+        if (prevFilter!=null && !(prevFilter instanceof TableRowFilter)) {
             filter.setParentFilter(prevFilter);
         }
-
         drs.setRowFilter(filter);
         return true;
-
-
     }
 
-    class TableRowFilter extends RowFilter<Object,Object> implements Serializable {
+    class TableRowFilter extends RowFilter<Object, Object> implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
@@ -49,35 +48,36 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
             return parentFilter;
         }
 
-        public void setParentFilter( RowFilter<Object, Object> parentFilter ) {
-            this.parentFilter = (parentFilter == null ||  parentFilter == this )? null: parentFilter;
+        public void setParentFilter(RowFilter<Object, Object> parentFilter) {
+            this.parentFilter = (parentFilter == null || parentFilter == this) ? null : parentFilter;
         }
 
         @Override
-        public boolean include( final Entry<? extends Object, ? extends Object> entry) {
+        public boolean include(final Entry<? extends Object, ? extends Object> entry) {
 
             // use parent filter condition
-            if ( parentFilter != null && !parentFilter.include(entry)) return false;
+            if (parentFilter != null && !parentFilter.include(entry)) {
+                return false;
+            }
 
-            return includeRow( new ITableFilter.Row() {
+            return includeRow(new ITableFilter.Row() {
 
                 @Override
-                public Object getValue(int column) { return entry.getValue(column); }
-
+                public Object getValue(int column) {
+                    return entry.getValue(column);
+                }
                 @Override
-                public int getValueCount() { return entry.getValueCount(); }
-
+                public int getValueCount() {
+                    return entry.getValueCount();
+                }
             });
-
         }
-
     }
 
-    public void modelChanged( TableModel model ) {
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>( model );
+    public void modelChanged(TableModel model) {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
         sorter.setSortsOnUpdates(true);
-        getTable().setRowSorter( sorter );
+        getTable().setRowSorter(sorter);
     }
-
 
 }

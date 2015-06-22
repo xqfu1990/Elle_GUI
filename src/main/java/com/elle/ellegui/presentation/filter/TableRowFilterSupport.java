@@ -1,5 +1,8 @@
 package com.elle.ellegui.presentation.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -17,10 +20,9 @@ public final class TableRowFilterSupport {
     private boolean actionsVisible = true;
     private int filterIconPlacement = SwingConstants.LEADING;
     private boolean useTableRenderers = false;
-
+     private Logger log = LoggerFactory.getLogger(TableRowFilterSupport.class);
     private TableRowFilterSupport( ITableFilter<?> filter ) {
         if ( filter == null ) throw new NullPointerException();
-        //this.table = table;
         this.filter = filter;
     }
 
@@ -100,6 +102,21 @@ public final class TableRowFilterSupport {
         
         return filter.getTable();
     }
+      public ITableFilter<?> applyFilter() {
+
+        final TableFilterColumnPopup filterPopup = new TableFilterColumnPopup(filter);
+        filterPopup.setEnabled(true);
+        filterPopup.setActionsVisible(actionsVisible);
+        filterPopup.setSearchable(searchable);
+        filterPopup.setSearchFilter(searchFilter);
+        filterPopup.setSearchTranslator(translator);
+        filterPopup.setUseTableRenderers( useTableRenderers );
+
+        setupTableHeader();
+        log.debug("Filter row count {}", filter.getTable().getRowCount());
+        return filter;
+    }
+    
 
     private void setupTableHeader() {
 
@@ -115,22 +132,8 @@ public final class TableRowFilterSupport {
             }
         });
         
-
+          setupHeaderRenderers(table.getModel(), true );
         // make sure that search component is reset after table model changes
-        setupHeaderRenderers(table.getModel(), true );
-//        table.addPropertyChangeListener("model", new PropertyChangeListener() {
-//
-//            public void propertyChange(PropertyChangeEvent evt) {
-//
-//                FilterTableHeaderRenderer headerRenderer = new FilterTableHeaderRenderer(filter);
-//                filter.modelChanged((TableModel) evt.getNewValue());
-//
-//                for( TableColumn c:  Collections.list( filter.getTable().getColumnModel().getColumns()) ) {
-//                    c.setHeaderRenderer( headerRenderer );
-//                }
-//            }}
-//
-//        );
     }
 
     private void setupHeaderRenderers( TableModel newModel, boolean fullSetup ) {
