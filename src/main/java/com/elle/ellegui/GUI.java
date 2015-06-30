@@ -29,7 +29,18 @@ import java.sql.Statement;
  */
 public class GUI extends javax.swing.JFrame {
 
-    private Logger log = LoggerFactory.getLogger(GUI.class);
+    private final Logger log = LoggerFactory.getLogger(GUI.class);
+    private String selectedTableName;
+    private boolean checkBoxSymbolPosition;
+    private boolean checkBoxSymbolTrades;
+    private String selectedSymbolTrades;
+    private String selectedSymbolPosition;
+    private String dateInitPosition;
+    private String dateEndPosition;
+    private boolean checkBoxDatePosition;
+    private String dateInitTrades;
+    private String dateEndTrades;
+    private boolean checkBoxDateTrades;
 
     /**
      * Creates new form GUI2
@@ -58,7 +69,6 @@ public class GUI extends javax.swing.JFrame {
         jBIB = new javax.swing.JButton();
         jBTL = new javax.swing.JButton();
         numOfRecords = new javax.swing.JLabel();
-        jLConnect = new javax.swing.JLabel();
         jCSymbol = new javax.swing.JCheckBox();
         jCDateRange = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -72,6 +82,8 @@ public class GUI extends javax.swing.JFrame {
         jEnter = new javax.swing.JButton();
         jClear = new javax.swing.JButton();
         jPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMFile = new javax.swing.JMenu();
         jMFileConnections = new javax.swing.JMenu();
@@ -83,6 +95,7 @@ public class GUI extends javax.swing.JFrame {
         jMFilePrintGUI = new javax.swing.JMenuItem();
         jMFilePrintWindow = new javax.swing.JMenuItem();
         jMFileSave = new javax.swing.JMenuItem();
+        jMVersion = new javax.swing.JMenuItem();
         jMEdit = new javax.swing.JMenu();
         jMEditConnection = new javax.swing.JMenuItem();
         jMFind = new javax.swing.JMenu();
@@ -101,6 +114,7 @@ public class GUI extends javax.swing.JFrame {
         jMViewLoadsTable = new javax.swing.JMenuItem();
         jMHelp = new javax.swing.JMenu();
         jMOther = new javax.swing.JMenu();
+        jMConnect = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -219,26 +233,20 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39))
-                            .addComponent(clearAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(jCDateRange)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,18 +263,16 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                                        .addComponent(jTSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTEndDate))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
@@ -278,7 +284,6 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(numOfRecords))
-                    .addComponent(jLConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -345,8 +350,14 @@ public class GUI extends javax.swing.JFrame {
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 419, Short.MAX_VALUE)
         );
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
+        jMenuBar1.setSize(new java.awt.Dimension(840, 10));
 
         jMFile.setText("File");
 
@@ -413,6 +424,14 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jMFile.add(jMFileSave);
+
+        jMVersion.setText("Version");
+        jMVersion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMVersionActionPerformed(evt);
+            }
+        });
+        jMFile.add(jMVersion);
 
         jMenuBar1.add(jMFile);
 
@@ -524,6 +543,12 @@ public class GUI extends javax.swing.JFrame {
         jMOther.setText("Other");
         jMenuBar1.add(jMOther);
 
+        jMConnect.setText("?");
+        jMConnect.setToolTipText("");
+        jMenuBar1.add(Box.createHorizontalGlue());
+        jMenuBar1.add(jMConnect);
+        jMConnect.setIcon(iconConnection);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -549,29 +574,12 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPositionsActionPerformed
-        positions = showTable(positions, "ShowDV_Positions");
-        doNotHighlightButtons();
-        jBPositions.setBackground(Color.RED);
-    }//GEN-LAST:event_jBPositionsActionPerformed
-
-    private void jBTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTradesActionPerformed
-        trades = showTable(trades, "ShowDV_Trades");
-        doNotHighlightButtons();
-        jBTrades.setBackground(Color.RED);
-    }//GEN-LAST:event_jBTradesActionPerformed
-
-    private void jBIBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIBActionPerformed
-        IB_8949 = showTable(IB_8949, "ShowDV_IB_8949");
-        doNotHighlightButtons();
-        jBIB.setBackground(Color.RED);
-    }//GEN-LAST:event_jBIBActionPerformed
-
     private void jMFileConnDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileConnDummyActionPerformed
         if (dummy.checkInfo()) {
             registerServer(dummy);
         } else {
             new LoginWindow();
+            jMConnect.setText("Dummy");
         }
     }//GEN-LAST:event_jMFileConnDummyActionPerformed
 
@@ -580,6 +588,8 @@ public class GUI extends javax.swing.JFrame {
             registerServer(local);
         } else {
             new LoginWindow();
+            jMConnect.setText("Local");
+
         }
     }//GEN-LAST:event_jMFileConnLocalActionPerformed
 
@@ -588,6 +598,8 @@ public class GUI extends javax.swing.JFrame {
             registerServer(aws);
         } else {
             new LoginWindow();
+            jMConnect.setText("AWS");
+
         }
     }//GEN-LAST:event_jMFileConnAWSActionPerformed
 
@@ -641,22 +653,6 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMLoadFileActionPerformed
 
-    private void jBMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMatchesActionPerformed
-        showTable();
-        doNotHighlightButtons();
-        jBMatches.setBackground(Color.RED);
-    }//GEN-LAST:event_jBMatchesActionPerformed
-
-    private void jBTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTLActionPerformed
-        TL_8949 = showTable(TL_8949, "ShowDV_TL_8949");
-        doNotHighlightButtons();
-        jBTL.setBackground(Color.RED);
-    }//GEN-LAST:event_jBTLActionPerformed
-
-    private void jBAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAllocationsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBAllocationsActionPerformed
-
     private void jMViewLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewLogActionPerformed
         logWindow.showLogWindow();
     }//GEN-LAST:event_jMViewLogActionPerformed
@@ -689,41 +685,35 @@ public class GUI extends javax.swing.JFrame {
     private void jMToolsReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMToolsReconcileActionPerformed
         reconcile = showTable(reconcile, "Reconcile");
     }//GEN-LAST:event_jMToolsReconcileActionPerformed
-    public ITableFilter filter;
-    private void filterBySymbol() {         //Filter Main window
+    private static ITableFilter filterBySymbol;
+    private static ITableFilter filterByDate;
+    private String selectedSymbol;
+    private int column_index_symbol;
+    private int column_index_date;
+    private String dateEnd;
+    private String dateInit;
+
+    /**
+     * Filter by Symbol same popup filter used in Main window
+     */
+    private void filterBySymbol() {
         jCSymbol.setSelected(true);
         jCSymbol.setEnabled(true);
-        String selectedSymbol = jTSymbol.getText();
-        int column_index=0;
-        for (int i=0; i<createTable.table.getColumnCount(); i++){
-            if(createTable.table.getColumnName(i).equals("Symbol")){
-              column_index = i + 1;
-              break;
-            }
-        }
-        filter = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
-
-        filter.applyFilterBySymbol(column_index, selectedSymbol, filter);
-        monitorTableChange(column_index-1);
+        filterBySymbol = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
+        filterBySymbol.applyFilterBySymbol(column_index_symbol, selectedSymbol, filterBySymbol);
+        monitorTableChange(column_index_symbol - 1);
     }
 
+    /**
+     * //Filter by Date with same popup filter used in Main window
+     */
     private void filterByDate() {
-        jCDateRange.setSelected(true);                              //Filter by Date with same popup filter
+        jCDateRange.setSelected(true);
         jCDateRange.setEnabled(true);
+        filterByDate = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
 
-        doNotHighlightButtons();
-        int column = createTable.table.getColumnModel().getColumnCount();
-        int column_index =0;
-        for (int i = 0; i < column; i++) {
-            if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // select first column with *Time title
-                    column_index = i;
-                    break;
-            }
-        }
-        filter = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
-
-        filter.applyFilterByDate(19,jTStartDate.getText(), jTEndDate.getText(),filter);
-        monitorTableChange(column_index-1);
+        filterByDate.applyFilterByDate(createTable.table.getColumnCount() - 1, dateInit, dateEnd, filterByDate);
+        monitorTableChange(column_index_date - 1);
 
     }
 
@@ -763,30 +753,197 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMFileSaveActionPerformed
 
+    private void jMVersionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMVersionActionPerformed
+        JOptionPane.showMessageDialog(this, "Creation Date: "
+                + "2015-06-28" + "\n"
+                + "Version: " + "0.6.8");
+    }//GEN-LAST:event_jMVersionActionPerformed
+
+    private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
+        clearAllFilterButton();
+    }//GEN-LAST:event_clearAllFiltersActionPerformed
+
+    private void clearAllFilterButton() {
+        if (filterBySymbol != null) {
+            filterBySymbol.clear();
+            jCSymbol.setSelected(false);
+            jCDateRange.setSelected(false);
+            GUI.monitorTableChange(-1);
+        }
+    }
+
     private void jCDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCDateRangeActionPerformed
-        if (jCDateRange.isSelected()) {
+        dateEnd = jTEndDate.getText();
+        dateInit = jTStartDate.getText();
+
+        if((createTable.getTableNum()==7) && jCDateRange.isSelected()){
+            dateInitPosition = dateInit;
+            dateEndPosition = dateEnd;
+            checkBoxDatePosition = jCSymbol.isSelected();
+        } else if ((createTable.getTableNum()==2 && jCDateRange.isSelected())){
+            dateInitTrades = dateInit;
+            dateEndTrades = dateEnd;
+            checkBoxDateTrades = jCSymbol.isSelected();
+        }
+        int column = createTable.table.getColumnModel().getColumnCount();
+        for (int i = 0; i < column; i++) {
+            if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // select first column with *Time title
+                column_index_date = i;
+                break;
+            }
+
+        }
+
+        if (jCDateRange.isSelected() && !jCSymbol.isSelected()) {
             filterByDate();
+        } else if (jCDateRange.isSelected() && jCSymbol.isSelected()) {
+            filterBySymbol.applyFilterByDate(column - 1, dateInit, dateEnd, filterBySymbol);
+            monitorTableChange(column_index_date - 1);
+        } else if (!jCDateRange.isSelected() && jCSymbol.isSelected()) {
+            filterBySymbol();
+            monitorTableChange(column_index_symbol - 1);
         } else {
-            filter.clear();
-            monitorTableChange(-1);
+            filterByDate.clear();
+            if(createTable.getTableNum()==7){
+                dateEndPosition = null;
+                dateInitPosition=null;
+                checkBoxDatePosition = false;
+                monitorTableChange(-1);
+            } else if (createTable.getTableNum()==2){
+                dateEndTrades = null;
+                dateInitTrades=null;
+                checkBoxDateTrades = false;
+                monitorTableChange(-1);
+            }
         }
     }//GEN-LAST:event_jCDateRangeActionPerformed
 
     private void jCSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCSymbolActionPerformed
-        if (jCSymbol.isSelected()) {
+        selectedSymbol= jTSymbol.getText();
+        if((createTable.getTableNum()==7) && jCSymbol.isSelected()){
+            selectedSymbolPosition = selectedSymbol;
+            checkBoxSymbolPosition = jCSymbol.isSelected();
+        } else if ((createTable.getTableNum()==2 && jCSymbol.isSelected())){
+            selectedSymbolTrades = jTSymbol.getText();
+            checkBoxSymbolTrades = jCSymbol.isSelected();
+        }
+
+        for (int i = 0; i < createTable.table.getColumnCount(); i++) {
+            if (createTable.table.getColumnName(i).equals("Symbol")) {
+                column_index_symbol = i + 1;
+                break;
+            }
+        }
+        if (jCSymbol.isSelected() && !jCDateRange.isSelected()) {
             filterBySymbol();
+        } else if (jCSymbol.isSelected() && jCDateRange.isSelected()) {
+            filterByDate.applyFilterBySymbol(column_index_symbol, selectedSymbol, filterByDate);
+            monitorTableChange(column_index_symbol - 1);
+        } else if (!jCSymbol.isSelected() && jCDateRange.isSelected()) {
+            filterByDate();
+            monitorTableChange(column_index_date - 1);
         } else {
-            filter.clear();
-            GUI.monitorTableChange(-1);
+            filterBySymbol.clear();
+            if(createTable.getTableNum()==7){
+                selectedSymbolPosition = null;
+                checkBoxSymbolPosition = false;
+                monitorTableChange(-1);
+            } else if (createTable.getTableNum()==2){
+                selectedSymbolTrades = jTSymbol.getText();
+                checkBoxSymbolTrades = jCSymbol.isSelected();
+                monitorTableChange(-1);
+            }
         }
     }//GEN-LAST:event_jCSymbolActionPerformed
 
-    private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
-        createTable.clearFilter(createTable.sorter);
-        createTable.table.setRowSorter(createTable.sorter);
-        GUI.monitorTableChange(-1);
+    private void jBTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTLActionPerformed
+        TL_8949 = showTable(TL_8949, "ShowDV_TL_8949");
+        doNotHighlightButtons();
+        jBTL.setBackground(Color.RED);
+    }//GEN-LAST:event_jBTLActionPerformed
 
-    }//GEN-LAST:event_clearAllFiltersActionPerformed
+    private void jBIBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIBActionPerformed
+        IB_8949 = showTable(IB_8949, "ShowDV_IB_8949");
+        doNotHighlightButtons();
+        jBIB.setBackground(Color.RED);
+    }//GEN-LAST:event_jBIBActionPerformed
+
+    private void jBMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMatchesActionPerformed
+        showTable();
+        doNotHighlightButtons();
+        jBMatches.setBackground(Color.RED);
+    }//GEN-LAST:event_jBMatchesActionPerformed
+
+    private void jBAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAllocationsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBAllocationsActionPerformed
+
+    private void jBTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTradesActionPerformed
+        if (checkBoxSymbolTrades && checkBoxDateTrades) {
+            jTSymbol.setText(selectedSymbolTrades);
+            jCSymbol.setSelected(true);
+            jTStartDate.setText(dateInitTrades);
+            jTEndDate.setText(dateEndTrades);
+            jCDateRange.setSelected(true);
+        } else if(checkBoxSymbolTrades && !checkBoxDateTrades) {
+            jTSymbol.setText(selectedSymbolTrades);
+            jCSymbol.setSelected(true);
+            jTStartDate.setText(null);
+            jTEndDate.setText(null);
+            jCDateRange.setSelected(false);
+
+        } else if (!checkBoxSymbolTrades && checkBoxDateTrades){
+            jTSymbol.setText(null);
+            jCSymbol.setSelected(false);
+            jTStartDate.setText(dateInitTrades);
+            jTEndDate.setText(dateEndTrades);
+            jCDateRange.setSelected(true);
+        }  else {
+            jTSymbol.setText(null);
+            jCSymbol.setSelected(false);
+            jTStartDate.setText(null);
+            jTEndDate.setText(null);
+            jCDateRange.setSelected(false);
+        }
+        trades = showTable(trades, "ShowDV_Trades");
+        doNotHighlightButtons();
+        jBTrades.setBackground(Color.RED);
+        selectedTableName = "Trades";
+
+    }//GEN-LAST:event_jBTradesActionPerformed
+
+    private void jBPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPositionsActionPerformed
+        if (checkBoxSymbolPosition && checkBoxDatePosition) {
+            jTSymbol.setText(selectedSymbolPosition);
+            jCSymbol.setSelected(true);
+            jTStartDate.setText(dateInitPosition);
+            jTEndDate.setText(dateEndPosition);
+            jCDateRange.setSelected(true);
+        } else if(checkBoxSymbolPosition && !checkBoxDatePosition) {
+            jTSymbol.setText(selectedSymbolPosition);
+            jCSymbol.setSelected(true);
+            jTStartDate.setText(null);
+            jTEndDate.setText(null);
+            jCDateRange.setSelected(false);
+
+        } else if (!checkBoxSymbolPosition && checkBoxDatePosition){
+            jTSymbol.setText(null);
+            jCSymbol.setSelected(false);
+            jTStartDate.setText(dateInitPosition);
+            jTEndDate.setText(dateEndPosition);
+            jCDateRange.setSelected(true);
+        } else {
+            jTSymbol.setText(null);
+            jCSymbol.setSelected(false);
+            jTStartDate.setText(null);
+            jTEndDate.setText(null);
+            jCDateRange.setSelected(false);
+        }
+        positions = showTable(positions, "ShowDV_Positions");
+        doNotHighlightButtons();
+        jBPositions.setBackground(Color.RED);
+
+    }//GEN-LAST:event_jBPositionsActionPerformed
     private void showTable(String showTable) {
         try {
             jPanel.remove(scrollPane);
@@ -809,7 +966,6 @@ public class GUI extends javax.swing.JFrame {
 
     private CreateTables showTable(CreateTables table, String str) {    // parameters passed by value
         int numOfRow = 0;
-
         try {
             jPanel.remove(scrollPane);
             jPanel.repaint();
@@ -836,9 +992,10 @@ public class GUI extends javax.swing.JFrame {
                 table.setTable(table.table);
             } catch (Exception e) {
                 doNotHighlightButtons();
-                JOptionPane.showMessageDialog(this, "Please log in.");
+                JOptionPane.showMessageDialog(this, "Please log in");
             }
         } else {
+            createTable = table;
             scrollPane = new JScrollPane(table.getTable());
             numOfRow = table.getTable().getRowCount();
         }
@@ -896,11 +1053,7 @@ public class GUI extends javax.swing.JFrame {
 
             logWindow.sendMessages("Connect successfully!\n");
 
-            jLConnect.setText(info.getServerName());
-//            String str = "images/imag_11.png";
             ImageIcon image = new ImageIcon(info.getIconAddress());
-            // image.getImage().getScaledInstance(1, 1, Image.SCALE_SMOOTH);
-            jLConnect.setIcon(image);
             info.checkInfo();   // change status if connection built up
         } catch (SQLException ex) {
             logWindow.sendMessages(ex.getMessage());
@@ -930,7 +1083,7 @@ public class GUI extends javax.swing.JFrame {
             createTable.setFilteredTable(createTable.table);
             createTable.setFilteringStatus(true);
         } else {
-            for (int i = 1; i < createTable.table.getModel().getColumnCount() - 1; i++) {
+            for (int i = 0; i < createTable.table.getColumnCount() - 1; i++) {
                 createTable.table.getColumnModel().getColumn(i)
                         .setHeaderRenderer(new HeaderRenderer(createTable.table));
             }
@@ -1032,7 +1185,7 @@ public class GUI extends javax.swing.JFrame {
     public static LoginInfo dummy = new LoginInfo("Dummy");
     public static LoginInfo tempInfo = new LoginInfo();    // used for communicating with loginWindow
     private final EnterButton enterButton = new EnterButton();
-
+    private final Icon iconConnection = new javax.swing.ImageIcon("/Users/danielabecker/Dropbox/ELLE Prog 2015/ELLE GUI/ElleGUI/src/main/java/com/elle/ellegui/images/imag_11.png");
     private JScrollPane scrollPane;
 
     public static CreateTables positions, trades, IB_8949, TL_8949,
@@ -1040,7 +1193,6 @@ public class GUI extends javax.swing.JFrame {
             loadsTable, textFile, reconcile;
     public JTable tablefilte;
 
-    @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button clearAllFilters;
     private javax.swing.JButton jBAllocations;
@@ -1053,8 +1205,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCSymbol;
     private javax.swing.JButton jClear;
     private javax.swing.JButton jEnter;
-    private javax.swing.JLabel jLConnect;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMConnect;
     private javax.swing.JMenu jMEdit;
     private javax.swing.JMenuItem jMEditConnection;
     private javax.swing.JMenu jMFile;
@@ -1075,6 +1229,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMReports;
     private javax.swing.JMenu jMTools;
     private javax.swing.JMenuItem jMToolsReconcile;
+    private javax.swing.JMenuItem jMVersion;
     private javax.swing.JMenu jMView;
     private javax.swing.JMenuItem jMViewIB;
     private javax.swing.JMenuItem jMViewLoadsTable;
