@@ -1,5 +1,6 @@
 package com.elle.ellegui;
 
+import com.elle.ellegui.presentation.filter.ITableFilter;
 import com.elle.ellegui.presentation.filter.TableRowFilterSupport;
 
 import javax.swing.*;
@@ -19,7 +20,6 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +29,13 @@ public class CreateTables extends JPanel {
     public JTable table_2;
     public JScrollPane scrollPane;
     public JScrollPane scrollPane_2;
-    private int tableNum;
     public TableRowSorter sorter;
 
+    public int getTableNum() {
+        return tableNum;
+    }
+
+    private int tableNum;
     // New variables
     private boolean isFiltering = false;
     private boolean tableStatus = false;    // if original createTable is set, then true
@@ -41,7 +45,7 @@ public class CreateTables extends JPanel {
     private String tableCommand;            // i.e. ShowDV_Trades
     private JTableHeader header;
 
-//    // For excel fiter
+    //    // For excel fiter
 //    private static int mColumnIndex = -1;
 //    private static ITableFilter<?> filter;
 //    private static CheckList<DistinctColumnItem> filterList = new CheckList.Builder().build();
@@ -51,79 +55,6 @@ public class CreateTables extends JPanel {
         table.getColumn("#").setMaxWidth(30);
         table.getColumn("#").setMinWidth(30);
         table.getTableHeader().setReorderingAllowed(false);
-    }
-
-    private class RowHeaderTable extends AbstractTableModel {
-
-        private String[] columnNames = new String[1];
-        private Object[][] data;
-
-        public RowHeaderTable(int num) {
-            columnNames[0] = "#";
-            data = new Object[num][1];
-            for (int i = 1; i <= num; i++) {
-                data[i - 1][0] = i;
-            }
-        }
-
-        @Override
-        public int getColumnCount() {
-            if (columnNames == null) {
-                return 0;
-            }
-            return columnNames.length;
-        }
-
-        @Override
-        public int getRowCount() {
-            if (data == null) {
-                return 0;
-            }
-            return data.length;
-        }
-
-        @Override
-        public String getColumnName(int col) {
-            if (columnNames == null) {
-                return null;
-            }
-            return columnNames[col];
-        }
-
-        @Override
-        public Object getValueAt(int row, int col) {
-            try {
-                Object ob = data[row][col];
-            } catch (NullPointerException e) {
-                return null;
-            }
-            return data[row][col];
-        }
-
-        @Override
-        public Class getColumnClass(int c) {
-            try {
-                this.getValueAt(0, c).getClass();
-            } catch (NullPointerException e) {
-                return null;
-            }
-            return this.getValueAt(0, c).getClass();
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int col) {
-
-            // note that the data/cell address is constant,
-            // no matter where the cell appears on screen.
-            return false;
-        }
-
-        @Override
-        public void setValueAt(Object value, int row, int col) {
-
-            data[row][col] = value;
-            fireTableDataChanged();
-        }
     }
 
     public CreateTables() {
@@ -151,10 +82,10 @@ public class CreateTables extends JPanel {
 
         JTable headColumn, headColumn_2;
 
-        table = new JTable(new MyTableModel_7(connect), cm);
-        table_2 = new JTable(new MyTableModel_2(connect), cm_2);
-        headColumn = new JTable(new MyTableModel_7(connect), rowHeaderModel);
-        headColumn_2 = new JTable(new MyTableModel_2(connect), rowHeaderModel_2);
+        table = new JTable(new MyTableModel_Position(connect), cm);
+        table_2 = new JTable(new MyTableModel_Trades(connect), cm_2);
+        headColumn = new JTable(new MyTableModel_Position(connect), rowHeaderModel);
+        headColumn_2 = new JTable(new MyTableModel_Trades(connect), rowHeaderModel_2);
 
         table.createDefaultColumnsFromModel();
         headColumn.createDefaultColumnsFromModel();
@@ -233,14 +164,12 @@ public class CreateTables extends JPanel {
             table = new JTable(new MyTableModel_1(), cm);
             headColumn = new JTable(new MyTableModel_1(), rowHeaderModel);
             tableNum = 1;
-            // createTable.setBackground(Color.getHSBColor((float) 0.15, (float) 0.5,
-            // (float) 1.0));
+
         } else if (str.equals("ShowDV_Trades")) {
-            table = new JTable(new MyTableModel_2(connect), cm);
-            headColumn = new JTable(new MyTableModel_2(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_Trades(connect), cm);
+            headColumn = new JTable(new MyTableModel_Trades(connect), rowHeaderModel);
             tableNum = 2;
-            // createTable.setBackground(Color.getHSBColor((float) 0.15, (float) 0.5,
-            // (float) 1.0));
+
         } else if (str.startsWith("#")) {
             table = new JTable(new MyTableModel_3(str, connect), cm);
             headColumn = new JTable(new MyTableModel_3(str, connect),
@@ -280,8 +209,8 @@ public class CreateTables extends JPanel {
             headColumn = new JTable(new MyTableModel_14(connect), rowHeaderModel);
             tableNum = 14;
         } else if (str.equals("ShowDV_Positions")) {
-            table = new JTable(new MyTableModel_7(connect), cm);
-            headColumn = new JTable(new MyTableModel_7(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_Position(connect), cm);
+            headColumn = new JTable(new MyTableModel_Position(connect), rowHeaderModel);
             tableNum = 7;
         } else if (str.equals("ShowLoadsTable")) {
             table = new JTable(new MyTableModel_8(connect), cm);
@@ -317,8 +246,8 @@ public class CreateTables extends JPanel {
                         (MyTableModel_1) table.getModel());
                 break;
             case 2:
-                sorter = new TableRowSorter<MyTableModel_2>(
-                        (MyTableModel_2) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_Trades>(
+                        (MyTableModel_Trades) table.getModel());
                 break;
             case 3:
                 sorter = new TableRowSorter<MyTableModel_3>(
@@ -337,8 +266,8 @@ public class CreateTables extends JPanel {
                         (MyTableModel_6) table.getModel());
                 break;
             case 7:
-                sorter = new TableRowSorter<MyTableModel_7>(
-                        (MyTableModel_7) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_Position>(
+                        (MyTableModel_Position) table.getModel());
                 break;
             case 8:
                 sorter = new TableRowSorter<MyTableModel_8>(
@@ -436,7 +365,7 @@ public class CreateTables extends JPanel {
             public void setMyRowFilter(MouseEvent e, TableRowSorter rowSorter) {
                 RowFilter rf;
                 int rowIndex = table.getSelectedRow();
-                int[] columnIndex = table.getColumnModel().getSelectedColumns();//Get Column selected 
+                int[] columnIndex = table.getColumnModel().getSelectedColumns();//Get Column selected
                 Object selectedRow = table.getValueAt(rowIndex, columnIndex[0]);
                 try {
                     if (selectedRow instanceof Date) {//Filter by Date
@@ -454,23 +383,6 @@ public class CreateTables extends JPanel {
                     System.out.println("error from SetMyRowFilter" + ex.getMessage());
                 }
             }
-
-//            public void setMyRowFilter(MouseEvent e, TableRowSorter rowSorter) { // <-- filter codes for mouse click
-//                try {
-//                    RowFilter rf;
-//                    int rowIndex = createTable.getSelectedRow();
-//                    int columnIndex = createTable.getColumnModel().getColumnIndex(
-//                            "Symbol");
-//                    String[] lst = ((String) createTable.getValueAt(rowIndex,
-//                            columnIndex)).split(" ");
-//
-//                    rf = RowFilter.regexFilter("^" + lst[0]);
-//                    rowSorter.setRowFilter(rf);
-//
-//                } catch (Exception ex) {
-//
-//                }
-//            }
         });
 
         header = table.getTableHeader(); // Listener in the header to do DoubleClick and clean filter
@@ -516,8 +428,23 @@ public class CreateTables extends JPanel {
             table.getColumnModel().getColumn(i)
                     .setMinWidth(stringLength * 7 + 40);
             table.getColumnModel().getColumn(i)
-                    .setPreferredWidth(stringLength * 7 + 40);
+                    .setPreferredWidth(stringLength * 7 + 40);            // Set width of each columns with length of String that is inside of each columns
         }
+        for (int i = 0; i <=2; i++) {                                    // Set last 2 columns to width to hide from the table view
+            int stringLength = 0;
+            for (int j = 0; j < table.getRowCount(); j++) {
+                String temp = table.getValueAt(j, i).toString();
+                if (temp.length() > stringLength) {
+                    stringLength = temp.length();
+                }
+            }
+            table.getColumnModel().getColumn((table.getColumnCount()-3)+i)
+                    .setMinWidth(0);
+            table.getColumnModel().getColumn((table.getColumnCount()-3)+i)
+                    .setPreferredWidth(0);
+        }
+
+
 
         this.add(scrollPane);
     }
@@ -534,6 +461,221 @@ public class CreateTables extends JPanel {
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
+    /**
+     * Table methods for filtering
+     *
+     * @param rowSorter
+     * @param symbol
+     */
+    public void setSymbolFilter(TableRowSorter rowSorter, String symbol) {  // <-- filter codes for buttons
+        try {
+            RowFilter rf;
+
+            rf = RowFilter.regexFilter("^" + symbol.toUpperCase());
+            rowSorter.setRowFilter(rf);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Could not find " + symbol.toUpperCase() + ".");
+        }
+    }
+
+    public void setDateFilter(TableRowSorter rowSorter,
+                              String date1, String date2) {
+
+        LocalDate StartDate = LocalDate.parse(date1);
+        LocalDate EndDate = LocalDate.parse(date2);
+
+        if (StartDate.isAfter(EndDate)) {
+            JOptionPane.showMessageDialog(null, "The end date is before the start date.",
+                    "Date Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            List<String> totalDates = new ArrayList<>();
+            while (!StartDate.isAfter(EndDate)) {   // loop the dates between start and end dates
+                totalDates.add(StartDate.toString());
+                StartDate = StartDate.plusDays(1);
+            }
+            String[] lst = totalDates.toArray(new String[totalDates.size()]);
+
+            try {
+                List<RowFilter<Object, Object>> filters
+                        = new ArrayList<>();
+                RowFilter<Object, Object> rf;
+                int i;
+
+                for (i = 0; i < lst.length; i++) {
+                    filters.add(RowFilter.regexFilter("^" + lst[i]));
+                }
+                rf = RowFilter.orFilter(filters);
+                rowSorter.setRowFilter(rf);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Could not find records between these two dates");
+            }
+        }
+    }
+
+//    public void clearFilter(TableRowSorter rowSorter) {
+//        try {
+//            RowFilter rf;
+//
+//            String str = "40627N";  // <- generalize this
+//
+//            rf = RowFilter.regexFilter("^" + str);
+//            rowSorter.setRowFilter(rf);
+//
+//        } catch (Exception ex) {
+//
+//        }
+//    }
+
+    public void setFilteringStatus(boolean a) {
+        isFiltering = a;
+    }
+
+    public JTable getTable() {
+        return originalTable;
+    }
+
+    public void setTable(JTable a) {
+        originalTable = a;
+        tableStatus = true;
+    }
+
+    public JTable getFilteredTable() {
+        return filteredTable;
+    }
+
+    public void setFilteredTable(JTable a) {
+        filteredTable = a;
+        isFiltering = true;
+    }
+
+    public boolean getFilterStatus() {
+        return isFiltering;
+    }
+
+    public boolean getTableStatus() {
+        return tableStatus;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String a) {
+        tableName = a;
+    }
+
+    public String getTableCommand() {
+        return tableCommand;
+    }
+
+    public void setTableCommand(String a) {
+        tableCommand = a;
+    }
+
+    public String getTable(String tableName) {
+        switch (tableName) {
+            case "ShowDV_Positions":
+                return "positions";
+            case "ShowDV_Trades":
+                return "trades";
+            default:
+                return "trades"; // <-- need to be updated to match all tables in database
+        }
+    }
+
+    public String getDateColumn(String tableName) {
+        switch (tableName) {
+            case "ShowDV_Positions":
+                return "Lot_Time";
+            case "ShowDV_Trades":
+                return "Trade_Time";
+            default:
+                return "Trade_Time"; // <-- need to be updated to match all tables in database
+        }
+    }
+
+//    public void applyDistinctColumnItems(int col, Object selectField) { //Create Collection from selected fields
+//        Collection<DistinctColumnItem> item = new ArrayList<>();
+//        DistinctColumnItem distinctColumnItem = new DistinctColumnItem(selectField, col);
+//        item.add(distinctColumnItem);
+////        return apply(col, item);
+//    }
+
+    private class RowHeaderTable extends AbstractTableModel {
+
+        private String[] columnNames = new String[1];
+        private Object[][] data;
+
+        public RowHeaderTable(int num) {
+            columnNames[0] = "#";
+            data = new Object[num][1];
+            for (int i = 1; i <= num; i++) {
+                data[i - 1][0] = i;
+            }
+        }
+
+        @Override
+        public int getColumnCount() {
+            if (columnNames == null) {
+                return 0;
+            }
+            return columnNames.length;
+        }
+
+        @Override
+        public int getRowCount() {
+            if (data == null) {
+                return 0;
+            }
+            return data.length;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            if (columnNames == null) {
+                return null;
+            }
+            return columnNames[col];
+        }
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            try {
+                Object ob = data[row][col];
+            } catch (NullPointerException e) {
+                return null;
+            }
+            return data[row][col];
+        }
+
+        @Override
+        public Class getColumnClass(int c) {
+            try {
+                this.getValueAt(0, c).getClass();
+            } catch (NullPointerException e) {
+                return null;
+            }
+            return this.getValueAt(0, c).getClass();
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+
+            // note that the data/cell address is constant,
+            // no matter where the cell appears on screen.
+            return false;
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+
+            data[row][col] = value;
+            fireTableDataChanged();
+        }
+    }
+
     private class MyTableModel_1 extends AbstractTableModel {
 
         private String[] columnNames;
@@ -542,7 +684,7 @@ public class CreateTables extends JPanel {
         public MyTableModel_1() {
             String textFile = "D:/MySQL File/IB 9048/IB 9048 AS 2013-06H.csv";
             BufferedReader br;
-            String line ;
+            String line;
             String splitSign = ",";
             int i = 0;
             try {
@@ -635,18 +777,30 @@ public class CreateTables extends JPanel {
         }
     }
 
-    public class MyTableModel_2 extends AbstractTableModel {
+    public class MyTableModel_Trades extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
 
+        private boolean checkBoxSymbolTrades;
+        private String selectedSymbolTrades;
+        private String dateInitTrades;
+        private String dateEndTrades;
+        private boolean checkBoxDateTrades;
+        private  ITableFilter filterBySymbol;
+        private  ITableFilter filterByDate;
+        private String selectedSymbol;
+        private int column_index_symbol;
+        private int column_index_date;
+        private String dateEnd;
+        private String dateInit;
+
         /**
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_2(Connection connect) {
-
+        public MyTableModel_Trades(Connection connect) {
             ResultSet rs;
             String sql1, sql2, sql3;
             int columnNum;
@@ -654,7 +808,8 @@ public class CreateTables extends JPanel {
             sql1 = "SET SQL_SAFE_UPDATES = 0;";
             sql2 = "UPDATE trades SET Expiry = NULL WHERE Expiry = '0000-00-00';";
             sql3 = "SELECT * FROM " + TradesView.setDefaultView();
-
+            SimpleDateFormat df_short = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat df_complete = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
             try {
                 state = connect.createStatement();
                 state.addBatch(sql1);
@@ -665,31 +820,76 @@ public class CreateTables extends JPanel {
                 while (rs.next()) {
                     rowNum++;
                 }
-                data = new Object[rowNum][columnNum + 1];
+                data = new Object[rowNum][columnNum + 3];     //Add 2 more column for date-only which the are going to be use in filter popup construction
                 rs.close();
                 rs = state.executeQuery(sql3);
-                columnNames = new String[columnNum + 1];
+                columnNames = new String[columnNum + 3];
                 columnNames[0] = "#";
+                columnNames[columnNum + 1] = "Trade_Date";
+                columnNames[columnNum + 2] = "Lot_Date";
                 for (int column = 1; column <= columnNum; column++) {
                     columnNames[column] = rs.getMetaData()
                             .getColumnName(column);
                 }
                 int row = 0;
-                while (rs.next()) {
-                    data[row][0] = row + 1;
-                    for (int column = 1; column <= columnNum; column++) {
-                        if (rs.getString(column) == null) {
-                            data[row][column] = "NULL";
-                        } else {
-                            data[row][column] = rs.getString(column);
-                        }
-                    }
-                    row++;
-                }
+
+                setDateColumns(rs, columnNum, row, df_short, df_complete);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(table, e.getMessage());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(table, "You have not yet logged in");
+            }
+        }
+
+        /**
+         * Set format yyyy-MM-dd HH:mm:ss date to Time columns and yyyy-MM-dd for auxiliary columns to be use in filter creation.
+         *
+         * @param rs
+         * @param columnNum
+         * @param row
+         * @param df_short
+         * @throws SQLException
+         */
+        private void setDateColumns(ResultSet rs, int columnNum, int row, SimpleDateFormat df_short, SimpleDateFormat df_complete) throws SQLException {
+            String title;
+            while (rs.next()) {
+                data[row][0] = row + 1;
+                for (int column = 1; column <= columnNum; column++) {
+                    title = columnNames[column];
+                    if (title.equals("Trade_Time")) {      // create Trade_Tine date column
+                        try {
+                            Date value = rs.getTimestamp(column);
+                            data[row][column] = df_complete.format(rs.getTimestamp(column));
+                            data[row][columnNum + 1] = df_short.format(value);
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                    } else if (title.equals("Lot_Time")) {      // create Trade_Tine date column
+                        try {
+                            Date value = rs.getDate(column);
+                            if (value != null) {
+                                data[row][column] = df_complete.format(rs.getTimestamp(column));
+                                data[row][columnNum + 2] = df_short.format(value);
+
+                            } else {
+                                data[row][column] = "NULL";
+                                data[row][columnNum + 2] = "NULL";
+                            }
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+
+                    } else if (rs.getString(column) != null) {
+                        data[row][column] = rs.getString(column);
+
+                    } else {
+                        data[row][column] = "NULL";
+                    }
+                }
+
+                row++;
             }
         }
 
@@ -1313,7 +1513,7 @@ public class CreateTables extends JPanel {
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_5(Connection connect) {
+        public MyTableModel_5(Connection connect) {  // Position TableModel
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1450,7 +1650,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_6(Connection connect) {
+        public MyTableModel_6(Connection connect) {  //TableModel for Trades
 
             ResultSet rs;
             String sql1, sql2, sql3;
@@ -1573,18 +1773,71 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_7 extends AbstractTableModel {    // <-- positions
+    public class MyTableModel_Position extends AbstractTableModel {    // <-- positions
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
-//        private Object[][] dateList;
+        private boolean checkBoxSymboPosition;
+        private String symbolSelectedPosition;
+        private String dateInitPosition;
+        private String dateEndPosition;
+        private boolean checkBoxDatePosition;
+        private  ITableFilter filterBySymbol;
+        private  ITableFilter filterByDate;
+        private String selectedSymbol;
+        private int column_index_symbol;
+        private int column_index_date;
+        private String dateEnd;
+        private String dateInit;
+
+        public boolean isCheckBoxDatePosition() {
+            return checkBoxDatePosition;
+        }
+
+        public void setCheckBoxDatePosition(boolean checkBoxDatePosition) {
+            this.checkBoxDatePosition = checkBoxDatePosition;
+        }
+
+        public boolean isCheckBoxSymboPosition() {
+            return checkBoxSymboPosition;
+        }
+
+        public void setCheckBoxSymboPosition(boolean checkBoxSymboPosition) {
+            this.checkBoxSymboPosition = checkBoxSymboPosition;
+        }
+
+        public String getDateEndPosition() {
+            return dateEndPosition;
+        }
+
+        public void setDateEndPosition(String dateEndPosition) {
+            this.dateEndPosition = dateEndPosition;
+        }
+
+        public String getDateInitPosition() {
+            return dateInitPosition;
+        }
+
+        public void setDateInitPosition(String dateInitPosition) {
+            this.dateInitPosition = dateInitPosition;
+        }
+
+        public String getSymbolSelectedPosition() {
+            return symbolSelectedPosition;
+        }
+
+        public void setSymbolSelectedPosition(String symbolSelectedPosition) {
+            this.symbolSelectedPosition = symbolSelectedPosition;
+        }
 
         /**
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
+         *
+         * @param connect
          */
-        public MyTableModel_7(Connection connect) {
+        public MyTableModel_Position(Connection connect) {  //TableModel for Position table which shows in GUI
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1620,48 +1873,50 @@ public class CreateTables extends JPanel {
                 }
 
                 int row = 0;
-                String title;
-                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                String dateOnly;
-                while (rs.next()) {
-                    data[row][0] = row + 1;
-                    for (int column = 1; column <= columnNum; column++) {
-                        title = columnNames[column];
-                        if (rs.getString(column) == null) {
-                            data[row][column] = "NULL";
-                        } else if (title.equals("inputLine")) {     // turn inputLine contents into integer
-                            data[row][column] = Integer.parseInt(rs.getString(column));
-                        } else if (title.equals("Lot_Time")) {      // create Lot_Time date column
-                            try {
-                                Date value = rs.getDate(column);
-                                dateOnly = df2.format(value);
-                                data[row][column] = rs.getString(column);
-                                data[row][columnNum + 1] = dateOnly;
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, e.getMessage());
-                            }
-                        } else if (title.equals("OCE_Time")) {     // create OCE_Time date column
-                            try {
-                                Date value = rs.getDate(column);
-                                dateOnly = df2.format(value);
-                                data[row][column] = rs.getString(column);
-                                data[row][columnNum + 2] = dateOnly;
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, e.getMessage());
-                            }
-                        } else {
-                            data[row][column] = rs.getString(column);
-                        }
-                    }
-                    row++;
-                }
+
+                SimpleDateFormat df_short = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat df_complete = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+                setDateColumns(rs, columnNum, row, df_short, df_complete);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(table, e.getMessage());
-            } catch (Exception e) {
-                // A NullPointerException generated natively has a null message.
-//                if (e.getMessage().equals(""))
+            } catch (NumberFormatException | HeadlessException e) {
                 JOptionPane.showMessageDialog(table, "You have not yet logged in");
                 GUI.status = false;
+            }
+        }
+
+        private void setDateColumns(ResultSet rs, int columnNum, int row, SimpleDateFormat df_short, SimpleDateFormat df_complete) throws SQLException {
+            String title;
+            while (rs.next()) {
+                data[row][0] = row + 1;
+                for (int column = 1; column <= columnNum; column++) {
+                    title = columnNames[column];
+                    if (rs.getString(column) == null) {
+                        data[row][column] = "NULL";
+                    } else if (title.equals("inputLine")) {     // Turn inputLine contents into integer
+                        data[row][column] = Integer.parseInt(rs.getString(column));
+                    } else if (title.equals("Lot_Time")) {      // create Lot_Time date column
+                        try {
+                            Date value = rs.getTimestamp(column);
+                            data[row][column] = df_complete.format(value);
+                            data[row][columnNum + 1] = df_short.format(value);
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                    } else if (title.equals("OCE_Time")) {     // create OCE_Time date column with only date yyyy-mm-dd
+                        try {
+                            Date value = rs.getDate(column);
+                            data[row][column] = df_complete.format(value);
+                            data[row][columnNum + 2] = df_short.format(value);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                    } else {
+                        data[row][column] = rs.getString(column);
+                    }
+                }
+                row++;
             }
         }
 
@@ -1754,15 +2009,11 @@ public class CreateTables extends JPanel {
             int rowNum = 0;
             sql1 = "SET SQL_SAFE_UPDATES = 0;";
             sql2 = "UPDATE IB_8949 SET Expiry = NULL WHERE Expiry = '0000-00-00';";
-//			sql3 = "UPDATE IB_8949 SET Lot_Time = NULL WHERE Lot_Time = '0000-00-00 00:00:00';";
-//			sql4 = "UPDATE IB_8949 SET OCE_Time = NULL WHERE OCE_Time = '0000-00-00 00:00:00';";
             sql5 = "SELECT * FROM " + TradesView.setDefViewOfIB_8949();
             try {
                 state = connect.createStatement();
                 state.addBatch(sql1);
                 state.addBatch(sql2);
-//				state.addBatch(sql3);
-//				state.addBatch(sql4);
                 state.executeBatch();
                 rs = state.executeQuery(sql5);
                 columnNum = rs.getMetaData().getColumnCount();
@@ -1843,7 +2094,6 @@ public class CreateTables extends JPanel {
          */
         @Override
         public Class getColumnClass(int c) {
-
             try {
                 this.getValueAt(0, c).getClass();
             } catch (NullPointerException e) {
@@ -1886,16 +2136,10 @@ public class CreateTables extends JPanel {
             int columnNum;
             int rowNum = 0;
             sql1 = "SET SQL_SAFE_UPDATES = 0;";
-//			sql2 = "UPDATE TL_8949 SET Expiry = NULL WHERE Expiry = '0000-00-00';";
-//			sql3 = "UPDATE TL_8949 SET Lot_Time = NULL WHERE Lot_Time = '0000-00-00 00:00:00';";
-//			sql4 = "UPDATE TL_8949 SET OCE_Time = NULL WHERE OCE_Time = '0000-00-00 00:00:00';";
             sql5 = "SELECT * FROM " + TradesView.setDefViewOfTL_8949();
             try {
                 state = connect.createStatement();
                 state.addBatch(sql1);
-//                                state.addBatch(sql2);
-//				state.addBatch(sql3);
-//				state.addBatch(sql4);
                 state.executeBatch();
                 rs = state.executeQuery(sql5);
                 columnNum = rs.getMetaData().getColumnCount();
@@ -1927,7 +2171,6 @@ public class CreateTables extends JPanel {
                 JOptionPane.showMessageDialog(table, e.getMessage());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(table, "You have not yet logged in");
-//                JOptionPane.showMessageDialog(createTable, e.getMessage());
             }
         }
 
@@ -2387,144 +2630,6 @@ public class CreateTables extends JPanel {
             fireTableDataChanged();
         }
 
-    }
-
-    /**
-     * Table methods for filtering
-     * @param rowSorter
-     * @param symbol
-     */
-    public void setSymbolFilter(TableRowSorter rowSorter, String symbol) {  // <-- filter codes for buttons
-        try {
-            RowFilter rf;
-
-            rf = RowFilter.regexFilter("^" + symbol.toUpperCase());
-            rowSorter.setRowFilter(rf);
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Could not find " + symbol.toUpperCase() + ".");
-        }
-    }
-
-    public void setDateFilter(TableRowSorter rowSorter,
-            String date1, String date2) {
-
-        LocalDate StartDate = LocalDate.parse(date1);
-        LocalDate EndDate = LocalDate.parse(date2);
-
-        if (StartDate.isAfter(EndDate)) {
-            JOptionPane.showMessageDialog(null, "The end date is before the start date.",
-                    "Date Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            List<String> totalDates = new ArrayList<>();
-            while (!StartDate.isAfter(EndDate)) {   // loop the dates between start and end dates
-                totalDates.add(StartDate.toString());
-                StartDate = StartDate.plusDays(1);
-            }
-            String[] lst = totalDates.toArray(new String[totalDates.size()]);
-
-            try {
-                List<RowFilter<Object, Object>> filters
-                        = new ArrayList<>();
-                RowFilter<Object, Object> rf;
-                int i;
-
-                for (i = 0; i < lst.length; i++) {
-                    filters.add(RowFilter.regexFilter("^" + lst[i]));
-                }
-                rf = RowFilter.orFilter(filters);
-                rowSorter.setRowFilter(rf);
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Could not find records between these two dates");
-            }
-        }
-    }
-
-    public void clearFilter(TableRowSorter rowSorter) {
-        try {
-            RowFilter rf;
-
-            String str = "40627N";  // <- generalize this
-
-            rf = RowFilter.regexFilter("^" + str);
-            rowSorter.setRowFilter(rf);
-
-        } catch (Exception ex) {
-
-        }
-    }
-
-    public void setTable(JTable a) {
-        originalTable = a;
-        tableStatus = true;
-    }
-
-    public void setFilteredTable(JTable a) {
-        filteredTable = a;
-        isFiltering = true;
-    }
-
-    public void setFilteringStatus(boolean a) {
-        isFiltering = a;
-    }
-
-    public void setTableName(String a) {
-        tableName = a;
-    }
-
-    public void setTableCommand(String a) {
-        tableCommand = a;
-    }
-
-    public JTable getTable() {
-        return originalTable;
-    }
-
-    public JTable getFilteredTable() {
-        return filteredTable;
-    }
-
-    public boolean getFilterStatus() {
-        return isFiltering;
-    }
-
-    public boolean getTableStatus() {
-        return tableStatus;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public String getTableCommand() {
-        return tableCommand;
-    }
-
-    public String getTable(String tableName) {
-        if (tableName.equals("ShowDV_Positions")) {
-            return "positions";
-        } else if (tableName.equals("ShowDV_Trades")) {
-            return "trades";
-        } else {
-            return "trades"; // <-- need to be updated to match all tables in database
-        }
-    }
-
-    public String getDateColumn(String tableName) {
-        if (tableName.equals("ShowDV_Positions")) {
-            return "Lot_Time";
-        } else if (tableName.equals("ShowDV_Trades")) {
-            return "Trade_Time";
-        } else {
-            return "Trade_Time"; // <-- need to be updated to match all tables in database
-        }
-    }
-       public void applyDistinctColumnItems(int col, Object selectField) { //Create Collection from selected fields 
-        Collection<DistinctColumnItem> item = new ArrayList<>();
-        DistinctColumnItem distinctColumnItem = new DistinctColumnItem(selectField, col);
-        item.add(distinctColumnItem);
-//        return apply(col, item);
     }
 
 }

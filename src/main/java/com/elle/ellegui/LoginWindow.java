@@ -5,23 +5,12 @@
  */
 package com.elle.ellegui;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import java.util.*;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.awt.event.*;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.*;
 import java.io.BufferedReader;
@@ -132,6 +121,11 @@ public class LoginWindow extends javax.swing.JFrame {
 
         jPassword.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPassword.setText("DanielaMaria$$$$");
+        jPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordActionPerformed(evt);
+            }
+        });
         jPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPasswordKeyPressed(evt);
@@ -299,9 +293,13 @@ public class LoginWindow extends javax.swing.JFrame {
         new EditDatabaseList(this).setVisible(true);
     }//GEN-LAST:event_jEditDBActionPerformed
 
+    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordActionPerformed
+
     public void loadList() {
 
-        String temp = null;
+        String temp;
         List<String> dbList = new ArrayList<String>();
         String dbFile = "database.txt";
         boolean hasContent = false; // has a local text file and the file has contents
@@ -310,35 +308,21 @@ public class LoginWindow extends javax.swing.JFrame {
         BufferedReader buf = null;
         try {
             buf = new BufferedReader(new FileReader(dbFile));
-            // buf = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             while ((temp = buf.readLine()) != null) {
-//                if (temp.equals(server)) {
-//                    while ((temp = buf.readLine()) != null && !temp.equals("-1")) {
                 if (!temp.equals("")) {   // remove extra lines
                     dbList.add(temp);
                     hasContent = true;
                 }
-//                    }
-//                    break;
-//                }
+
             }
             if (!hasContent) {
-//                if (server.equals("Local")) {
-//                    jDatabase.setModel(new DefaultComboBoxModel(new String[] {"test"}));
-//                } else if (server.equals("AWS")) {
-//                    jDatabase.setModel(new DefaultComboBoxModel(new String[] {"dummy"}));
-//                }
+
             } else {
                 String[] arr = dbList.toArray(new String[dbList.size()]);
                 jDatabase.setModel(new DefaultComboBoxModel(arr));
             }
         } catch (Exception e) {
-//            if (server.equals("Local")) {
-//                jDatabase.setModel(new DefaultComboBoxModel(new String[] {"test"}));
-//            } else if (server.equals("AWS")) {
-//                jDatabase.setModel(new DefaultComboBoxModel(new String[] {"dummy"}));
-//            }
-//            JOptionPane.showMessageDialog(null, "Exception.");
+
         } finally {
             if (buf != null) {
                 try {
@@ -358,98 +342,55 @@ public class LoginWindow extends javax.swing.JFrame {
 //        String dbFile = "AWS.txt";
 
         // load url for server
-        if (selectedServer.equals("AWS")) 
-        {
+        if (selectedServer.equals("AWS")) {
             server = "jdbc:mysql://elle.csndtbcukajz.us-west-2.rds.amazonaws.com:3306/";
-        } else if (selectedServer.equals("Local")) 
-        {
+        } else if (selectedServer.equals("Local")) {
             server = "jdbc:mysql://localhost:3306/";
         } else {
             server = null;
         }
 
         // load database name
-        db = jDatabase.getSelectedItem().toString();   
-//        pw = jPassword.getPassword();
-//        str3 = jUsername.getText();
-//        str4 = String.valueOf(pw);
-//        str2 = server + db;
-//        Arrays.fill(pw,'0');
-
-//        str1 = "com.mysql.jdbc.Driver";
-//        gui.setConnectionParameters(str1, str2, str3, str4);
-//        info.setURL(server + db);
+        db = jDatabase.getSelectedItem().toString();
         info.setUsername(jUsername.getText());
         info.setPassword(String.valueOf(jPassword.getPassword()));
-//        info.checkInfo();
-//        gui.tempInfo = info;
-        
-        if (selectedServer.equals("AWS")) {
-            if (db.equals("Elle2015")) {
-                info.setURL(server + "Elle2014dev");    // <--
-                gui.aws = info;
-//                gui.aws.checkInfo();
-                gui.aws.setIconAddr("Images/imag_11.png");
-                gui.registerServer(gui.aws);
-            } else if (db.equals("dummy")) {
+
+        switch (selectedServer) {
+            case "AWS":
+                switch (db) {
+                    case "Elle2015":
+                        info.setURL(server + "Elle2014dev");    // <--
+                        GUI.aws = info;
+
+                        GUI.aws.setIconAddr("Images/imag_11.png");
+                        gui.registerServer(GUI.aws);
+                        break;
+                    case "dummy":
+                        info.setURL(server + db);
+                        GUI.dummy = info;
+
+                        GUI.dummy.setIconAddr("Images/imag_11.png");
+                        gui.registerServer(GUI.dummy);
+                        break;
+                }
+                break;
+            case "Local":
                 info.setURL(server + db);
-                gui.dummy = info;
-//                gui.dummy.checkInfo();
-                gui.dummy.setIconAddr("Images/imag_11.png");
-                gui.registerServer(gui.dummy);
-            }
-        } else if (selectedServer.equals("Local")) {
-            info.setURL(server + db);
-            gui.local = info;
-//            gui.local.checkInfo();
-//            gui.local.setServerName("local");
-            gui.local.setIconAddr("Images/imag_10.png");
-            gui.registerServer(gui.local);
+                GUI.local = info;
+
+                GUI.local.setIconAddr("Images/imag_10.png");
+                gui.registerServer(GUI.local);
+                break;
         }
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-//        JOptionPane.showMessageDialog(null, "class for name done?");
         dispose();
 
     }
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(LoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(LoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(LoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(LoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-////        initComponents();
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new LoginWindow().setVisible(true);
-//            }
-//        });
-//    }
+
     public LogWindow logwind = new LogWindow();
     private GUI gui = new GUI();
     private LoginInfo info = new LoginInfo();

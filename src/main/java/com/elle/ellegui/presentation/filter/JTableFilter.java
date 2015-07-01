@@ -74,6 +74,7 @@ public class JTableFilter extends AbstractTableFilter<JTable> {
         }
     }
 
+
     public void modelChanged(TableModel model) {
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
         sorter.setSortsOnUpdates(true);

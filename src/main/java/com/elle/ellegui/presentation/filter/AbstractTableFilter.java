@@ -8,6 +8,9 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -85,7 +88,7 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
     }
 
     @Override
-    public  boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter){
+    public  boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter){    //method use in a main window filter
         Collection<DistinctColumnItem> items = new ArrayList<>();
         Collection<DistinctColumnItem> listItems = filter.getDistinctColumnItems(col);
           for(DistinctColumnItem item: listItems){
@@ -95,23 +98,41 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
           }
            return apply(col,items);
     }
-
+    /**
+     * Method to apply filter with date from main window search box.
+     * @param col
+     * @param dateInit
+     * @param dateEnd
+     * @param filter
+     * @return 
+     */
     @Override
     public boolean applyFilterByDate(int col, String dateInit, String dateEnd, ITableFilter filter) {
         Collection<DistinctColumnItem> items = new ArrayList<>();
         Collection<DistinctColumnItem> listItems = filter.getDistinctColumnItems(col);
         ArrayList<DistinctColumnItem> itemArrayList = new ArrayList<>(listItems);
-
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        Date date_End= null;
+        try {
+            date_End = format.parse(dateEnd);
+        } catch (ParseException e) {
+            e.printStackTrace();  
+        }
         for(int i=0; i<itemArrayList.size();i++){
             if(itemArrayList.get(i).getValue().equals(dateInit)){
                 for(int j=i; j<itemArrayList.size();j++){
-                    if(!itemArrayList.get(j).getValue().equals(dateEnd)){
+
+                    try {
+                        date = format.parse(itemArrayList.get(j).getValue().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();  
+                    }
+                  
+                    if(date.before(date_End) || date.equals(date_End)){
                         items.add(itemArrayList.get(j));
                     }
-                    else{
-                        items.add(itemArrayList.get(j));
-                        break;
-                    }
+
                 }
             }
             else {

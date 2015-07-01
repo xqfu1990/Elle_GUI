@@ -83,7 +83,7 @@ public class LoginInfo {
             return true;
         }
         else {
-            JOptionPane.showMessageDialog(null, "Your login information is not complete.\nPlease login.");
+//            JOptionPane.showMessageDialog(null, "Your login information is not complete.\nPlease login.");
             return false;
         }
          

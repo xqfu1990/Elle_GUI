@@ -51,20 +51,12 @@ class TableFilterColumnPopup extends PopupWindow implements MouseListener {
         filterList.getList().setVisibleRowCount(8);
 
         setupTableHeader();
-        filter.getTable().addPropertyChangeListener("tableHeader", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setupTableHeader();
-            }
-        }
-        );
-        filter.getTable().addPropertyChangeListener("model", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                colAttrs.clear();
-            }
-        }
-        );
+        filter.getTable().addPropertyChangeListener("tableHeader", (PropertyChangeEvent evt) -> {
+            setupTableHeader();
+        });
+        filter.getTable().addPropertyChangeListener("model", (PropertyChangeEvent evt) -> {
+            colAttrs.clear();
+        });
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
 
