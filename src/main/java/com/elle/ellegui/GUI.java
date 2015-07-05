@@ -20,6 +20,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -30,16 +33,15 @@ public class GUI extends javax.swing.JFrame {
      * Variables to remember each combination of main windows filter
      *
      */
-    private boolean checkBoxSymbolPosition;
-    private boolean checkBoxSymbolTrades;
-    private String selectedSymbolTrades;
-    private String selectedSymbolPosition;
-    private String dateInitPosition;
-    private String dateEndPosition;
-    private boolean checkBoxDatePosition;
-    private String dateInitTrades;
-    private String dateEndTrades;
-    private boolean checkBoxDateTrades;
+    private CreateTables.MyTableModel_TradesDefault myTableModel_trades;
+    private CreateTables.MyTableModel_PositionDefault myTableModel_position;
+    private static ITableFilter filterBySymbol;
+    private static ITableFilter filterByDate;
+//    private String selectedSymbol;
+    private int column_index_symbol;
+    private int column_index_date;
+    private String dateEnd;
+    private String dateInit;
 
     /**
      * Creates new form GUI2
@@ -684,24 +686,23 @@ public class GUI extends javax.swing.JFrame {
     private void jMToolsReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMToolsReconcileActionPerformed
         reconcile = showTable(reconcile, "Reconcile");
     }//GEN-LAST:event_jMToolsReconcileActionPerformed
-    private static ITableFilter filterBySymbol;
-    private static ITableFilter filterByDate;
-    private String selectedSymbol;
-    private int column_index_symbol;
-    private int column_index_date;
-    private String dateEnd;
-    private String dateInit;
+
 
     /**
      * Filter by Symbol same popup filter used in Main window
      */
-    private void filterBySymbol() {
+    private void filterBySymbol(String selectedSymbol) {
         jCSymbol.setSelected(true);
         jCSymbol.setEnabled(true);
         filterBySymbol = TableRowFilterSupport.forTable(createTable.table).actions(true).applyFilter();
         filterBySymbol.applyFilterBySymbol(column_index_symbol, selectedSymbol, filterBySymbol);
         monitorTableChange(column_index_symbol - 1);
         showNumberOfRecords(filterBySymbol.getTable().getRowCount());
+        if(createTable.getTableNum()==7){
+                myTableModel_position.setFilterBySymbol(filterBySymbol);
+        } else if(createTable.getTableNum()==2){
+                 myTableModel_trades.setFilterBySymbol(filterBySymbol);
+        }
 
     }
 
@@ -716,6 +717,11 @@ public class GUI extends javax.swing.JFrame {
         filterByDate.applyFilterByDate(createTable.table.getColumnCount() - 1, dateInit, dateEnd, filterByDate);
         monitorTableChange(column_index_date - 1);
         showNumberOfRecords(filterByDate.getTable().getRowCount());
+        if(createTable.getTableNum()==7){
+            myTableModel_position.setFilterByDate(filterByDate);
+        } else if(createTable.getTableNum()==2){
+            myTableModel_trades.setFilterByDate(filterByDate);
+        }
 
     }
 
@@ -757,88 +763,147 @@ public class GUI extends javax.swing.JFrame {
 
     private void jMVersionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMVersionActionPerformed
         JOptionPane.showMessageDialog(this, "Creation Date: "
-                + "2015-06-28" + "\n"
-                + "Version: " + "0.6.8");
+                + "2015-07-03" + "\n"
+                + "Version: " + "0.6.8a");
     }//GEN-LAST:event_jMVersionActionPerformed
 
     private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
         clearAllFilterButton();
     }//GEN-LAST:event_clearAllFiltersActionPerformed
 
+    /**
+     * Clear all filter from main window search boxes. In both case ONLY set selected false each checkbox.
+     * clearAllFilter is execute with "clear All Filter" button.
+     */
+
     private void clearAllFilterButton() {
         if (createTable.getTableNum()==7) {   //position Table
             if(filterByDate!=null){
-            filterByDate.clear();
+                myTableModel_position.getFilterByDate().clear();
             }
             if(filterBySymbol !=null){
-               filterBySymbol.clear();
+               myTableModel_position.getFilterBySymbol().clear();
             }
-            jCSymbol.setSelected(false);
-            jCDateRange.setSelected(false);
+            myTableModel_position.setCheckBoxSymbol(false);
+            myTableModel_position.setCheckBoxDateRange(false);
 
         }
         if (createTable.getTableNum()==2){
             if(filterByDate!=null){
-                filterByDate.clear();
+                myTableModel_trades.getFilterByDate().clear();
             }
             if(filterBySymbol !=null){
-                filterBySymbol.clear();
+                myTableModel_trades.getFilterBySymbol().clear();
             }
-            jCSymbol.setSelected(false);
-            jCDateRange.setSelected(false);
-
-
+            myTableModel_trades.setCheckBoxSymbol(false);
+            myTableModel_trades.setCheckBoxDateRange(false);
         }
+            jCDateRange.setSelected(false);
+            jCSymbol.setSelected(false);
             GUI.monitorTableChange(-1);
             showNumberOfRecords(createTable.table.getRowCount());
     }
 
+    /**
+     * Method that execute in a check box for Date range.
+     * it takes myTableModel for each table to set and get the parameters.
+     * @param evt
+     */
     private void jCDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCDateRangeActionPerformed
-        dateEnd = jTEndDate.getText();
+        String selectedSymbol = "";
         dateInit = jTStartDate.getText();
+        dateEnd = jTEndDate.getText();
 
-        if((createTable.getTableNum()==7) && jCDateRange.isSelected()){
-            dateInitPosition = dateInit;
-            dateEndPosition = dateEnd;
-            checkBoxDatePosition = jCDateRange.isSelected();
-        } else if ((createTable.getTableNum()==2 && jCDateRange.isSelected())){
-            dateInitTrades = dateInit;
-            dateEndTrades = dateEnd;
-            checkBoxDateTrades = jCDateRange.isSelected();
+        if(dateCheckingFormat(dateInit,dateEnd)){
+            if((createTable.getTableNum()==7)){
+                myTableModel_position.setDateInit(dateInit);
+                myTableModel_position.setDateEnd(dateEnd);
+                myTableModel_position.setCheckBoxDateRange(jCDateRange.isSelected());
+                selectedSymbol= myTableModel_position.getSelectedSymbol();
+
+            } else if ((createTable.getTableNum()==2 )){
+                myTableModel_trades.setDateInit(dateInit);
+                myTableModel_trades.setDateEnd(dateEnd);
+                myTableModel_trades.setCheckBoxDateRange(jCDateRange.isSelected());
+                selectedSymbol= myTableModel_trades.getSelectedSymbol();
+            }
+            int column = createTable.table.getModel().getColumnCount();
+            getColumnIndexTime();
+            getColumnIndexSymbol();
+
+            if (jCDateRange.isSelected() && !jCSymbol.isSelected()) {
+                filterByDate();
+            } else if (jCDateRange.isSelected() && jCSymbol.isSelected()) {
+                filterBySymbol.applyFilterByDate(column-2, dateInit, dateEnd, filterBySymbol);    //column-2 because filter use the last column data to apply filter
+                monitorTableChange(column_index_date - 1);
+            } else if (!jCDateRange.isSelected() && jCSymbol.isSelected()) {
+                filterBySymbol(selectedSymbol);
+                monitorTableChange(column_index_symbol - 1);
+            } else {
+
+                if(createTable.getTableNum()==7){
+                    myTableModel_position.getFilterByDate().clear();
+                    myTableModel_position.setDateEnd(null);
+                    myTableModel_position.setDateInit(null);
+                    myTableModel_position.setCheckBoxDateRange(false);
+
+                } else if (createTable.getTableNum()==2){
+                    myTableModel_trades.getFilterByDate().clear();
+                    myTableModel_trades.setDateEnd(null);
+                    myTableModel_trades.setDateInit(null);
+                    myTableModel_trades.setCheckBoxDateRange(false);
+                }
+                monitorTableChange(-1);
+                showNumberOfRecords(createTable.table.getRowCount());
+            }
         }
-        int column = createTable.table.getModel().getColumnCount();
-        getColumnIndexTime(column);
-        getColumnIndexSymbol(column);
-
-        if (jCDateRange.isSelected() && !jCSymbol.isSelected()) {
-            filterByDate();
-        } else if (jCDateRange.isSelected() && jCSymbol.isSelected()) {
-            filterBySymbol.applyFilterByDate(column-2, dateInit, dateEnd, filterBySymbol);    //column-2 because filter use the last column data to apply filter
-            monitorTableChange(column_index_date - 1);
-        } else if (!jCDateRange.isSelected() && jCSymbol.isSelected()) {
-            filterBySymbol();
-            monitorTableChange(column_index_symbol - 1);
-        } else {
-
-            if(createTable.getTableNum()==7){
-                filterByDate.clear();
-                dateEndPosition = null;
-                dateInitPosition=null;
-                checkBoxDatePosition = false;
-
-            } else if (createTable.getTableNum()==2){
-                filterByDate.clear();
-                dateEndTrades = null;
-                dateInitTrades=null;
-                checkBoxDateTrades = false;
+            else{
+              JOptionPane.showMessageDialog(this,"Date value or format may be wrong  e.g: 2001-03-11 - 2012-04-11");
+              jCDateRange.setSelected(false);
+              if(createTable.getTableNum()==7){
+                positions = showTable(positions, "ShowDV_Positions");
+              }else{
+                  trades = showTable(trades, "ShowDV_Trades");
+              }
 
             }
-            monitorTableChange(-1);
-            showNumberOfRecords(createTable.table.getRowCount());
-        }
     }//GEN-LAST:event_jCDateRangeActionPerformed
 
-    private int getColumnIndexSymbol(int column) {
+    /**
+     * Method to check date format and values before to do filterByDate.
+     * @param dateInit
+     * @param dateEnd
+     */
+    private boolean dateCheckingFormat(String dateInit, String dateEnd)  {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date_init= null;
+        Date date_End = null;
+        int numOfRow = createTable.getTable().getRowCount();
+        int column_index_date= getColumnIndexTime();
+        if(dateInit.equals("")){
+           dateInit= createTable.getTable().getValueAt(0,column_index_date-1).toString();
+        }
+        if(dateEnd.equals("")){
+            dateEnd = createTable.getTable().getValueAt(numOfRow-1,column_index_date-1).toString();
+        }
+        try{
+
+                date_init= format.parse(dateInit);
+                date_End = format.parse(dateEnd);
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this,"Date Format is wrong e.g: 2011-03-11");
+            e.printStackTrace();
+        }
+        if(date_End.before(date_init)){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    private int getColumnIndexSymbol() {
+        int column = createTable.table.getColumnCount();
         for (int i = 0; i < column; i++) {
             if (createTable.table.getModel().getColumnName(i).matches("Symbol")) {   // select first column with *Time title
                 column_index_symbol = i;
@@ -849,8 +914,8 @@ public class GUI extends javax.swing.JFrame {
         return column_index_symbol;
     }
 
-    private int getColumnIndexTime(int column) {
-
+    private int getColumnIndexTime() {
+        int column = createTable.table.getColumnCount();
         for (int i = 0; i < column; i++) {
             if (createTable.table.getModel().getColumnName(i).matches(".*Time.*")) {   // select first column with *Time title
                 column_index_date = i;
@@ -862,21 +927,22 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void jCSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCSymbolActionPerformed
-        selectedSymbol= jTSymbol.getText();
-        if((createTable.getTableNum()==7) && jCSymbol.isSelected()){
-            selectedSymbolPosition = selectedSymbol;
-            checkBoxSymbolPosition = jCSymbol.isSelected();
-        } else if ((createTable.getTableNum()==2 && jCSymbol.isSelected())){
-            selectedSymbolTrades = jTSymbol.getText();
-            checkBoxSymbolTrades = jCSymbol.isSelected();
+        String selectedSymbol= jTSymbol.getText();
+        if((createTable.getTableNum()==7)){
+            myTableModel_position.setSelectedSymbol(selectedSymbol);
+            myTableModel_position.setCheckBoxSymbol(jCSymbol.isSelected());
+
+        } else if ((createTable.getTableNum()==2 )){
+            myTableModel_trades.setSelectedSymbol(selectedSymbol);
+            myTableModel_trades.setCheckBoxSymbol(jCSymbol.isSelected());
         }
 
         int column = createTable.table.getColumnModel().getColumnCount();
-        getColumnIndexTime(column);
-        getColumnIndexSymbol(column);
+        getColumnIndexTime();
+        getColumnIndexSymbol();
 
         if (jCSymbol.isSelected() && !jCDateRange.isSelected()) {
-            filterBySymbol();
+            filterBySymbol(selectedSymbol);
         } else if (jCSymbol.isSelected() && jCDateRange.isSelected()) {
             filterByDate.applyFilterBySymbol(column_index_symbol, selectedSymbol, filterByDate);
             monitorTableChange(column_index_symbol - 1);
@@ -884,14 +950,15 @@ public class GUI extends javax.swing.JFrame {
             filterByDate();
             monitorTableChange(column_index_date - 1);
         } else {
-            filterBySymbol.clear();
+
             if(createTable.getTableNum()==7){
-                selectedSymbolPosition = null;
-                checkBoxSymbolPosition = false;
+                myTableModel_position.getFilterBySymbol().clear();
+                myTableModel_position.setCheckBoxSymbol(false);
 
             } else if (createTable.getTableNum()==2){
-                selectedSymbolTrades = jTSymbol.getText();
-                checkBoxSymbolTrades = jCSymbol.isSelected();
+                myTableModel_trades.getFilterBySymbol().clear();
+                myTableModel_trades.setSelectedSymbol(jTSymbol.getText());
+                myTableModel_trades.setCheckBoxSymbol(jCSymbol.isSelected());
             }
 
              monitorTableChange(-1);
@@ -922,11 +989,19 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAllocationsActionPerformed
 
     private void jBTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTradesActionPerformed
+        trades = showTable(trades, "ShowDV_Trades");
+        if(myTableModel_trades ==null){
+             myTableModel_trades =createTable.new MyTableModel_TradesDefault(conn);
+        }
+        boolean checkBoxSymbolTrades = myTableModel_trades.isCheckBoxSymbol();
+        String selectedSymbolTrades = myTableModel_trades.getSelectedSymbol();
+        boolean checkBoxDateTrades = myTableModel_trades.isCheckBoxDateRange();
+
         if (checkBoxSymbolTrades && checkBoxDateTrades) {
             jTSymbol.setText(selectedSymbolTrades);
             jCSymbol.setSelected(true);
-            jTStartDate.setText(dateInitTrades);
-            jTEndDate.setText(dateEndTrades);
+            jTStartDate.setText(myTableModel_trades.getDateInit());
+            jTEndDate.setText(myTableModel_trades.getDateEnd());
             jCDateRange.setSelected(true);
         } else if(checkBoxSymbolTrades && !checkBoxDateTrades) {
             jTSymbol.setText(selectedSymbolTrades);
@@ -938,17 +1013,18 @@ public class GUI extends javax.swing.JFrame {
         } else if (!checkBoxSymbolTrades && checkBoxDateTrades){
             jTSymbol.setText(null);
             jCSymbol.setSelected(false);
-            jTStartDate.setText(dateInitTrades);
-            jTEndDate.setText(dateEndTrades);
+            jTStartDate.setText(myTableModel_trades.getDateInit());
+            jTEndDate.setText(myTableModel_trades.getDateEnd());
             jCDateRange.setSelected(true);
-        }  else {
-            jTSymbol.setText(null);
+        }
+        else {
+            jTSymbol.setText(selectedSymbolTrades);
             jCSymbol.setSelected(false);
-            jTStartDate.setText(null);
-            jTEndDate.setText(null);
+            jTStartDate.setText(myTableModel_trades.getDateInit());
+            jTEndDate.setText(myTableModel_trades.getDateEnd());
             jCDateRange.setSelected(false);
         }
-        trades = showTable(trades, "ShowDV_Trades");
+
         doNotHighlightButtons();
         jBTrades.setBackground(Color.RED);
        
@@ -956,17 +1032,22 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jBTradesActionPerformed
 
     private void jBPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPositionsActionPerformed
+        positions = showTable(positions, "ShowDV_Positions");
+        if(myTableModel_position==null){
+            myTableModel_position= createTable.new MyTableModel_PositionDefault(conn);
+        }
+          boolean checkBoxSymbolPosition = myTableModel_position.isCheckBoxSymbol();
+          boolean checkBoxDatePosition = myTableModel_position.isCheckBoxDateRange();
+          String symbol = myTableModel_position.getSelectedSymbol();
         if (checkBoxSymbolPosition && checkBoxDatePosition) {
-            jTSymbol.setText(selectedSymbolPosition);
+            jTSymbol.setText(symbol);
             jCSymbol.setSelected(true);
-
-            jTStartDate.setText(dateInitPosition);
-            jTEndDate.setText(dateEndPosition);
+            jTStartDate.setText(myTableModel_position.getDateInit());
+            jTEndDate.setText(myTableModel_position.getDateEnd());
             jCDateRange.setSelected(true);
         } else if(checkBoxSymbolPosition && !checkBoxDatePosition) {
-            jTSymbol.setText(selectedSymbolPosition);
-            jCSymbol.setSelected(true)
-            ;
+            jTSymbol.setText(symbol);
+            jCSymbol.setSelected(true);
             jTStartDate.setText(null);
             jTEndDate.setText(null);
             jCDateRange.setSelected(false);
@@ -975,17 +1056,17 @@ public class GUI extends javax.swing.JFrame {
             jTSymbol.setText(null);
             jCSymbol.setSelected(false);
 
-            jTStartDate.setText(dateInitPosition);
-            jTEndDate.setText(dateEndPosition);
+            jTStartDate.setText(myTableModel_position.getDateInit());
+            jTEndDate.setText(myTableModel_position.getDateEnd());
             jCDateRange.setSelected(true);
         } else {
-            jTSymbol.setText(null);
+            jTSymbol.setText(symbol);
             jCSymbol.setSelected(false);
-            jTStartDate.setText(null);
-            jTEndDate.setText(null);
+            jTStartDate.setText(myTableModel_position.getDateInit());
+            jTEndDate.setText(myTableModel_position.getDateEnd());
             jCDateRange.setSelected(false);
         }
-        positions = showTable(positions, "ShowDV_Positions");
+
         doNotHighlightButtons();
         jBPositions.setBackground(Color.RED);
 
@@ -1098,7 +1179,7 @@ public class GUI extends javax.swing.JFrame {
     public void registerServer(LoginInfo info) {
         try {
             logWindow.sendMessages("Start to connect...");
-//            JOptionPane.showMessageDialog(null, "send messages done");
+
             conn = DriverManager.getConnection(info.getURL(), info.getUsername(), info.getPassword());
 
             logWindow.sendMessages("Connect successfully!\n");
@@ -1139,7 +1220,6 @@ public class GUI extends javax.swing.JFrame {
             }
             createTable.setFilteringStatus(false);
         }
-
     }
 
     public void installSaveFile() {
@@ -1223,10 +1303,6 @@ public class GUI extends javax.swing.JFrame {
 
             }
         });
-    }
-
-    public JLabel getNumOfRecords() {
-        return numOfRecords;
     }
 
     protected static CreateTables createTable;    // record the current createTable

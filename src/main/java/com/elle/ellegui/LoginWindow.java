@@ -120,7 +120,6 @@ public class LoginWindow extends javax.swing.JFrame {
         jLabel3.setText("Password");
 
         jPassword.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPassword.setText("DanielaMaria$$$$");
         jPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordActionPerformed(evt);

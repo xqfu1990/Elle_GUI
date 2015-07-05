@@ -59,6 +59,8 @@ public interface ITableFilter<T extends JTable> extends Serializable {
      * Apply filter for specified column based on collection of distinct items get them from search text field.
      * @param col
      * @param dateInit
+     * @param dateEnd
+     * @param filter
      * @return
      */
     boolean applyFilterByDate(int col, String dateInit, String dateEnd, ITableFilter filter);

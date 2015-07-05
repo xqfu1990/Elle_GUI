@@ -82,10 +82,10 @@ public class CreateTables extends JPanel {
 
         JTable headColumn, headColumn_2;
 
-        table = new JTable(new MyTableModel_Position(connect), cm);
-        table_2 = new JTable(new MyTableModel_Trades(connect), cm_2);
-        headColumn = new JTable(new MyTableModel_Position(connect), rowHeaderModel);
-        headColumn_2 = new JTable(new MyTableModel_Trades(connect), rowHeaderModel_2);
+        table = new JTable(new MyTableModel_PositionDefault(connect), cm);
+        table_2 = new JTable(new MyTableModel_TradesDefault(connect), cm_2);
+        headColumn = new JTable(new MyTableModel_PositionDefault(connect), rowHeaderModel);
+        headColumn_2 = new JTable(new MyTableModel_TradesDefault(connect), rowHeaderModel_2);
 
         table.createDefaultColumnsFromModel();
         headColumn.createDefaultColumnsFromModel();
@@ -161,68 +161,68 @@ public class CreateTables extends JPanel {
         this.tableCommand = str;
 
         if (str.equals("ShowTextFile")) {
-            table = new JTable(new MyTableModel_1(), cm);
-            headColumn = new JTable(new MyTableModel_1(), rowHeaderModel);
+            table = new JTable(new MyTableModel_IB_9048_File(), cm);
+            headColumn = new JTable(new MyTableModel_IB_9048_File(), rowHeaderModel);
             tableNum = 1;
 
         } else if (str.equals("ShowDV_Trades")) {
-            table = new JTable(new MyTableModel_Trades(connect), cm);
-            headColumn = new JTable(new MyTableModel_Trades(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_TradesDefault(connect), cm);
+            headColumn = new JTable(new MyTableModel_TradesDefault(connect), rowHeaderModel);
             tableNum = 2;
 
         } else if (str.startsWith("#")) {
-            table = new JTable(new MyTableModel_3(str, connect), cm);
-            headColumn = new JTable(new MyTableModel_3(str, connect),
+            table = new JTable(new MyTableModel_bySymbol(str, connect), cm);
+            headColumn = new JTable(new MyTableModel_bySymbol(str, connect),
                     rowHeaderModel);
             tableNum = 3;
             // createTable.setBackground(Color.getHSBColor((float) 0.15, (float) 0.5,
             // (float) 1.0));
         } else if (str.startsWith("*")) {
-            table = new JTable(new MyTableModel_4(str, connect), cm);
-            headColumn = new JTable(new MyTableModel_4(str, connect),
+            table = new JTable(new MyTableModel_byDateRange(str, connect), cm);
+            headColumn = new JTable(new MyTableModel_byDateRange(str, connect),
                     rowHeaderModel);
             tableNum = 4;
             // createTable.setBackground(Color.getHSBColor((float) 0.15, (float) 0.5,
             // (float) 1.0));
         } else if (str.equals("ShowAllPositions")) {
-            table = new JTable(new MyTableModel_5(connect), cm);
-            headColumn = new JTable(new MyTableModel_5(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_AllPosition(connect), cm);
+            headColumn = new JTable(new MyTableModel_AllPosition(connect), rowHeaderModel);
             tableNum = 5;
         } else if (str.equals("ShowAllTrades")) {
-            table = new JTable(new MyTableModel_6(connect), cm);
-            headColumn = new JTable(new MyTableModel_6(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_AllTrades(connect), cm);
+            headColumn = new JTable(new MyTableModel_AllTrades(connect), rowHeaderModel);
             tableNum = 6;
         } else if (str.equals("ShowAllIB_8949")) {
-            table = new JTable(new MyTableModel_11(connect), cm);
-            headColumn = new JTable(new MyTableModel_11(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_IB_8949(connect), cm);
+            headColumn = new JTable(new MyTableModel_IB_8949(connect), rowHeaderModel);
             tableNum = 11;
         } else if (str.equals("ShowAllTL_8949")) {
-            table = new JTable(new MyTableModel_12(connect), cm);
-            headColumn = new JTable(new MyTableModel_12(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_TL_8949(connect), cm);
+            headColumn = new JTable(new MyTableModel_TL_8949(connect), rowHeaderModel);
             tableNum = 12;
         } else if (str.equals("ShowDV_IB_8949")) {
-            table = new JTable(new MyTableModel_13(connect), cm);
-            headColumn = new JTable(new MyTableModel_13(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_TradesView_IB_8949(connect), cm);
+            headColumn = new JTable(new MyTableModel_TradesView_IB_8949(connect), rowHeaderModel);
             tableNum = 13;
         } else if (str.equals("ShowDV_TL_8949")) {
-            table = new JTable(new MyTableModel_14(connect), cm);
-            headColumn = new JTable(new MyTableModel_14(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_TradesView_TL_8949(connect), cm);
+            headColumn = new JTable(new MyTableModel_TradesView_TL_8949(connect), rowHeaderModel);
             tableNum = 14;
         } else if (str.equals("ShowDV_Positions")) {
-            table = new JTable(new MyTableModel_Position(connect), cm);
-            headColumn = new JTable(new MyTableModel_Position(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_PositionDefault(connect), cm);
+            headColumn = new JTable(new MyTableModel_PositionDefault(connect), rowHeaderModel);
             tableNum = 7;
         } else if (str.equals("ShowLoadsTable")) {
-            table = new JTable(new MyTableModel_8(connect), cm);
-            headColumn = new JTable(new MyTableModel_8(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_Loads(connect), cm);
+            headColumn = new JTable(new MyTableModel_Loads(connect), rowHeaderModel);
             tableNum = 8;
         } else if (str.equals("Reconcile")) {
-            table = new JTable(new MyTableModel_9(connect), cm);
-            headColumn = new JTable(new MyTableModel_9(connect), rowHeaderModel);
+            table = new JTable(new MyTableModel_Reconcile_8949(connect), cm);
+            headColumn = new JTable(new MyTableModel_Reconcile_8949(connect), rowHeaderModel);
             tableNum = 9;
         } else {
-            table = new JTable(new MyTableModel_10(str, connect), cm);
-            headColumn = new JTable(new MyTableModel_10(str, connect),
+            table = new JTable(new MyTableModel_template(str, connect), cm);
+            headColumn = new JTable(new MyTableModel_template(str, connect),
                     rowHeaderModel);
             tableNum = 10;
             // createTable.setBackground(Color.getHSBColor((float) 0.15, (float) 0.5,
@@ -242,60 +242,60 @@ public class CreateTables extends JPanel {
         table.getTableHeader().setReorderingAllowed(false);
         switch (tableNum) {
             case 1:
-                sorter = new TableRowSorter<MyTableModel_1>(
-                        (MyTableModel_1) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_IB_9048_File>(
+                        (MyTableModel_IB_9048_File) table.getModel());
                 break;
             case 2:
-                sorter = new TableRowSorter<MyTableModel_Trades>(
-                        (MyTableModel_Trades) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_TradesDefault>(
+                        (MyTableModel_TradesDefault) table.getModel());
                 break;
             case 3:
-                sorter = new TableRowSorter<MyTableModel_3>(
-                        (MyTableModel_3) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_bySymbol>(
+                        (MyTableModel_bySymbol) table.getModel());
                 break;
             case 4:
-                sorter = new TableRowSorter<MyTableModel_4>(
-                        (MyTableModel_4) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_byDateRange>(
+                        (MyTableModel_byDateRange) table.getModel());
                 break;
             case 5:
-                sorter = new TableRowSorter<MyTableModel_5>(
-                        (MyTableModel_5) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_AllPosition>(
+                        (MyTableModel_AllPosition) table.getModel());
                 break;
             case 6:
-                sorter = new TableRowSorter<MyTableModel_6>(
-                        (MyTableModel_6) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_AllTrades>(
+                        (MyTableModel_AllTrades) table.getModel());
                 break;
             case 7:
-                sorter = new TableRowSorter<MyTableModel_Position>(
-                        (MyTableModel_Position) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_PositionDefault>(
+                        (MyTableModel_PositionDefault) table.getModel());
                 break;
             case 8:
-                sorter = new TableRowSorter<MyTableModel_8>(
-                        (MyTableModel_8) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_Loads>(
+                        (MyTableModel_Loads) table.getModel());
                 break;
             case 9:
-                sorter = new TableRowSorter<MyTableModel_9>(
-                        (MyTableModel_9) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_Reconcile_8949>(
+                        (MyTableModel_Reconcile_8949) table.getModel());
                 break;
             case 10:
-                sorter = new TableRowSorter<MyTableModel_10>(
-                        (MyTableModel_10) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_template>(
+                        (MyTableModel_template) table.getModel());
                 break;
             case 11:
-                sorter = new TableRowSorter<MyTableModel_11>(
-                        (MyTableModel_11) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_IB_8949>(
+                        (MyTableModel_IB_8949) table.getModel());
                 break;
             case 12:
-                sorter = new TableRowSorter<MyTableModel_12>(
-                        (MyTableModel_12) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_TL_8949>(
+                        (MyTableModel_TL_8949) table.getModel());
                 break;
             case 13:
-                sorter = new TableRowSorter<MyTableModel_13>(
-                        (MyTableModel_13) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_TradesView_IB_8949>(
+                        (MyTableModel_TradesView_IB_8949) table.getModel());
                 break;
             case 14:
-                sorter = new TableRowSorter<MyTableModel_14>(
-                        (MyTableModel_14) table.getModel());
+                sorter = new TableRowSorter<MyTableModel_TradesView_TL_8949>(
+                        (MyTableModel_TradesView_TL_8949) table.getModel());
                 break;
         }
         table.addMouseListener(new MouseListener() {
@@ -676,12 +676,12 @@ public class CreateTables extends JPanel {
         }
     }
 
-    private class MyTableModel_1 extends AbstractTableModel {
+    private class MyTableModel_IB_9048_File extends AbstractTableModel {
 
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_1() {
+        public MyTableModel_IB_9048_File() {
             String textFile = "D:/MySQL File/IB 9048/IB 9048 AS 2013-06H.csv";
             BufferedReader br;
             String line;
@@ -777,30 +777,91 @@ public class CreateTables extends JPanel {
         }
     }
 
-    public class MyTableModel_Trades extends AbstractTableModel {
+    public class MyTableModel_TradesDefault extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
+        public int column_index_date;
 
-        private boolean checkBoxSymbolTrades;
-        private String selectedSymbolTrades;
-        private String dateInitTrades;
-        private String dateEndTrades;
-        private boolean checkBoxDateTrades;
+
+        private boolean checkBoxDateRange;
+        private boolean checkBoxSymbol;
+        private String selectedSymbol;
+        private String dateInit;
+        private String dateEnd;
         private  ITableFilter filterBySymbol;
         private  ITableFilter filterByDate;
-        private String selectedSymbol;
-        private int column_index_symbol;
-        private int column_index_date;
-        private String dateEnd;
-        private String dateInit;
+
+
+        /**
+         * Setter and Getter for ALL values to use in filter main windows.
+         * @return
+         */
+
+        public boolean isCheckBoxDateRange() {
+            return checkBoxDateRange;
+        }
+
+        public void setCheckBoxDateRange(boolean checkBoxDateRange) {
+            this.checkBoxDateRange = checkBoxDateRange;
+        }
+
+        public boolean isCheckBoxSymbol() {
+            return checkBoxSymbol;
+        }
+
+        public void setCheckBoxSymbol(boolean checkBoxSymbol) {
+            this.checkBoxSymbol = checkBoxSymbol;
+        }
+
+        public String getDateEnd() {
+            return dateEnd;
+        }
+
+        public void setDateEnd(String dateEnd) {
+            this.dateEnd = dateEnd;
+        }
+
+        public String getDateInit() {
+            return dateInit;
+        }
+
+        public void setDateInit(String dateInit) {
+            this.dateInit = dateInit;
+        }
+
+        public ITableFilter getFilterByDate() {
+            return filterByDate;
+        }
+
+        public void setFilterByDate(ITableFilter filterByDate) {
+            this.filterByDate = filterByDate;
+        }
+
+        public String getSelectedSymbol() {
+            return selectedSymbol;
+        }
+
+        public void setSelectedSymbol(String selectedSymbol) {
+            this.selectedSymbol = selectedSymbol;
+        }
+
+
+        public ITableFilter getFilterBySymbol() {
+            return filterBySymbol;
+        }
+
+        public void setFilterBySymbol(ITableFilter filterBySymbol) {
+            this.filterBySymbol = filterBySymbol;
+        }
+
 
         /**
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_Trades(Connection connect) {
+        public MyTableModel_TradesDefault(Connection connect) {
             ResultSet rs;
             String sql1, sql2, sql3;
             int columnNum;
@@ -861,6 +922,7 @@ public class CreateTables extends JPanel {
                             Date value = rs.getTimestamp(column);
                             data[row][column] = df_complete.format(rs.getTimestamp(column));
                             data[row][columnNum + 1] = df_short.format(value);
+                            column_index_date=column;
 
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -966,9 +1028,10 @@ public class CreateTables extends JPanel {
             fireTableDataChanged();
         }
 
+
     }
 
-    public class MyTableModel_3 extends AbstractTableModel {
+    public class MyTableModel_bySymbol extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -978,7 +1041,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_3(String str, Connection connect) {
+        public MyTableModel_bySymbol(String str, Connection connect) {
 
             ResultSet rs;
             int columnNum;
@@ -1100,7 +1163,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_4 extends AbstractTableModel {
+    public class MyTableModel_byDateRange extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -1110,7 +1173,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_4(String str, Connection connect) {
+        public MyTableModel_byDateRange(String str, Connection connect) {
 
             ResultSet rs;
             int columnNum;
@@ -1237,7 +1300,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_11 extends AbstractTableModel {
+    public class MyTableModel_IB_8949 extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -1247,7 +1310,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_11(Connection connect) {
+        public MyTableModel_IB_8949(Connection connect) {
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1374,13 +1437,13 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_12 extends AbstractTableModel {
+    public class MyTableModel_TL_8949 extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_12(Connection connect) {
+        public MyTableModel_TL_8949(Connection connect) {
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1507,13 +1570,13 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_5 extends AbstractTableModel {
+    public class MyTableModel_AllPosition extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_5(Connection connect) {  // Position TableModel
+        public MyTableModel_AllPosition(Connection connect) {  // Position TableModel
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1640,7 +1703,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_6 extends AbstractTableModel {
+    public class MyTableModel_AllTrades extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -1650,7 +1713,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_6(Connection connect) {  //TableModel for Trades
+        public MyTableModel_AllTrades(Connection connect) {  //TableModel for Trades
 
             ResultSet rs;
             String sql1, sql2, sql3;
@@ -1773,62 +1836,73 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_Position extends AbstractTableModel {    // <-- positions
+    public class MyTableModel_PositionDefault extends AbstractTableModel {    // <-- positions
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
-        private boolean checkBoxSymboPosition;
-        private String symbolSelectedPosition;
-        private String dateInitPosition;
-        private String dateEndPosition;
-        private boolean checkBoxDatePosition;
+        private boolean checkBoxDateRange;
+        private boolean checkBoxSymbol;
+        private String selectedSymbol;
+        private String dateInit;
+        private String dateEnd;
         private  ITableFilter filterBySymbol;
         private  ITableFilter filterByDate;
-        private String selectedSymbol;
-        private int column_index_symbol;
-        private int column_index_date;
-        private String dateEnd;
-        private String dateInit;
 
-        public boolean isCheckBoxDatePosition() {
-            return checkBoxDatePosition;
+        public boolean isCheckBoxDateRange() {
+            return checkBoxDateRange;
         }
 
-        public void setCheckBoxDatePosition(boolean checkBoxDatePosition) {
-            this.checkBoxDatePosition = checkBoxDatePosition;
+        public void setCheckBoxDateRange(boolean checkBoxDateRange) {
+            this.checkBoxDateRange = checkBoxDateRange;
         }
 
-        public boolean isCheckBoxSymboPosition() {
-            return checkBoxSymboPosition;
+        public boolean isCheckBoxSymbol() {
+            return checkBoxSymbol;
         }
 
-        public void setCheckBoxSymboPosition(boolean checkBoxSymboPosition) {
-            this.checkBoxSymboPosition = checkBoxSymboPosition;
+        public void setCheckBoxSymbol(boolean checkBoxSymbol) {
+            this.checkBoxSymbol = checkBoxSymbol;
         }
 
-        public String getDateEndPosition() {
-            return dateEndPosition;
+        public String getDateInit() {
+            return dateInit;
         }
 
-        public void setDateEndPosition(String dateEndPosition) {
-            this.dateEndPosition = dateEndPosition;
+        public void setDateInit(String dateInit) {
+            this.dateInit = dateInit;
         }
 
-        public String getDateInitPosition() {
-            return dateInitPosition;
+        public String getDateEnd() {
+            return dateEnd;
         }
 
-        public void setDateInitPosition(String dateInitPosition) {
-            this.dateInitPosition = dateInitPosition;
+        public void setDateEnd(String dateEnd) {
+            this.dateEnd = dateEnd;
         }
 
-        public String getSymbolSelectedPosition() {
-            return symbolSelectedPosition;
+        public ITableFilter getFilterByDate() {
+            return filterByDate;
         }
 
-        public void setSymbolSelectedPosition(String symbolSelectedPosition) {
-            this.symbolSelectedPosition = symbolSelectedPosition;
+        public void setFilterByDate(ITableFilter filterByDate) {
+            this.filterByDate = filterByDate;
+        }
+
+        public ITableFilter getFilterBySymbol() {
+            return filterBySymbol;
+        }
+
+        public void setFilterBySymbol(ITableFilter filterBySymbol) {
+            this.filterBySymbol = filterBySymbol;
+        }
+
+        public String getSelectedSymbol() {
+            return selectedSymbol;
+        }
+
+        public void setSelectedSymbol(String selectedSymbol) {
+            this.selectedSymbol = selectedSymbol;
         }
 
         /**
@@ -1837,7 +1911,7 @@ public class CreateTables extends JPanel {
          *
          * @param connect
          */
-        public MyTableModel_Position(Connection connect) {  //TableModel for Position table which shows in GUI
+        public MyTableModel_PositionDefault(Connection connect) {  //TableModel for Position table which shows in GUI
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -1995,13 +2069,13 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_13 extends AbstractTableModel {
+    public class MyTableModel_TradesView_IB_8949 extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_13(Connection connect) {
+        public MyTableModel_TradesView_IB_8949(Connection connect) {
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -2123,13 +2197,13 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_14 extends AbstractTableModel {
+    public class MyTableModel_TradesView_TL_8949 extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
         private Object[][] data;
 
-        public MyTableModel_14(Connection connect) {
+        public MyTableModel_TradesView_TL_8949(Connection connect) {
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -2249,7 +2323,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_8 extends AbstractTableModel {
+    public class MyTableModel_Loads extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -2259,7 +2333,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_8(Connection connect) {
+        public MyTableModel_Loads(Connection connect) {
 
             ResultSet rs;
             String sql1, sql2, sql3, sql4, sql5;
@@ -2377,7 +2451,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_9 extends AbstractTableModel {
+    public class MyTableModel_Reconcile_8949 extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -2387,7 +2461,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_9(Connection connect) {
+        public MyTableModel_Reconcile_8949(Connection connect) {
 
             ResultSet rs;
             String sql1;
@@ -2505,7 +2579,7 @@ public class CreateTables extends JPanel {
 
     }
 
-    public class MyTableModel_10 extends AbstractTableModel {
+    public class MyTableModel_template extends AbstractTableModel {
 
         private Statement state;
         private String[] columnNames;
@@ -2515,7 +2589,7 @@ public class CreateTables extends JPanel {
          * constructor of this class in order to query the data in database, we
          * have to register the JDBC driver, then connect to the database
          */
-        public MyTableModel_10(String str, Connection connect) {
+        public MyTableModel_template(String str, Connection connect) {
 
             ResultSet rs;
             int columnNum;

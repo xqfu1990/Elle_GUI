@@ -15,21 +15,18 @@ import java.util.*;
 
 /**
  * Partial implementation of table filter
- *
+ * <p/>
  * Created on Feb 10, 2011
  *
- * @author Eugene Ryzhikov
- *
  * @param <T>
+ * @author Eugene Ryzhikov
  */
 @SuppressWarnings("serial")
 public abstract class AbstractTableFilter<T extends JTable> implements ITableFilter<T> {
 
     private final Set<IFilterChangeListener> listeners = Collections.synchronizedSet(new HashSet<IFilterChangeListener>());
-
     private final Map<Integer, Collection<DistinctColumnItem>> distinctItemCache
             = Collections.synchronizedMap(new HashMap<Integer, Collection<DistinctColumnItem>>());
-
     private final T table;
     private final TableFilterState filterState = new TableFilterState();
 
@@ -88,23 +85,25 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
     }
 
     @Override
-    public  boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter){    //method use in a main window filter
+    public boolean applyFilterBySymbol(int col, String symbolSelected, ITableFilter filter) {    //method use in a main window filter
         Collection<DistinctColumnItem> items = new ArrayList<>();
         Collection<DistinctColumnItem> listItems = filter.getDistinctColumnItems(col);
-          for(DistinctColumnItem item: listItems){
-                   if(item.getValue().toString().startsWith(symbolSelected)){
-                      items.add(item);
-                   }
-          }
-           return apply(col,items);
+        for (DistinctColumnItem item : listItems) {
+            if (item.getValue().toString().startsWith(symbolSelected)) {
+                items.add(item);
+            }
+        }
+        return apply(col, items);
     }
+
     /**
      * Method to apply filter with date from main window search box.
+     *
      * @param col
      * @param dateInit
      * @param dateEnd
      * @param filter
-     * @return 
+     * @return
      */
     @Override
     public boolean applyFilterByDate(int col, String dateInit, String dateEnd, ITableFilter filter) {
@@ -113,33 +112,45 @@ public abstract class AbstractTableFilter<T extends JTable> implements ITableFil
         ArrayList<DistinctColumnItem> itemArrayList = new ArrayList<>(listItems);
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
-        Date date_End= null;
+        Date date_End = null;
+        int initDate = 0;
         try {
+            if(!dateEnd.equals("")){
             date_End = format.parse(dateEnd);
-        } catch (ParseException e) {
-            e.printStackTrace();  
-        }
-        for(int i=0; i<itemArrayList.size();i++){
-            if(itemArrayList.get(i).getValue().equals(dateInit)){
-                for(int j=i; j<itemArrayList.size();j++){
-
-                    try {
-                        date = format.parse(itemArrayList.get(j).getValue().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();  
-                    }
-                  
-                    if(date.before(date_End) || date.equals(date_End)){
-                        items.add(itemArrayList.get(j));
-                    }
-
-                }
             }
             else {
-                continue;
+                date_End = format.parse("2050-12-31");     // if date end is null retrieve all date from dateInit to the end of the list.
             }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        return apply(col,items);
+        if(dateInit!=null){
+            for (int i = 0; i < itemArrayList.size(); i++) {
+                if (itemArrayList.get(i).getValue().equals(dateInit)) {
+                    initDate = i;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+        }else {
+            initDate=0;                                                 //if date initial is null retrieve all dates from the beginning
+        }
+            for (int j = initDate; j < itemArrayList.size(); j++) {
+                try {
+                    date = format.parse(itemArrayList.get(j).getValue().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (date.before(date_End) || date.equals(date_End)) {
+                    items.add(itemArrayList.get(j));
+                } else {
+                    break;
+                }
+            }
+        return apply(col, items);
+
     }
 
     @Override
