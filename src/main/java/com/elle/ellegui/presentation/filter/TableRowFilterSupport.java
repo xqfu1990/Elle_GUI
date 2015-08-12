@@ -1,8 +1,5 @@
 package com.elle.ellegui.presentation.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -20,7 +17,6 @@ public final class TableRowFilterSupport {
     private boolean actionsVisible = true;
     private int filterIconPlacement = SwingConstants.LEADING;
     private boolean useTableRenderers = false;
-     private Logger log = LoggerFactory.getLogger(TableRowFilterSupport.class);
     private TableRowFilterSupport( ITableFilter<?> filter ) {
         if ( filter == null ) throw new NullPointerException();
         this.filter = filter;
@@ -113,7 +109,6 @@ public final class TableRowFilterSupport {
         filterPopup.setUseTableRenderers( useTableRenderers );
 
         setupTableHeader();
-        log.debug("Filter row count {}", filter.getTable().getRowCount());
         return filter;
     }
     
