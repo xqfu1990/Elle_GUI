@@ -1,4 +1,4 @@
-package ELLE_GUI;
+package ELLE_GUI.ellegui;
 
 import java.awt.*;
 import java.awt.print.PageFormat;

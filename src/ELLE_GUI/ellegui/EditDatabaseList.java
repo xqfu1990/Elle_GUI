@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ELLE_GUI;
+package ELLE_GUI.ellegui;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

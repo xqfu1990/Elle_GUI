@@ -1,4 +1,4 @@
-package ELLE_GUI;
+package ELLE_GUI.ellegui;
 
 import ELLE_GUI.presentation.filter.CreateDocumentFilter;
 import javax.swing.JTextArea;

@@ -1,4 +1,4 @@
-package ELLE_GUI;
+package ELLE_GUI.ellegui;
 
 import ELLE_GUI.presentation.filter.ITableFilter;
 import ELLE_GUI.presentation.filter.AbstractTableFilter;

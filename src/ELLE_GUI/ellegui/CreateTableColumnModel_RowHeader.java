@@ -1,4 +1,4 @@
-package ELLE_GUI;
+package ELLE_GUI.ellegui;
 
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
