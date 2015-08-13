@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ELLE_GUI.ellegui;
 
-import ELLE_GUI.presentation.filter.CreateDocumentFilter;
-import ELLE_GUI.presentation.filter.TableRowFilterSupport;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -788,20 +782,20 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jBDateRangeActionPerformed
 
     private void jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnterActionPerformed
-        logWindow.sendMessages("SQL Command processing...\n"
-                + enterButton.getCommand(jText));
-        if (enterButton.isCreateTable(jText)) {
-            try {
-                showTable(enterButton.getCommand(jText));
-                logWindow.sendMessages("Execution complete!\n");
-                enterButton.adjustText(jText);
-            } catch (Exception ex) {
-                logWindow.sendMessages(ex.getMessage() + "\n");
-            }
-        } else {
-            ExecuteSQLStatement.updateDatabase(conn,
-                    enterButton.getCommand(jText));
-        }
+//        logWindow.sendMessages("SQL Command processing...\n"
+//                + enterButton.getCommand(jText));
+//        if (enterButton.isCreateTable(jText)) {
+//            try {
+//                showTable(enterButton.getCommand(jText));
+//                logWindow.sendMessages("Execution complete!\n");
+//                enterButton.adjustText(jText);
+//            } catch (Exception ex) {
+//                logWindow.sendMessages(ex.getMessage() + "\n");
+//            }
+//        } else {
+//            ExecuteSQLStatement.updateDatabase(conn,
+//                    enterButton.getCommand(jText));
+//        }
     }//GEN-LAST:event_jEnterActionPerformed
 
     private void jClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClearActionPerformed
@@ -863,8 +857,8 @@ public class GUI extends javax.swing.JFrame {
 
     private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
          
-        TableRowFilterSupport.forTable(createTable.table).searchable(true).actions(true)
-                .apply();
+//        TableRowFilterSupport.forTable(createTable.table).searchable(true).actions(true)
+//                .apply();
         GUI.monitorTableChange(-1);
        
       
@@ -1113,7 +1107,6 @@ public class GUI extends javax.swing.JFrame {
     public static LoginInfo local = new LoginInfo("Local");
     public static LoginInfo dummy = new LoginInfo("Dummy");
     public static LoginInfo tempInfo = new LoginInfo();    // used for communicating with loginWindow
-    private final EnterButton enterButton = new EnterButton();
 
     private JScrollPane scrollPane;
 

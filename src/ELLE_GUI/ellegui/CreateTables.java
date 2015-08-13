@@ -1,6 +1,5 @@
 package ELLE_GUI.ellegui;
 
-import ELLE_GUI.presentation.filter.TableRowFilterSupport;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -196,10 +195,10 @@ public class CreateTables extends JPanel {
         table_2.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table_2.setFillsViewportHeight(true);
 
-        TableRowFilterSupport.forTable(table).searchable(true).actions(true)
-                .apply();
-        TableRowFilterSupport.forTable(table_2).searchable(true).actions(true)
-                .apply();
+//        TableRowFilterSupport.forTable(table).searchable(true).actions(true)
+//                .apply();
+//        TableRowFilterSupport.forTable(table_2).searchable(true).actions(true)
+//                .apply();
 
         setRowSelected(table);
         setRowSelected(table_2);
@@ -507,7 +506,7 @@ public class CreateTables extends JPanel {
         }
 
         // TableRowFilterSupport is for pop up window and filter methods
-        TableRowFilterSupport.forTable(table).searchable(true).actions(true).apply();
+//        TableRowFilterSupport.forTable(table).searchable(true).actions(true).apply();
 
         table.createDefaultColumnsFromModel();
         headColumn.createDefaultColumnsFromModel();
@@ -542,8 +541,8 @@ public class CreateTables extends JPanel {
 
     private void clearFilterDoubleClick(MouseEvent e, JTable table) {
         int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
-        TableRowFilterSupport.forTable(table).searchable(true).actions(true)
-                .apply();
+//        TableRowFilterSupport.forTable(table).searchable(true).actions(true)
+//                .apply();
         GUI.monitorTableChange(-1);// clean green background
 
     }
