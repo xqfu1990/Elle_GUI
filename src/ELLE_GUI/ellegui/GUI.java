@@ -1,6 +1,7 @@
 
 package ELLE_GUI.ellegui;
 
+import ELLE_GUI.presentation.filter.CreateDocumentFilter;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -51,9 +52,6 @@ public class GUI extends javax.swing.JFrame {
         jBPositions = new javax.swing.JButton();
         jBTrades = new javax.swing.JButton();
         jBAllocations = new javax.swing.JButton();
-        jBMatches = new javax.swing.JButton();
-        jBIB = new javax.swing.JButton();
-        jBTL = new javax.swing.JButton();
         jBSymbol = new javax.swing.JButton();
         jBDateRange = new javax.swing.JButton();
         numOfRecords = new javax.swing.JLabel();
@@ -88,6 +86,9 @@ public class GUI extends javax.swing.JFrame {
         jMReports = new javax.swing.JMenu();
         jMTools = new javax.swing.JMenu();
         jMToolsReconcile = new javax.swing.JMenuItem();
+        menuItemShowMatches = new javax.swing.JMenuItem();
+        menuItemIB8949 = new javax.swing.JMenuItem();
+        menuItemTL8949 = new javax.swing.JMenuItem();
         jMLoad = new javax.swing.JMenu();
         jMLoadFile = new javax.swing.JMenuItem();
         jMView = new javax.swing.JMenu();
@@ -130,36 +131,6 @@ public class GUI extends javax.swing.JFrame {
         jBAllocations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAllocationsActionPerformed(evt);
-            }
-        });
-
-        jBMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ELLE_GUI/images/button3.png"))); // NOI18N
-        jBMatches.setText("Show Matches");
-        jBMatches.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBMatches.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBMatches.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBMatchesActionPerformed(evt);
-            }
-        });
-
-        jBIB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ELLE_GUI/images/button1.png"))); // NOI18N
-        jBIB.setText("IB_8949");
-        jBIB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBIB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBIB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBIBActionPerformed(evt);
-            }
-        });
-
-        jBTL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ELLE_GUI/images/button1.png"))); // NOI18N
-        jBTL.setText("TL_8949");
-        jBTL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBTL.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBTL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTLActionPerformed(evt);
             }
         });
 
@@ -224,13 +195,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(numOfRecords)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBAllocations)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBMatches)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBIB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBTL)
-                .addGap(43, 43, 43)
+                .addGap(334, 334, 334)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,9 +232,6 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jBTrades)
                             .addComponent(jBAllocations)
-                            .addComponent(jBMatches)
-                            .addComponent(jBIB)
-                            .addComponent(jBTL)
                             .addComponent(jBPositions))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -461,6 +423,30 @@ public class GUI extends javax.swing.JFrame {
         });
         jMTools.add(jMToolsReconcile);
 
+        menuItemShowMatches.setText("Show Matches");
+        menuItemShowMatches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemShowMatchesActionPerformed(evt);
+            }
+        });
+        jMTools.add(menuItemShowMatches);
+
+        menuItemIB8949.setText("IB 8949");
+        menuItemIB8949.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemIB8949ActionPerformed(evt);
+            }
+        });
+        jMTools.add(menuItemIB8949);
+
+        menuItemTL8949.setText("TL 8949");
+        menuItemTL8949.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemTL8949ActionPerformed(evt);
+            }
+        });
+        jMTools.add(menuItemTL8949);
+
         jMenuBar1.add(jMTools);
 
         jMLoad.setText("Load");
@@ -578,12 +564,6 @@ public class GUI extends javax.swing.JFrame {
         jBTrades.setBackground(Color.RED);
     }//GEN-LAST:event_jBTradesActionPerformed
 
-    private void jBIBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIBActionPerformed
-        IB_8949 = showTable(IB_8949, "ShowDV_IB_8949");
-        doNotHighlightButtons();
-        jBIB.setBackground(Color.RED);
-    }//GEN-LAST:event_jBIBActionPerformed
-
     private void jMFileConnDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileConnDummyActionPerformed
         if (dummy.checkInfo()) {
             registerServer(dummy);
@@ -657,18 +637,6 @@ public class GUI extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_jMLoadFileActionPerformed
-
-    private void jBMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMatchesActionPerformed
-        showTable();
-        doNotHighlightButtons();
-        jBMatches.setBackground(Color.RED);
-    }//GEN-LAST:event_jBMatchesActionPerformed
-
-    private void jBTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTLActionPerformed
-        TL_8949 = showTable(TL_8949, "ShowDV_TL_8949");
-        doNotHighlightButtons();
-        jBTL.setBackground(Color.RED);
-    }//GEN-LAST:event_jBTLActionPerformed
 
     private void jBAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAllocationsActionPerformed
         // TODO add your handling code here:
@@ -864,6 +832,21 @@ public class GUI extends javax.swing.JFrame {
       
     }//GEN-LAST:event_clearAllFiltersActionPerformed
 
+    private void menuItemShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowMatchesActionPerformed
+        showTable();
+        doNotHighlightButtons();
+    }//GEN-LAST:event_menuItemShowMatchesActionPerformed
+
+    private void menuItemIB8949ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIB8949ActionPerformed
+        IB_8949 = showTable(IB_8949, "ShowDV_IB_8949");
+        doNotHighlightButtons();
+    }//GEN-LAST:event_menuItemIB8949ActionPerformed
+
+    private void menuItemTL8949ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTL8949ActionPerformed
+        TL_8949 = showTable(TL_8949, "ShowDV_TL_8949");
+        doNotHighlightButtons();
+    }//GEN-LAST:event_menuItemTL8949ActionPerformed
+
     private void showTable(String showTable) {
         try {
             jPanel.remove(scrollPane);
@@ -1035,10 +1018,7 @@ public class GUI extends javax.swing.JFrame {
     public void doNotHighlightButtons() {
         jBTrades.setBackground(null);
         jBPositions.setBackground(null);
-        jBIB.setBackground(null);
-        jBTL.setBackground(null);
         jBAllocations.setBackground(null);
-        jBMatches.setBackground(null);
     }
 
     public GridBagConstraints setConstraintsOfFilters(GridBagConstraints c) {
@@ -1119,11 +1099,8 @@ public class GUI extends javax.swing.JFrame {
     private java.awt.Button clearAllFilters;
     private javax.swing.JButton jBAllocations;
     private javax.swing.JButton jBDateRange;
-    private javax.swing.JButton jBIB;
-    private javax.swing.JButton jBMatches;
     private javax.swing.JButton jBPositions;
     private javax.swing.JButton jBSymbol;
-    private javax.swing.JButton jBTL;
     private javax.swing.JButton jBTrades;
     private javax.swing.JCheckBox jCDateRange;
     private javax.swing.JCheckBox jCSymbol;
@@ -1168,6 +1145,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTStartDate;
     private javax.swing.JTextField jTSymbol;
     private javax.swing.JTextArea jText;
+    private javax.swing.JMenuItem menuItemIB8949;
+    private javax.swing.JMenuItem menuItemShowMatches;
+    private javax.swing.JMenuItem menuItemTL8949;
     private javax.swing.JLabel numOfRecords;
     // End of variables declaration//GEN-END:variables
 }
