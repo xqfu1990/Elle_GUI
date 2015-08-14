@@ -1,4 +1,4 @@
-package com.elle.analyster.database;
+package com.elle.elle_gui.database;
 
 import java.util.ArrayList;
 import javax.swing.JTable;

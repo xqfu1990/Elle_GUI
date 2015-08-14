@@ -1,5 +1,5 @@
 
-package com.elle.analyster.database;
+package com.elle.elle_gui.database;
 
 import java.io.FileWriter;
 import java.io.IOException;
