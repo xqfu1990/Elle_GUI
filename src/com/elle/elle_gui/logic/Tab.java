@@ -1,8 +1,8 @@
 
 package com.elle.elle_gui.logic;
 
-import com.elle.analyster.database.ModifiedTableData;
-import com.elle.analyster.presentation.AnalysterWindow;
+import com.elle.elle_gui.database.ModifiedTableData;
+import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
 import javax.swing.JTable;
 
 /**
@@ -273,7 +273,7 @@ public class Tab implements ITableConstants{
                     throw new NoSuchFieldException(errorMessage);
                 } catch (NoSuchFieldException ex) {
                     // post to log.txt
-                    AnalysterWindow.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
+                    ELLE_GUI_Frame.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
                     ex.printStackTrace();
                 }
         

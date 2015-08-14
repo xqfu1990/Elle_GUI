@@ -1,7 +1,7 @@
 
 package com.elle.elle_gui.presentation;
 
-import com.elle.analyster.logic.LogMessage;
+import com.elle.elle_gui.logic.LogMessage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -138,12 +138,39 @@ public class LogWindow extends JFrame{
         // read log messages from the log file
         readMessages();
     }
+    
+    /**
+     * fillSQLCommand
+     * This is legacy code for ELLE_GUI
+     * @param str
+     * @return 
+     */
+    public String fillSQLCommand(String str) {
 
+        String output;
+        if (str.startsWith("#")) {
+            output = "SELECT *\nFROM trades\nWHERE Symbol = " + "'"
+                    + str.substring(1) + "'";
+        } else {
+            String[] lst = str.split(" ");
+            output = "SELECT *\nFROM trades\nWHERE Trade_Time BETWEEN " + "'"
+                    + lst[0].substring(1) + "' AND '" + lst[1] + "'";
+        }
+        return output;
+    }
+
+    /**
+     * readCurrentMessages
+     * @param str 
+     */
     public void readCurrentMessages(String str) {
         logText.append("\n");
         logText.append(str);
     }
 
+    /**
+     * readMessages
+     */
     public void readMessages() {
         String line = "";
         try {

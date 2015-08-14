@@ -7,7 +7,7 @@
  */
 package com.elle.elle_gui.presentation;
 
-import com.elle.analyster.database.DBConnection;
+import com.elle.elle_gui.database.DBConnection;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

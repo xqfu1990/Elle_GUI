@@ -1,8 +1,8 @@
 
 package com.elle.elle_gui.presentation;
 
-import com.elle.analyster.database.DBConnection;
-import com.elle.analyster.logic.EditableTableModel;
+import com.elle.elle_gui.database.DBConnection;
+import com.elle.elle_gui.logic.EditableTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
@@ -38,8 +38,8 @@ public class ReportWindow extends JDialog {
         initComponents();
         statement = DBConnection.getStatement();
         connection(sqlQuery);
-        AnalysterWindow analyster = AnalysterWindow.getInstance();
-        logWindow = analyster.getLogWindow();
+        ELLE_GUI_Frame elle_gui = ELLE_GUI_Frame.getInstance();
+        logWindow = elle_gui.getLogWindow();
     }
 
     /**

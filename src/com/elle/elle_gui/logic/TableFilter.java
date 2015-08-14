@@ -1,7 +1,7 @@
 
 package com.elle.elle_gui.logic;
 
-import com.elle.analyster.logic.EditableTableModel;
+import com.elle.elle_gui.logic.EditableTableModel;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;

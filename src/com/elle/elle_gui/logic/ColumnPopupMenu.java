@@ -1,7 +1,7 @@
 
 package com.elle.elle_gui.logic;
 
-import com.elle.elle_gui.presentation.AnalysterWindow;
+import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
 import com.elle.elle_gui.logic.Tab;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -43,7 +43,7 @@ public class ColumnPopupMenu extends JPopupMenu{
     private int columnIndex; // selected colunm
     
     // for updating the records label when a filter is applied
-    private AnalysterWindow analyster;
+    private ELLE_GUI_Frame elle_gui;
     private Map<String,Tab> tabs;
     
     /**
@@ -59,10 +59,10 @@ public class ColumnPopupMenu extends JPopupMenu{
         // load all check box items
         //loadAllCheckBoxItems();
         
-        // initialize analyster and tabs 
+        // initialize elle_gui and tabs 
         // for updating the records label when filter is applied
-        analyster = AnalysterWindow.getInstance();
-        tabs = analyster.getTabs();
+        elle_gui = ELLE_GUI_Frame.getInstance().getInstance();
+        tabs = elle_gui.getTabs();
     }
     
     /**
@@ -469,7 +469,7 @@ public class ColumnPopupMenu extends JPopupMenu{
         String tabName = table.getName();
         Tab tab = tabs.get(tabName);
         String recordsLabelText = tab.getRecordsLabel();
-        JLabel recordsLabel = analyster.getRecordsLabel();
+        JLabel recordsLabel = elle_gui.getLabelNumOfRecords();
         recordsLabel.setText(recordsLabelText);
     }  
     

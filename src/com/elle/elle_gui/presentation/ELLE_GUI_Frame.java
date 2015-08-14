@@ -2,10 +2,11 @@
 package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.logic.Tab;
-import com.elle.elle_gui.old.CreateDocumentFilter;
+import com.elle.elle_gui.logic.CreateDocumentFilter;
 import java.sql.Statement;
 import java.util.Map;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.text.AbstractDocument;
 
 /**
@@ -17,8 +18,8 @@ import javax.swing.text.AbstractDocument;
 public class ELLE_GUI_Frame extends JFrame {
     
     // Edit the version and date it was created for new archives and jars
-    private final String CREATION_DATE = "2015-08-13";  
-    private final String VERSION = "0.8.3c";   
+    private final String CREATION_DATE = "2015-08-14";  
+    private final String VERSION = "0.6.9a";   
     
     // attributes
     private Map<String,Tab> tabs; // stores individual tabName information
@@ -27,6 +28,7 @@ public class ELLE_GUI_Frame extends JFrame {
     
     // components
     private static ELLE_GUI_Frame instance;
+    private LogWindow logWindow;
     private LoginWindow loginWindow;
 
     /**
@@ -38,6 +40,8 @@ public class ELLE_GUI_Frame extends JFrame {
         initComponents();
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         setTitle("Elle GUI");
+        
+        instance = this;
     }
 
     /**
@@ -665,6 +669,64 @@ public class ELLE_GUI_Frame extends JFrame {
 
     }//GEN-LAST:event_menuItemTL8949ActionPerformed
 
+    public Map<String, Tab> getTabs() {
+        return tabs;
+    }
+
+    public void setTabs(Map<String, Tab> tabs) {
+        this.tabs = tabs;
+    }
+
+    public static Statement getStatement() {
+        return statement;
+    }
+
+    public static void setStatement(Statement statement) {
+        ELLE_GUI_Frame.statement = statement;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public LoginWindow getLoginWindow() {
+        return loginWindow;
+    }
+
+    public void setLoginWindow(LoginWindow loginWindow) {
+        this.loginWindow = loginWindow;
+    }
+
+    public String getCREATION_DATE() {
+        return CREATION_DATE;
+    }
+
+    public String getVERSION() {
+        return VERSION;
+    }
+
+    public static ELLE_GUI_Frame getInstance() {
+        return instance;
+    }
+
+    public JLabel getLabelNumOfRecords() {
+        return labelNumOfRecords;
+    }
+
+    public LogWindow getLogWindow() {
+        return logWindow;
+    }
+
+    public void setLogWindow(LogWindow logWindow) {
+        this.logWindow = logWindow;
+    }
+
+    
+    
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
