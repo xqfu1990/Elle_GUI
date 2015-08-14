@@ -69,7 +69,7 @@ public class ELLE_GUI_Frame extends JFrame {
         btnEnterSQL = new javax.swing.JButton();
         btnClearSQL = new javax.swing.JButton();
         panelShowTables = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuConnections = new javax.swing.JMenu();
         menuItemLocal = new javax.swing.JMenuItem();
@@ -386,7 +386,7 @@ public class ELLE_GUI_Frame extends JFrame {
         });
         menuFile.add(menuItemSave);
 
-        jMenuBar1.add(menuFile);
+        menuBar.add(menuFile);
 
         menuEdit.setText("Edit");
 
@@ -398,13 +398,13 @@ public class ELLE_GUI_Frame extends JFrame {
         });
         menuEdit.add(menuItemConnection);
 
-        jMenuBar1.add(menuEdit);
+        menuBar.add(menuEdit);
 
         menuFind.setText("Find");
-        jMenuBar1.add(menuFind);
+        menuBar.add(menuFind);
 
         menuReports.setText("Reports");
-        jMenuBar1.add(menuReports);
+        menuBar.add(menuReports);
 
         menuTools.setText("Tools");
 
@@ -440,7 +440,7 @@ public class ELLE_GUI_Frame extends JFrame {
         });
         menuTools.add(menuItemTL8949);
 
-        jMenuBar1.add(menuTools);
+        menuBar.add(menuTools);
 
         menuLoad.setText("Load");
 
@@ -452,7 +452,7 @@ public class ELLE_GUI_Frame extends JFrame {
         });
         menuLoad.add(menuItemLoadFile);
 
-        jMenuBar1.add(menuLoad);
+        menuBar.add(menuLoad);
 
         menuView.setText("View");
 
@@ -512,15 +512,15 @@ public class ELLE_GUI_Frame extends JFrame {
         });
         menuView.add(menuItemLoadsTable);
 
-        jMenuBar1.add(menuView);
+        menuBar.add(menuView);
 
         menuHelp.setText("Help");
-        jMenuBar1.add(menuHelp);
+        menuBar.add(menuHelp);
 
         menuOther.setText("Other");
-        jMenuBar1.add(menuOther);
+        menuBar.add(menuOther);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -678,9 +678,9 @@ public class ELLE_GUI_Frame extends JFrame {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelNumOfRecords;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuConnections;
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
