@@ -1,23 +1,43 @@
 
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.logic.Tab;
 import com.elle.elle_gui.old.CreateDocumentFilter;
+import java.sql.Statement;
+import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.text.AbstractDocument;
 
 /**
- *
- * @author Louis W.
+ * ELLE_GUI_Frame
+ * @author Carlos Igreja
+ * @since 8-14-2015
+ * @version ELLE_GUI-0.6.9
  */
-public class ELLE_GUI_Frame extends javax.swing.JFrame {
+public class ELLE_GUI_Frame extends JFrame {
+    
+    // Edit the version and date it was created for new archives and jars
+    private final String CREATION_DATE = "2015-08-13";  
+    private final String VERSION = "0.8.3c";   
+    
+    // attributes
+    private Map<String,Tab> tabs; // stores individual tabName information
+    private static Statement statement;
+    private String database;
+    
+    // components
+    private static ELLE_GUI_Frame instance;
+    private LoginWindow loginWindow;
 
     /**
-     * Creates new form GUI2
+     * ELLE_GUI_Frame
+     * Creates the ELLE_GUI_Frame 
+     * which is the main window of the application
      */
     public ELLE_GUI_Frame() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle("Elle GUI");
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+        setTitle("Elle GUI");
     }
 
     /**
@@ -29,380 +49,372 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jBPositions = new javax.swing.JButton();
-        jBTrades = new javax.swing.JButton();
-        jBAllocations = new javax.swing.JButton();
-        jBSymbol = new javax.swing.JButton();
-        jBDateRange = new javax.swing.JButton();
-        numOfRecords = new javax.swing.JLabel();
-        jLConnect = new javax.swing.JLabel();
-        jCSymbol = new javax.swing.JCheckBox();
-        jCDateRange = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
-        jTSymbol = new javax.swing.JTextField();
-        jTStartDate = new javax.swing.JTextField();
-        jTEndDate = new javax.swing.JTextField();
-        clearAllFilters = new java.awt.Button();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jText = new javax.swing.JTextArea();
-        jEnter = new javax.swing.JButton();
-        jClear = new javax.swing.JButton();
-        jPanel = new javax.swing.JPanel();
+        panelCTRLPanel = new javax.swing.JPanel();
+        btnPositions = new javax.swing.JButton();
+        btnTrades = new javax.swing.JButton();
+        btnAllocations = new javax.swing.JButton();
+        btnSymbol = new javax.swing.JButton();
+        btnDateRange = new javax.swing.JButton();
+        labelNumOfRecords = new javax.swing.JLabel();
+        checkBoxSymbol = new javax.swing.JCheckBox();
+        checkBoxDateRange = new javax.swing.JCheckBox();
+        labelHyphen = new javax.swing.JLabel();
+        textFieldSymbol = new javax.swing.JTextField();
+        textFieldStartDate = new javax.swing.JTextField();
+        textFieldEndDate = new javax.swing.JTextField();
+        btnClearAllFilters = new java.awt.Button();
+        panelSQL = new javax.swing.JPanel();
+        scrollPaneSQL = new javax.swing.JScrollPane();
+        textAreaSQL = new javax.swing.JTextArea();
+        btnEnterSQL = new javax.swing.JButton();
+        btnClearSQL = new javax.swing.JButton();
+        panelShowTables = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMFile = new javax.swing.JMenu();
-        jMFileConnections = new javax.swing.JMenu();
-        jMFileConnLocal = new javax.swing.JMenuItem();
-        jMFileConnAWS = new javax.swing.JMenuItem();
-        jMFileConnDummy = new javax.swing.JMenuItem();
-        jMFileRead = new javax.swing.JMenuItem();
-        jMFilePrint = new javax.swing.JMenu();
-        jMFilePrintGUI = new javax.swing.JMenuItem();
-        jMFilePrintWindow = new javax.swing.JMenuItem();
-        jMFileSave = new javax.swing.JMenuItem();
-        jMEdit = new javax.swing.JMenu();
-        jMEditConnection = new javax.swing.JMenuItem();
-        jMFind = new javax.swing.JMenu();
-        jMReports = new javax.swing.JMenu();
-        jMTools = new javax.swing.JMenu();
-        jMToolsReconcile = new javax.swing.JMenuItem();
+        menuFile = new javax.swing.JMenu();
+        menuConnections = new javax.swing.JMenu();
+        menuItemLocal = new javax.swing.JMenuItem();
+        menuItemAWS = new javax.swing.JMenuItem();
+        menuItemDummy = new javax.swing.JMenuItem();
+        menuItemRead = new javax.swing.JMenuItem();
+        menuPrint = new javax.swing.JMenu();
+        menuItemPrintGUI = new javax.swing.JMenuItem();
+        menuItemPrintDisplayWindow = new javax.swing.JMenuItem();
+        menuItemSave = new javax.swing.JMenuItem();
+        menuEdit = new javax.swing.JMenu();
+        menuItemConnection = new javax.swing.JMenuItem();
+        menuFind = new javax.swing.JMenu();
+        menuReports = new javax.swing.JMenu();
+        menuTools = new javax.swing.JMenu();
+        menuItemReconcile = new javax.swing.JMenuItem();
         menuItemShowMatches = new javax.swing.JMenuItem();
         menuItemIB8949 = new javax.swing.JMenuItem();
         menuItemTL8949 = new javax.swing.JMenuItem();
-        jMLoad = new javax.swing.JMenu();
-        jMLoadFile = new javax.swing.JMenuItem();
-        jMView = new javax.swing.JMenu();
-        jMViewLog = new javax.swing.JMenuItem();
-        jMViewSql = new javax.swing.JMenuItem();
-        jMViewTrades = new javax.swing.JMenuItem();
-        jMViewPositions = new javax.swing.JMenuItem();
-        jMViewIB = new javax.swing.JMenuItem();
-        jMViewTL = new javax.swing.JMenuItem();
-        jMViewLoadsTable = new javax.swing.JMenuItem();
-        jMHelp = new javax.swing.JMenu();
-        jMOther = new javax.swing.JMenu();
+        menuLoad = new javax.swing.JMenu();
+        menuItemLoadFile = new javax.swing.JMenuItem();
+        menuView = new javax.swing.JMenu();
+        menuItemLog = new javax.swing.JMenuItem();
+        menuItemSqlCommand = new javax.swing.JMenuItem();
+        menuItemTrades = new javax.swing.JMenuItem();
+        menuItemPositions = new javax.swing.JMenuItem();
+        menuItemIB = new javax.swing.JMenuItem();
+        menuItemTL = new javax.swing.JMenuItem();
+        menuItemLoadsTable = new javax.swing.JMenuItem();
+        menuHelp = new javax.swing.JMenu();
+        menuOther = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jBPositions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
-        jBPositions.setText("Positions");
-        jBPositions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBPositions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBPositions.addActionListener(new java.awt.event.ActionListener() {
+        btnPositions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
+        btnPositions.setText("Positions");
+        btnPositions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPositions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPositions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBPositionsActionPerformed(evt);
+                btnPositionsActionPerformed(evt);
             }
         });
 
-        jBTrades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
-        jBTrades.setText("Trades");
-        jBTrades.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBTrades.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBTrades.addActionListener(new java.awt.event.ActionListener() {
+        btnTrades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
+        btnTrades.setText("Trades");
+        btnTrades.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnTrades.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnTrades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTradesActionPerformed(evt);
+                btnTradesActionPerformed(evt);
             }
         });
 
-        jBAllocations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button3.png"))); // NOI18N
-        jBAllocations.setText("Allocations");
-        jBAllocations.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBAllocations.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBAllocations.addActionListener(new java.awt.event.ActionListener() {
+        btnAllocations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button3.png"))); // NOI18N
+        btnAllocations.setText("Allocations");
+        btnAllocations.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAllocations.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAllocations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAllocationsActionPerformed(evt);
+                btnAllocationsActionPerformed(evt);
             }
         });
 
-        jBSymbol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
-        jBSymbol.setText(" ");
-        jBSymbol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBSymbol.addActionListener(new java.awt.event.ActionListener() {
+        btnSymbol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
+        btnSymbol.setText(" ");
+        btnSymbol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSymbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSymbolActionPerformed(evt);
+                btnSymbolActionPerformed(evt);
             }
         });
 
-        jBDateRange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
-        jBDateRange.setText(" ");
-        jBDateRange.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBDateRange.setIconTextGap(0);
-        jBDateRange.addActionListener(new java.awt.event.ActionListener() {
+        btnDateRange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
+        btnDateRange.setText(" ");
+        btnDateRange.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDateRange.setIconTextGap(0);
+        btnDateRange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBDateRangeActionPerformed(evt);
+                btnDateRangeActionPerformed(evt);
             }
         });
 
-        numOfRecords.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        numOfRecords.setText("Number of Records: 0");
+        labelNumOfRecords.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelNumOfRecords.setText("Number of Records: 0");
 
-        jCSymbol.setText("Symbol");
-        jCSymbol.addActionListener(new java.awt.event.ActionListener() {
+        checkBoxSymbol.setText("Symbol");
+        checkBoxSymbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCSymbolActionPerformed(evt);
+                checkBoxSymbolActionPerformed(evt);
             }
         });
 
-        jCDateRange.setText("Date Range");
-        jCDateRange.addActionListener(new java.awt.event.ActionListener() {
+        checkBoxDateRange.setText("Date Range");
+        checkBoxDateRange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCDateRangeActionPerformed(evt);
+                checkBoxDateRangeActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("-");
+        labelHyphen.setText("-");
 
-        clearAllFilters.setActionCommand("Clear All Filters");
-        clearAllFilters.setLabel("Clear All Filters");
-        clearAllFilters.addActionListener(new java.awt.event.ActionListener() {
+        btnClearAllFilters.setActionCommand("Clear All Filters");
+        btnClearAllFilters.setLabel("Clear All Filters");
+        btnClearAllFilters.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearAllFiltersActionPerformed(evt);
+                btnClearAllFiltersActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBPositions)
+        javax.swing.GroupLayout panelCTRLPanelLayout = new javax.swing.GroupLayout(panelCTRLPanel);
+        panelCTRLPanel.setLayout(panelCTRLPanelLayout);
+        panelCTRLPanelLayout.setHorizontalGroup(
+            panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addComponent(btnPositions)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBTrades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnTrades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(numOfRecords)))
+                        .addComponent(labelNumOfRecords)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBAllocations)
+                .addComponent(btnAllocations)
                 .addGap(334, 334, 334)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(checkBoxSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCDateRange)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkBoxDateRange)
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addComponent(textFieldStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHyphen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                                .addComponent(textFieldEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(clearAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnClearAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(128, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBTrades)
-                            .addComponent(jBAllocations)
-                            .addComponent(jBPositions))
+        panelCTRLPanelLayout.setVerticalGroup(
+            panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTrades)
+                            .addComponent(btnAllocations)
+                            .addComponent(btnPositions))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createSequentialGroup()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)
+                                .addComponent(labelHyphen)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jBDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jBSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTStartDate)
-                                    .addComponent(jTEndDate))
+                                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(textFieldStartDate)
+                                    .addComponent(textFieldEndDate))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCDateRange)
-                            .addComponent(jCSymbol))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkBoxDateRange)
+                            .addComponent(checkBoxSymbol))))
+                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(numOfRecords))
-                    .addComponent(jLConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelNumOfRecords))
+                    .addComponent(btnClearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jBPositions.getAccessibleContext().setAccessibleDescription("");
+        btnPositions.getAccessibleContext().setAccessibleDescription("");
 
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        scrollPaneSQL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jText.setBackground(new java.awt.Color(153, 255, 204));
-        jText.setColumns(20);
-        jText.setRows(5);
-        jText.setText("Please input an SQL statement:\n>>");
-        jText.setText("Please input an SQL statement:\n>>");
-        ((AbstractDocument) jText.getDocument())
+        textAreaSQL.setBackground(new java.awt.Color(153, 255, 204));
+        textAreaSQL.setColumns(20);
+        textAreaSQL.setRows(5);
+        textAreaSQL.setText("Please input an SQL statement:\n>>");
+        textAreaSQL.setText("Please input an SQL statement:\n>>");
+        ((AbstractDocument) textAreaSQL.getDocument())
         .setDocumentFilter(new CreateDocumentFilter(33));
-        jScrollPane4.setViewportView(jText);
+        scrollPaneSQL.setViewportView(textAreaSQL);
 
-        jEnter.setText("Enter");
-        jEnter.addActionListener(new java.awt.event.ActionListener() {
+        btnEnterSQL.setText("Enter");
+        btnEnterSQL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jEnterActionPerformed(evt);
+                btnEnterSQLActionPerformed(evt);
             }
         });
 
-        jClear.setText("Clear");
-        jClear.addActionListener(new java.awt.event.ActionListener() {
+        btnClearSQL.setText("Clear");
+        btnClearSQL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jClearActionPerformed(evt);
+                btnClearSQLActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelSQLLayout = new javax.swing.GroupLayout(panelSQL);
+        panelSQL.setLayout(panelSQLLayout);
+        panelSQLLayout.setHorizontalGroup(
+            panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSQLLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4)
+                .addComponent(scrollPaneSQL)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSQLLayout.createSequentialGroup()
                 .addGap(455, 455, 455)
-                .addComponent(jEnter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEnterSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(426, 426, 426))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panelSQLLayout.setVerticalGroup(
+            panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSQLLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneSQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jEnter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEnterSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
 
-        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
-        jPanel.setLayout(jPanelLayout);
-        jPanelLayout.setHorizontalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelShowTablesLayout = new javax.swing.GroupLayout(panelShowTables);
+        panelShowTables.setLayout(panelShowTablesLayout);
+        panelShowTablesLayout.setHorizontalGroup(
+            panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanelLayout.setVerticalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelShowTablesLayout.setVerticalGroup(
+            panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 425, Short.MAX_VALUE)
         );
 
-        jMFile.setText("File");
+        menuFile.setText("File");
 
-        jMFileConnections.setText("Select Connections");
+        menuConnections.setText("Select Connections");
 
-        jMFileConnLocal.setText("Local");
-        jMFileConnLocal.addActionListener(new java.awt.event.ActionListener() {
+        menuItemLocal.setText("Local");
+        menuItemLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFileConnLocalActionPerformed(evt);
+                menuItemLocalActionPerformed(evt);
             }
         });
-        jMFileConnections.add(jMFileConnLocal);
+        menuConnections.add(menuItemLocal);
 
-        jMFileConnAWS.setText("AWS");
-        jMFileConnAWS.addActionListener(new java.awt.event.ActionListener() {
+        menuItemAWS.setText("AWS");
+        menuItemAWS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFileConnAWSActionPerformed(evt);
+                menuItemAWSActionPerformed(evt);
             }
         });
-        jMFileConnections.add(jMFileConnAWS);
+        menuConnections.add(menuItemAWS);
 
-        jMFileConnDummy.setText("Dummy");
-        jMFileConnDummy.addActionListener(new java.awt.event.ActionListener() {
+        menuItemDummy.setText("Dummy");
+        menuItemDummy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFileConnDummyActionPerformed(evt);
+                menuItemDummyActionPerformed(evt);
             }
         });
-        jMFileConnections.add(jMFileConnDummy);
+        menuConnections.add(menuItemDummy);
 
-        jMFile.add(jMFileConnections);
+        menuFile.add(menuConnections);
 
-        jMFileRead.setText("Read from Text File");
-        jMFileRead.addActionListener(new java.awt.event.ActionListener() {
+        menuItemRead.setText("Read from Text File");
+        menuItemRead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFileReadActionPerformed(evt);
+                menuItemReadActionPerformed(evt);
             }
         });
-        jMFile.add(jMFileRead);
+        menuFile.add(menuItemRead);
 
-        jMFilePrint.setText("Print");
+        menuPrint.setText("Print");
 
-        jMFilePrintGUI.setText("Print GUI");
-        jMFilePrintGUI.addActionListener(new java.awt.event.ActionListener() {
+        menuItemPrintGUI.setText("Print GUI");
+        menuItemPrintGUI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFilePrintGUIActionPerformed(evt);
+                menuItemPrintGUIActionPerformed(evt);
             }
         });
-        jMFilePrint.add(jMFilePrintGUI);
+        menuPrint.add(menuItemPrintGUI);
 
-        jMFilePrintWindow.setText("Print Display Window");
-        jMFilePrintWindow.addActionListener(new java.awt.event.ActionListener() {
+        menuItemPrintDisplayWindow.setText("Print Display Window");
+        menuItemPrintDisplayWindow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFilePrintWindowActionPerformed(evt);
+                menuItemPrintDisplayWindowActionPerformed(evt);
             }
         });
-        jMFilePrint.add(jMFilePrintWindow);
+        menuPrint.add(menuItemPrintDisplayWindow);
 
-        jMFile.add(jMFilePrint);
+        menuFile.add(menuPrint);
 
-        jMFileSave.setText("Save File");
-        jMFileSave.addActionListener(new java.awt.event.ActionListener() {
+        menuItemSave.setText("Save File");
+        menuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMFileSaveActionPerformed(evt);
+                menuItemSaveActionPerformed(evt);
             }
         });
-        jMFile.add(jMFileSave);
+        menuFile.add(menuItemSave);
 
-        jMenuBar1.add(jMFile);
+        jMenuBar1.add(menuFile);
 
-        jMEdit.setText("Edit");
+        menuEdit.setText("Edit");
 
-        jMEditConnection.setText("Connection...");
-        jMEditConnection.addActionListener(new java.awt.event.ActionListener() {
+        menuItemConnection.setText("Connection...");
+        menuItemConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMEditConnectionActionPerformed(evt);
+                menuItemConnectionActionPerformed(evt);
             }
         });
-        jMEdit.add(jMEditConnection);
+        menuEdit.add(menuItemConnection);
 
-        jMenuBar1.add(jMEdit);
+        jMenuBar1.add(menuEdit);
 
-        jMFind.setText("Find");
-        jMenuBar1.add(jMFind);
+        menuFind.setText("Find");
+        jMenuBar1.add(menuFind);
 
-        jMReports.setText("Reports");
-        jMenuBar1.add(jMReports);
+        menuReports.setText("Reports");
+        jMenuBar1.add(menuReports);
 
-        jMTools.setText("Tools");
+        menuTools.setText("Tools");
 
-        jMToolsReconcile.setText("Reconcile 8949s");
-        jMToolsReconcile.addActionListener(new java.awt.event.ActionListener() {
+        menuItemReconcile.setText("Reconcile 8949s");
+        menuItemReconcile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMToolsReconcileActionPerformed(evt);
+                menuItemReconcileActionPerformed(evt);
             }
         });
-        jMTools.add(jMToolsReconcile);
+        menuTools.add(menuItemReconcile);
 
         menuItemShowMatches.setText("Show Matches");
         menuItemShowMatches.addActionListener(new java.awt.event.ActionListener() {
@@ -410,7 +422,7 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
                 menuItemShowMatchesActionPerformed(evt);
             }
         });
-        jMTools.add(menuItemShowMatches);
+        menuTools.add(menuItemShowMatches);
 
         menuItemIB8949.setText("IB 8949");
         menuItemIB8949.addActionListener(new java.awt.event.ActionListener() {
@@ -418,7 +430,7 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
                 menuItemIB8949ActionPerformed(evt);
             }
         });
-        jMTools.add(menuItemIB8949);
+        menuTools.add(menuItemIB8949);
 
         menuItemTL8949.setText("TL 8949");
         menuItemTL8949.addActionListener(new java.awt.event.ActionListener() {
@@ -426,87 +438,87 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
                 menuItemTL8949ActionPerformed(evt);
             }
         });
-        jMTools.add(menuItemTL8949);
+        menuTools.add(menuItemTL8949);
 
-        jMenuBar1.add(jMTools);
+        jMenuBar1.add(menuTools);
 
-        jMLoad.setText("Load");
+        menuLoad.setText("Load");
 
-        jMLoadFile.setText("Load File...");
-        jMLoadFile.addActionListener(new java.awt.event.ActionListener() {
+        menuItemLoadFile.setText("Load File...");
+        menuItemLoadFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMLoadFileActionPerformed(evt);
+                menuItemLoadFileActionPerformed(evt);
             }
         });
-        jMLoad.add(jMLoadFile);
+        menuLoad.add(menuItemLoadFile);
 
-        jMenuBar1.add(jMLoad);
+        jMenuBar1.add(menuLoad);
 
-        jMView.setText("View");
+        menuView.setText("View");
 
-        jMViewLog.setText("Log");
-        jMViewLog.addActionListener(new java.awt.event.ActionListener() {
+        menuItemLog.setText("Log");
+        menuItemLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewLogActionPerformed(evt);
+                menuItemLogActionPerformed(evt);
             }
         });
-        jMView.add(jMViewLog);
+        menuView.add(menuItemLog);
 
-        jMViewSql.setText("SQL Command");
-        jMViewSql.addActionListener(new java.awt.event.ActionListener() {
+        menuItemSqlCommand.setText("SQL Command");
+        menuItemSqlCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewSqlActionPerformed(evt);
+                menuItemSqlCommandActionPerformed(evt);
             }
         });
-        jMView.add(jMViewSql);
+        menuView.add(menuItemSqlCommand);
 
-        jMViewTrades.setText("Display Trades-All Fields");
-        jMViewTrades.addActionListener(new java.awt.event.ActionListener() {
+        menuItemTrades.setText("Display Trades-All Fields");
+        menuItemTrades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewTradesActionPerformed(evt);
+                menuItemTradesActionPerformed(evt);
             }
         });
-        jMView.add(jMViewTrades);
+        menuView.add(menuItemTrades);
 
-        jMViewPositions.setText("Display Positions-All Fields");
-        jMViewPositions.addActionListener(new java.awt.event.ActionListener() {
+        menuItemPositions.setText("Display Positions-All Fields");
+        menuItemPositions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewPositionsActionPerformed(evt);
+                menuItemPositionsActionPerformed(evt);
             }
         });
-        jMView.add(jMViewPositions);
+        menuView.add(menuItemPositions);
 
-        jMViewIB.setText("Display IB_8949-All Fields");
-        jMViewIB.addActionListener(new java.awt.event.ActionListener() {
+        menuItemIB.setText("Display IB_8949-All Fields");
+        menuItemIB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewIBActionPerformed(evt);
+                menuItemIBActionPerformed(evt);
             }
         });
-        jMView.add(jMViewIB);
+        menuView.add(menuItemIB);
 
-        jMViewTL.setText("Display TL_8949-All Fields");
-        jMViewTL.addActionListener(new java.awt.event.ActionListener() {
+        menuItemTL.setText("Display TL_8949-All Fields");
+        menuItemTL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewTLActionPerformed(evt);
+                menuItemTLActionPerformed(evt);
             }
         });
-        jMView.add(jMViewTL);
+        menuView.add(menuItemTL);
 
-        jMViewLoadsTable.setText("Display Loads Table");
-        jMViewLoadsTable.addActionListener(new java.awt.event.ActionListener() {
+        menuItemLoadsTable.setText("Display Loads Table");
+        menuItemLoadsTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMViewLoadsTableActionPerformed(evt);
+                menuItemLoadsTableActionPerformed(evt);
             }
         });
-        jMView.add(jMViewLoadsTable);
+        menuView.add(menuItemLoadsTable);
 
-        jMenuBar1.add(jMView);
+        jMenuBar1.add(menuView);
 
-        jMHelp.setText("Help");
-        jMenuBar1.add(jMHelp);
+        menuHelp.setText("Help");
+        jMenuBar1.add(menuHelp);
 
-        jMOther.setText("Other");
-        jMenuBar1.add(jMOther);
+        menuOther.setText("Other");
+        jMenuBar1.add(menuOther);
 
         setJMenuBar(jMenuBar1);
 
@@ -514,132 +526,132 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelShowTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCTRLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelCTRLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelShowTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelSQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel.getAccessibleContext().setAccessibleParent(jPanel);
+        panelShowTables.getAccessibleContext().setAccessibleParent(panelShowTables);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPositionsActionPerformed
+    private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
 
-    }//GEN-LAST:event_jBPositionsActionPerformed
+    }//GEN-LAST:event_btnPositionsActionPerformed
 
-    private void jBTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTradesActionPerformed
+    private void btnTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTradesActionPerformed
 
-    }//GEN-LAST:event_jBTradesActionPerformed
+    }//GEN-LAST:event_btnTradesActionPerformed
 
-    private void jMFileConnDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileConnDummyActionPerformed
+    private void menuItemDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDummyActionPerformed
 
-    }//GEN-LAST:event_jMFileConnDummyActionPerformed
+    }//GEN-LAST:event_menuItemDummyActionPerformed
 
-    private void jMFileConnLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileConnLocalActionPerformed
+    private void menuItemLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLocalActionPerformed
 
-    }//GEN-LAST:event_jMFileConnLocalActionPerformed
+    }//GEN-LAST:event_menuItemLocalActionPerformed
 
-    private void jMFileConnAWSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileConnAWSActionPerformed
+    private void menuItemAWSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAWSActionPerformed
 
-    }//GEN-LAST:event_jMFileConnAWSActionPerformed
+    }//GEN-LAST:event_menuItemAWSActionPerformed
 
-    private void jMFileReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileReadActionPerformed
+    private void menuItemReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemReadActionPerformed
 
-    }//GEN-LAST:event_jMFileReadActionPerformed
+    }//GEN-LAST:event_menuItemReadActionPerformed
 
-    private void jMFilePrintGUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFilePrintGUIActionPerformed
+    private void menuItemPrintGUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintGUIActionPerformed
 
-    }//GEN-LAST:event_jMFilePrintGUIActionPerformed
+    }//GEN-LAST:event_menuItemPrintGUIActionPerformed
 
-    private void jMFilePrintWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFilePrintWindowActionPerformed
+    private void menuItemPrintDisplayWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintDisplayWindowActionPerformed
 
-    }//GEN-LAST:event_jMFilePrintWindowActionPerformed
+    }//GEN-LAST:event_menuItemPrintDisplayWindowActionPerformed
 
-    private void jMViewTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewTradesActionPerformed
+    private void menuItemTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTradesActionPerformed
 
-    }//GEN-LAST:event_jMViewTradesActionPerformed
+    }//GEN-LAST:event_menuItemTradesActionPerformed
 
-    private void jMLoadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMLoadFileActionPerformed
+    private void menuItemLoadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadFileActionPerformed
 
-    }//GEN-LAST:event_jMLoadFileActionPerformed
+    }//GEN-LAST:event_menuItemLoadFileActionPerformed
 
-    private void jBAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAllocationsActionPerformed
+    private void btnAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllocationsActionPerformed
 
-    }//GEN-LAST:event_jBAllocationsActionPerformed
+    }//GEN-LAST:event_btnAllocationsActionPerformed
 
-    private void jMViewLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewLogActionPerformed
+    private void menuItemLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogActionPerformed
 
-    }//GEN-LAST:event_jMViewLogActionPerformed
+    }//GEN-LAST:event_menuItemLogActionPerformed
 
-    private void jMViewPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewPositionsActionPerformed
+    private void menuItemPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPositionsActionPerformed
 
-    }//GEN-LAST:event_jMViewPositionsActionPerformed
+    }//GEN-LAST:event_menuItemPositionsActionPerformed
 
-    private void jMViewIBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewIBActionPerformed
+    private void menuItemIBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIBActionPerformed
 
-    }//GEN-LAST:event_jMViewIBActionPerformed
+    }//GEN-LAST:event_menuItemIBActionPerformed
 
-    private void jMViewTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewTLActionPerformed
+    private void menuItemTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTLActionPerformed
 
-    }//GEN-LAST:event_jMViewTLActionPerformed
+    }//GEN-LAST:event_menuItemTLActionPerformed
 
-    private void jMViewLoadsTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewLoadsTableActionPerformed
+    private void menuItemLoadsTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadsTableActionPerformed
 
-    }//GEN-LAST:event_jMViewLoadsTableActionPerformed
+    }//GEN-LAST:event_menuItemLoadsTableActionPerformed
 
-    private void jMViewSqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMViewSqlActionPerformed
+    private void menuItemSqlCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSqlCommandActionPerformed
 
-    }//GEN-LAST:event_jMViewSqlActionPerformed
+    }//GEN-LAST:event_menuItemSqlCommandActionPerformed
 
-    private void jMEditConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMEditConnectionActionPerformed
+    private void menuItemConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemConnectionActionPerformed
 
-    }//GEN-LAST:event_jMEditConnectionActionPerformed
+    }//GEN-LAST:event_menuItemConnectionActionPerformed
 
-    private void jMToolsReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMToolsReconcileActionPerformed
+    private void menuItemReconcileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemReconcileActionPerformed
 
-    }//GEN-LAST:event_jMToolsReconcileActionPerformed
+    }//GEN-LAST:event_menuItemReconcileActionPerformed
 
-    private void jBSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSymbolActionPerformed
+    private void btnSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSymbolActionPerformed
 
-    }//GEN-LAST:event_jBSymbolActionPerformed
+    }//GEN-LAST:event_btnSymbolActionPerformed
 
-    private void jBDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDateRangeActionPerformed
+    private void btnDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateRangeActionPerformed
 
-    }//GEN-LAST:event_jBDateRangeActionPerformed
+    }//GEN-LAST:event_btnDateRangeActionPerformed
 
-    private void jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnterActionPerformed
+    private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
 
-    }//GEN-LAST:event_jEnterActionPerformed
+    }//GEN-LAST:event_btnEnterSQLActionPerformed
 
-    private void jClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClearActionPerformed
+    private void btnClearSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSQLActionPerformed
 
-    }//GEN-LAST:event_jClearActionPerformed
+    }//GEN-LAST:event_btnClearSQLActionPerformed
 
-    private void jMFileSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFileSaveActionPerformed
+    private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
 
-    }//GEN-LAST:event_jMFileSaveActionPerformed
+    }//GEN-LAST:event_menuItemSaveActionPerformed
 
-    private void jCDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCDateRangeActionPerformed
+    private void checkBoxDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDateRangeActionPerformed
 
-    }//GEN-LAST:event_jCDateRangeActionPerformed
+    }//GEN-LAST:event_checkBoxDateRangeActionPerformed
 
-    private void jCSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCSymbolActionPerformed
+    private void checkBoxSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSymbolActionPerformed
 
-    }//GEN-LAST:event_jCSymbolActionPerformed
+    }//GEN-LAST:event_checkBoxSymbolActionPerformed
 
-    private void clearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllFiltersActionPerformed
+    private void btnClearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllFiltersActionPerformed
 
-    }//GEN-LAST:event_clearAllFiltersActionPerformed
+    }//GEN-LAST:event_btnClearAllFiltersActionPerformed
 
     private void menuItemShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowMatchesActionPerformed
 
@@ -656,59 +668,58 @@ public class ELLE_GUI_Frame extends javax.swing.JFrame {
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button clearAllFilters;
-    private javax.swing.JButton jBAllocations;
-    private javax.swing.JButton jBDateRange;
-    private javax.swing.JButton jBPositions;
-    private javax.swing.JButton jBSymbol;
-    private javax.swing.JButton jBTrades;
-    private javax.swing.JCheckBox jCDateRange;
-    private javax.swing.JCheckBox jCSymbol;
-    private javax.swing.JButton jClear;
-    private javax.swing.JButton jEnter;
-    private javax.swing.JLabel jLConnect;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMEdit;
-    private javax.swing.JMenuItem jMEditConnection;
-    private javax.swing.JMenu jMFile;
-    private javax.swing.JMenuItem jMFileConnAWS;
-    private javax.swing.JMenuItem jMFileConnDummy;
-    private javax.swing.JMenuItem jMFileConnLocal;
-    private javax.swing.JMenu jMFileConnections;
-    private javax.swing.JMenu jMFilePrint;
-    private javax.swing.JMenuItem jMFilePrintGUI;
-    private javax.swing.JMenuItem jMFilePrintWindow;
-    private javax.swing.JMenuItem jMFileRead;
-    private javax.swing.JMenuItem jMFileSave;
-    private javax.swing.JMenu jMFind;
-    private javax.swing.JMenu jMHelp;
-    private javax.swing.JMenu jMLoad;
-    private javax.swing.JMenuItem jMLoadFile;
-    private javax.swing.JMenu jMOther;
-    private javax.swing.JMenu jMReports;
-    private javax.swing.JMenu jMTools;
-    private javax.swing.JMenuItem jMToolsReconcile;
-    private javax.swing.JMenu jMView;
-    private javax.swing.JMenuItem jMViewIB;
-    private javax.swing.JMenuItem jMViewLoadsTable;
-    private javax.swing.JMenuItem jMViewLog;
-    private javax.swing.JMenuItem jMViewPositions;
-    private javax.swing.JMenuItem jMViewSql;
-    private javax.swing.JMenuItem jMViewTL;
-    private javax.swing.JMenuItem jMViewTrades;
+    private javax.swing.JButton btnAllocations;
+    private java.awt.Button btnClearAllFilters;
+    private javax.swing.JButton btnClearSQL;
+    private javax.swing.JButton btnDateRange;
+    private javax.swing.JButton btnEnterSQL;
+    private javax.swing.JButton btnPositions;
+    private javax.swing.JButton btnSymbol;
+    private javax.swing.JButton btnTrades;
+    private javax.swing.JCheckBox checkBoxDateRange;
+    private javax.swing.JCheckBox checkBoxSymbol;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTEndDate;
-    private javax.swing.JTextField jTStartDate;
-    private javax.swing.JTextField jTSymbol;
-    private javax.swing.JTextArea jText;
+    private javax.swing.JLabel labelHyphen;
+    private javax.swing.JLabel labelNumOfRecords;
+    private javax.swing.JMenu menuConnections;
+    private javax.swing.JMenu menuEdit;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuFind;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuItemAWS;
+    private javax.swing.JMenuItem menuItemConnection;
+    private javax.swing.JMenuItem menuItemDummy;
+    private javax.swing.JMenuItem menuItemIB;
     private javax.swing.JMenuItem menuItemIB8949;
+    private javax.swing.JMenuItem menuItemLoadFile;
+    private javax.swing.JMenuItem menuItemLoadsTable;
+    private javax.swing.JMenuItem menuItemLocal;
+    private javax.swing.JMenuItem menuItemLog;
+    private javax.swing.JMenuItem menuItemPositions;
+    private javax.swing.JMenuItem menuItemPrintDisplayWindow;
+    private javax.swing.JMenuItem menuItemPrintGUI;
+    private javax.swing.JMenuItem menuItemRead;
+    private javax.swing.JMenuItem menuItemReconcile;
+    private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JMenuItem menuItemShowMatches;
+    private javax.swing.JMenuItem menuItemSqlCommand;
+    private javax.swing.JMenuItem menuItemTL;
     private javax.swing.JMenuItem menuItemTL8949;
-    private javax.swing.JLabel numOfRecords;
+    private javax.swing.JMenuItem menuItemTrades;
+    private javax.swing.JMenu menuLoad;
+    private javax.swing.JMenu menuOther;
+    private javax.swing.JMenu menuPrint;
+    private javax.swing.JMenu menuReports;
+    private javax.swing.JMenu menuTools;
+    private javax.swing.JMenu menuView;
+    private javax.swing.JPanel panelCTRLPanel;
+    private javax.swing.JPanel panelSQL;
+    private javax.swing.JPanel panelShowTables;
+    private javax.swing.JScrollPane scrollPaneSQL;
+    private javax.swing.JTextArea textAreaSQL;
+    private javax.swing.JTextField textFieldEndDate;
+    private javax.swing.JTextField textFieldStartDate;
+    private javax.swing.JTextField textFieldSymbol;
     // End of variables declaration//GEN-END:variables
 
 }

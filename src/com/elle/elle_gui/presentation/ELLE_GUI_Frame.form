@@ -4,119 +4,119 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMFile">
+        <Menu class="javax.swing.JMenu" name="menuFile">
           <Properties>
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMFileConnections">
+            <Menu class="javax.swing.JMenu" name="menuConnections">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Select Connections"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMFileConnLocal">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemLocal">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Local"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFileConnLocalActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemLocalActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMFileConnAWS">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemAWS">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="AWS"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFileConnAWSActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemAWSActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMFileConnDummy">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemDummy">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Dummy"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFileConnDummyActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemDummyActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="jMFileRead">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemRead">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Read from Text File"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFileReadActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemReadActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMFilePrint">
+            <Menu class="javax.swing.JMenu" name="menuPrint">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Print"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMFilePrintGUI">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemPrintGUI">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Print GUI"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFilePrintGUIActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemPrintGUIActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMFilePrintWindow">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemPrintDisplayWindow">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Print Display Window"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFilePrintWindowActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemPrintDisplayWindowActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="jMFileSave">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save File"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMFileSaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemSaveActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMEdit">
+        <Menu class="javax.swing.JMenu" name="menuEdit">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMEditConnection">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemConnection">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Connection..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMEditConnectionActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemConnectionActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMFind">
+        <Menu class="javax.swing.JMenu" name="menuFind">
           <Properties>
             <Property name="text" type="java.lang.String" value="Find"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMReports">
+        <Menu class="javax.swing.JMenu" name="menuReports">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reports"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMTools">
+        <Menu class="javax.swing.JMenu" name="menuTools">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tools"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMToolsReconcile">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemReconcile">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reconcile 8949s"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMToolsReconcileActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemReconcileActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemShowMatches">
@@ -145,90 +145,90 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMLoad">
+        <Menu class="javax.swing.JMenu" name="menuLoad">
           <Properties>
             <Property name="text" type="java.lang.String" value="Load"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMLoadFile">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemLoadFile">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load File..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMLoadFileActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemLoadFileActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMView">
+        <Menu class="javax.swing.JMenu" name="menuView">
           <Properties>
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewLog">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemLog">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Log"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewLogActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemLogActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewSql">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemSqlCommand">
               <Properties>
                 <Property name="text" type="java.lang.String" value="SQL Command"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewSqlActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemSqlCommandActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewTrades">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemTrades">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display Trades-All Fields"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewTradesActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemTradesActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewPositions">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemPositions">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display Positions-All Fields"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewPositionsActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemPositionsActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewIB">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemIB">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display IB_8949-All Fields"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewIBActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemIBActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewTL">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemTL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display TL_8949-All Fields"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewTLActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemTLActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMViewLoadsTable">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemLoadsTable">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display Loads Table"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMViewLoadsTableActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemLoadsTableActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMHelp">
+        <Menu class="javax.swing.JMenu" name="menuHelp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMOther">
+        <Menu class="javax.swing.JMenu" name="menuOther">
           <Properties>
             <Property name="text" type="java.lang.String" value="Other"/>
           </Properties>
@@ -259,25 +259,25 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
-          <Component id="jPanel" alignment="0" max="32767" attributes="0"/>
-          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+          <Component id="panelSQL" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelShowTables" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelCTRLPanel" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="panelCTRLPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel" max="32767" attributes="0"/>
+              <Component id="panelShowTables" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <Component id="panelSQL" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="panelCTRLPanel">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -285,50 +285,41 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jBPositions" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPositions" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jBTrades" max="32767" attributes="0"/>
+                          <Component id="btnTrades" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="numOfRecords" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNumOfRecords" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jBAllocations" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAllocations" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="334" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTSymbol" min="-2" pref="86" max="-2" attributes="0"/>
+                          <Component id="textFieldSymbol" min="-2" pref="86" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jBSymbol" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="btnSymbol" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jCSymbol" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
+                      <Component id="checkBoxSymbol" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jCDateRange" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkBoxDateRange" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTStartDate" min="-2" pref="101" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jLConnect" min="-2" pref="8" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="textFieldStartDate" min="-2" pref="101" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="labelHyphen" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jTEndDate" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="textFieldEndDate" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jBDateRange" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnDateRange" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="clearAllFilters" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnClearAllFilters" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -342,9 +333,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jBTrades" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jBAllocations" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jBPositions" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnTrades" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAllocations" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPositions" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -352,36 +343,35 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelHyphen" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jBDateRange" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Component id="btnDateRange" min="-2" pref="33" max="-2" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                          <Component id="jBSymbol" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                          <Component id="jTSymbol" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="btnSymbol" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="textFieldSymbol" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jTStartDate" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTEndDate" max="32767" attributes="0"/>
+                                      <Component id="textFieldStartDate" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="textFieldEndDate" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jCDateRange" min="-2" max="-2" attributes="0"/>
-                              <Component id="jCSymbol" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkBoxDateRange" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkBoxSymbol" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="numOfRecords" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNumOfRecords" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLConnect" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="clearAllFilters" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnClearAllFilters" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -389,7 +379,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jBPositions">
+        <Component class="javax.swing.JButton" name="btnPositions">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/elle/elle_gui/images/button1.png"/>
@@ -402,10 +392,10 @@
             <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
           </AccessibilityProperties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBPositionsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPositionsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBTrades">
+        <Component class="javax.swing.JButton" name="btnTrades">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/elle/elle_gui/images/button1.png"/>
@@ -415,10 +405,10 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBTradesActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTradesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBAllocations">
+        <Component class="javax.swing.JButton" name="btnAllocations">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/elle/elle_gui/images/button3.png"/>
@@ -428,10 +418,10 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAllocationsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllocationsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBSymbol">
+        <Component class="javax.swing.JButton" name="btnSymbol">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/elle/elle_gui/images/filter.png"/>
@@ -440,10 +430,10 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBSymbolActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSymbolActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBDateRange">
+        <Component class="javax.swing.JButton" name="btnDateRange">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/elle/elle_gui/images/filter.png"/>
@@ -453,10 +443,10 @@
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDateRangeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDateRangeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="numOfRecords">
+        <Component class="javax.swing.JLabel" name="labelNumOfRecords">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="1"/>
@@ -464,61 +454,59 @@
             <Property name="text" type="java.lang.String" value="Number of Records: 0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLConnect">
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="jCSymbol">
+        <Component class="javax.swing.JCheckBox" name="checkBoxSymbol">
           <Properties>
             <Property name="text" type="java.lang.String" value="Symbol"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCSymbolActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxSymbolActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCDateRange">
+        <Component class="javax.swing.JCheckBox" name="checkBoxDateRange">
           <Properties>
             <Property name="text" type="java.lang.String" value="Date Range"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCDateRangeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxDateRangeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="labelHyphen">
           <Properties>
             <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTSymbol">
+        <Component class="javax.swing.JTextField" name="textFieldSymbol">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTStartDate">
+        <Component class="javax.swing.JTextField" name="textFieldStartDate">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTEndDate">
+        <Component class="javax.swing.JTextField" name="textFieldEndDate">
         </Component>
-        <Component class="java.awt.Button" name="clearAllFilters">
+        <Component class="java.awt.Button" name="btnClearAllFilters">
           <Properties>
             <Property name="actionCommand" type="java.lang.String" value="Clear All Filters"/>
             <Property name="label" type="java.lang.String" value="Clear All Filters"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearAllFiltersActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearAllFiltersActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel3">
+    <Container class="javax.swing.JPanel" name="panelSQL">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane4" max="32767" attributes="0"/>
+                  <Component id="scrollPaneSQL" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="455" max="-2" attributes="0"/>
-                  <Component id="jEnter" max="32767" attributes="0"/>
+                  <Component id="btnEnterSQL" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jClear" max="32767" attributes="0"/>
+                  <Component id="btnClearSQL" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="426" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -527,11 +515,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
+                  <Component id="scrollPaneSQL" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jEnter" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jClear" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnEnterSQL" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnClearSQL" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -539,7 +527,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+        <Container class="javax.swing.JScrollPane" name="scrollPaneSQL">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -553,7 +541,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jText">
+            <Component class="javax.swing.JTextArea" name="textAreaSQL">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="ff" red="99" type="rgb"/>
@@ -563,33 +551,33 @@
                 <Property name="text" type="java.lang.String" value="Please input an SQL statement:&#xa;&gt;&gt;"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jText.setText(&quot;Please input an SQL statement:\n&gt;&gt;&quot;);&#xd;&#xa;        ((AbstractDocument) jText.getDocument())&#xd;&#xa;                .setDocumentFilter(new CreateDocumentFilter(33));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="textAreaSQL.setText(&quot;Please input an SQL statement:\n&gt;&gt;&quot;);&#xd;&#xa;        ((AbstractDocument) textAreaSQL.getDocument())&#xd;&#xa;                .setDocumentFilter(new CreateDocumentFilter(33));"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jEnter">
+        <Component class="javax.swing.JButton" name="btnEnterSQL">
           <Properties>
             <Property name="text" type="java.lang.String" value="Enter"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jEnterActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnterSQLActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jClear">
+        <Component class="javax.swing.JButton" name="btnClearSQL">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jClearActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearSQLActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel">
+    <Container class="javax.swing.JPanel" name="panelShowTables">
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="jPanel"/>
+          <ComponentRef name="panelShowTables"/>
         </Property>
       </AccessibilityProperties>
 
