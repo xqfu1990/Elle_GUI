@@ -810,6 +810,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnClearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllFiltersActionPerformed
 
+        // clear all filters
+        //String tabName = getSelectedTabName();
+        String tabName = ALLOCATIONS_TABLE_NAME; //testing
+        Tab tab = tabs.get(tabName);
+        TableFilter filter = tab.getFilter();
+        filter.clearAllFilters();
+        filter.applyFilter();
+        filter.applyColorHeaders();
+
+        // set label record information
+        String recordsLabel = tab.getRecordsLabel();
+        labelNumOfRecords.setText(recordsLabel); 
     }//GEN-LAST:event_btnClearAllFiltersActionPerformed
 
     private void menuItemShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowMatchesActionPerformed
@@ -973,7 +985,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 public void mouseClicked(MouseEvent e) {
                     
                     if (e.getClickCount() == 2) {
-                        //clearFilterDoubleClick(e, table);
+                        clearFilterDoubleClick(e, table);
                     } 
                 }
                 
@@ -1012,7 +1024,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                         // if left mouse clicks
                         if(SwingUtilities.isLeftMouseButton(e)){
                             if (e.getClickCount() == 2 ) {
-                                //filterByDoubleClick(table);
+                                filterByDoubleClick(table);
                             } else if (e.getClickCount() == 1) {
 //                                if (jLabelEdit.getText().equals("ON ")) {
 //                                    selectAllText(e);
@@ -1122,6 +1134,48 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             setTableListeners(tabs.get(entry.getKey()).getTable());
         }
         return tabs;
+    }
+    
+    /**
+     * filterByDoubleClick
+     * this selects the item double clicked on to be filtered
+     * @param table 
+     */
+    public void filterByDoubleClick(JTable table) {
+        
+        int columnIndex = table.getSelectedColumn(); // this returns the column index
+        int rowIndex = table.getSelectedRow(); // this returns the rowIndex index
+        if (rowIndex != -1) {
+            Object selectedField = table.getValueAt(rowIndex, columnIndex);
+            //String tabName = getSelectedTabName();
+            String tabName = ALLOCATIONS_TABLE_NAME; //testing
+            Tab tab = tabs.get(tabName);
+            TableFilter filter = tab.getFilter();
+            filter.addFilterItem(columnIndex, selectedField);
+            filter.applyFilter();
+            String recordsLabel = tab.getRecordsLabel();
+            labelNumOfRecords.setText(recordsLabel); 
+        }
+    }
+
+    /**
+     * clearFilterDoubleClick
+     * This clears the filters for that column by double clicking on that 
+     * column header.
+     */
+    private void clearFilterDoubleClick(MouseEvent e, JTable table) {
+        
+        int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
+        //String tabName = getSelectedTabName();
+        String tabName = ALLOCATIONS_TABLE_NAME; //testing
+        Tab tab = tabs.get(tabName);
+        TableFilter filter = tab.getFilter();
+        filter.clearColFilter(columnIndex);
+        filter.applyFilter();
+        
+        // update records label
+        String recordsLabel = tab.getRecordsLabel();
+        labelNumOfRecords.setText(recordsLabel);  
     }
     
     /**
