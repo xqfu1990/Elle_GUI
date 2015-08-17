@@ -3,10 +3,14 @@ package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.logic.Tab;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
+import java.awt.BorderLayout;
 import java.sql.Statement;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 
 /**
@@ -42,6 +46,39 @@ public class ELLE_GUI_Frame extends JFrame {
         setTitle("Elle GUI");
         
         instance = this;
+        
+        /**********************************************************************
+         * ************************ TESTING ***********************************
+         **********************************************************************/
+        // make a test table
+        String[] columnNames = {"First Name",
+                        "Last Name",
+                        "Sport",
+                        "# of Years",
+                        "Vegetarian"};
+        
+        Object[][] data = {
+            {"Kathy", "Smith",
+             "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe",
+             "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black",
+             "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White",
+             "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown",
+             "Pool", new Integer(10), new Boolean(false)}
+        };
+        
+        JTable table = new JTable(data, columnNames);
+        table.setVisible(true);
+        
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setVisible(true);
+        
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        panelShowTables.setVisible(true);
     }
 
     /**
