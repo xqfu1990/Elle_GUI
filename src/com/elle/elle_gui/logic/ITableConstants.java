@@ -14,17 +14,17 @@ package com.elle.elle_gui.logic;
  */
 public interface ITableConstants {
     
-    public static final String POSITIONS = "Positions";
-    public static final String TRADES = "Trades";
-    public static final String ALLOCATIONS = "Allocations";
+    public static final String POSITIONS_TABLE_NAME = "positions";
+    public static final String TRADES_TABLE_NAME = "trades";
+    public static final String ALLOCATIONS_TABLE_NAME = "trades";
     
     // column header name constants
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
     
     // column width percent constants
-    public static final float[] COL_WIDTH_PER_ASSIGNMENTS = {35, 65, 80, 70, 99, 99};
-    public static final float[] COL_WIDTH_PER_REPORTS = {35, 65, 80, 100, 160, 120, 123};
-    public static final float[] COL_WIDTH_PER_ARCHIVE = {35, 65, 80, 70, 99, 99};
+    public static final float[] COL_WIDTH_PER_POSITIONS = {35, 65, 80, 70, 99, 99};
+    public static final float[] COL_WIDTH_PER_TRADES = {35, 65, 80, 100, 160, 120, 123};
+    public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
     
     // search fields for the comboBox for each table
     public static final String[] ASSIGNMENTS_SEARCH_FIELDS = {"Symbol","Analyst"};

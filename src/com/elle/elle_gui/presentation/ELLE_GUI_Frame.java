@@ -2,18 +2,37 @@
 package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.database.DBConnection;
+import com.elle.elle_gui.logic.ColumnPopupMenu;
 import com.elle.elle_gui.logic.Tab;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
+import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
+import com.elle.elle_gui.logic.TableFilter;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.text.AbstractDocument;
 
 /**
@@ -37,6 +56,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private static ELLE_GUI_Frame instance;
     private LogWindow logWindow;
     private LoginWindow loginWindow;
+    
+    // tables
+    private JTable positions;
+    private JTable trades;
+    private JTable allocations;
 
     /**
      * ELLE_GUI_Frame
@@ -58,9 +82,71 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         tabs = new HashMap();
         
         // create tabName objects -> this has to be before initcomponents();
-        tabs.put(POSITIONS, new Tab());
-        tabs.put(TRADES, new Tab());
-        tabs.put(ALLOCATIONS, new Tab());
+        tabs.put(POSITIONS_TABLE_NAME, new Tab());
+        tabs.put(TRADES_TABLE_NAME, new Tab());
+        tabs.put(ALLOCATIONS_TABLE_NAME, new Tab());
+        
+        // initialize tables
+        positions = new JTable();
+        trades = new JTable();
+        allocations = new JTable();
+        
+        // set table names 
+        tabs.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
+        tabs.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
+        tabs.get(ALLOCATIONS_TABLE_NAME).setTableName(ALLOCATIONS_TABLE_NAME);
+        
+        // set names to tables (this was in tabbedPanelChanged method)
+        positions.setName(POSITIONS_TABLE_NAME);
+        trades.setName(TRADES_TABLE_NAME);
+        allocations.setName(ALLOCATIONS_TABLE_NAME);
+        
+        // set tables to tabName objects
+        tabs.get(POSITIONS_TABLE_NAME).setTable(positions);
+        tabs.get(TRADES_TABLE_NAME).setTable(trades);
+        tabs.get(ALLOCATIONS_TABLE_NAME).setTable(allocations);
+        
+        // set array variable of stored column names of the tables
+        // this is just to store and use the information
+        // to actually change the table names it should be done
+        // through properties in the gui design tabName
+        tabs.get(POSITIONS_TABLE_NAME).setTableColNames(positions);
+        tabs.get(TRADES_TABLE_NAME).setTableColNames(trades);
+        tabs.get(ALLOCATIONS_TABLE_NAME).setTableColNames(allocations);
+        
+        // set column width percents to tables of the tabName objects
+        tabs.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
+        tabs.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabs.get(ALLOCATIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_ALLOCATIONS);
+        
+        // this sets the KeyboardFocusManger
+        //setKeyboardFocusManager();
+        
+        // add filters for each table
+        // must be before setting ColumnPopupMenu because this is its parameter
+        tabs.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(positions));
+        tabs.get(TRADES_TABLE_NAME).setFilter(new TableFilter(trades));
+        tabs.get(ALLOCATIONS_TABLE_NAME).setFilter(new TableFilter(allocations));
+        
+        // initialize columnPopupMenu 
+        // - must be before setTerminalFunctions is called
+        // - because the mouslistener is added to the table header
+        tabs.get(POSITIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(POSITIONS_TABLE_NAME).getFilter()));
+        tabs.get(TRADES_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(TRADES_TABLE_NAME).getFilter()));
+        tabs.get(ALLOCATIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(ALLOCATIONS_TABLE_NAME).getFilter()));
+        
+        // load data from database to tables
+        loadTables(tabs);
+            
+        // set initial record counts of now full tables
+        // this should only need to be called once at start up of Analyster.
+        // total counts are removed or added in the Tab class
+        initTotalRowCounts(tabs);
+        
+        
         
         /**********************************************************************
          * ************************ TESTING ***********************************
@@ -721,6 +807,372 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     }//GEN-LAST:event_menuItemTL8949ActionPerformed
 
+    
+    /**
+     * initTotalRowCounts
+  called once to initialize the total rowIndex counts of each tabs table
+     * @param tabs
+     * @return 
+     */
+    public Map<String,Tab> initTotalRowCounts(Map<String,Tab> tabs) {
+        
+        int totalRecords;
+ 
+        boolean isFirstTabRecordLabelSet = false;
+        
+        for (Map.Entry<String, Tab> entry : tabs.entrySet())
+        {
+            Tab tab = tabs.get(entry.getKey());
+            JTable table = tab.getTable();
+            totalRecords = table.getRowCount();
+            tab.setTotalRecords(totalRecords);
+            
+            if(isFirstTabRecordLabelSet == false){
+                String recordsLabel = tab.getRecordsLabel();
+                labelNumOfRecords.setText(recordsLabel);
+                isFirstTabRecordLabelSet = true; // now its set
+            }
+        }
+
+        return tabs;
+    }
+    
+    
+    /**
+     * loadTables
+     * This method takes a tabs Map and loads all the tabs/tables
+     * @param tabs
+     * @return 
+     */
+    public Map<String,Tab> loadTables(Map<String,Tab> tabs) {
+        
+        for (Map.Entry<String, Tab> entry : tabs.entrySet())
+        {
+            Tab tab = tabs.get(entry.getKey());
+            JTable table = tab.getTable();
+            loadTable(table);
+            setTableListeners(table);
+        }
+        
+        return tabs;
+    }
+    
+    /**
+    * loadTable
+    * This method takes a table and loads it
+    * Does not need to pass the table back since it is passed by reference
+    * However, it can make the code clearer and it's good practice to return
+    * @param table 
+    */
+    public JTable loadTable(JTable table) {
+        
+        String sql = "SELECT * FROM " + table.getName() + " ORDER BY symbol ASC";
+        loadTable(sql, table);
+        
+        return table;
+    }
+    
+    public JTable loadTable(String sql, JTable table) {
+        
+        Vector data = new Vector();
+        Vector columnNames = new Vector();
+        int columns;
+
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+        try {
+            rs = statement.executeQuery(sql);
+            metaData = rs.getMetaData();
+        } catch (Exception ex) {
+            System.out.println("SQL Error:");
+            ex.printStackTrace();
+        }
+        try {
+            columns = metaData.getColumnCount();
+            for (int i = 1; i <= columns; i++) {
+                columnNames.addElement(metaData.getColumnName(i));
+            }
+            while (rs.next()) {
+                Vector row = new Vector(columns);
+                for (int i = 1; i <= columns; i++) {
+                    row.addElement(rs.getObject(i));
+                }
+                data.addElement(row);
+            }
+            rs.close();
+
+        } catch (SQLException ex) {
+            System.out.println("SQL Error:");
+            ex.printStackTrace();
+        }
+        
+        EditableTableModel model = new EditableTableModel(data, columnNames);
+
+        // this has to be set here or else I get errors
+        // I tried passing the model to the filter and setting it there
+        // but it caused errors
+        table.setModel(model);
+        
+        // check that the filter items are initialized
+        String tabName = table.getName();
+        Tab tab = tabs.get(tabName);
+        
+        // apply filter
+        TableFilter filter = tab.getFilter();
+        if(filter.getFilterItems() == null){
+            filter.initFilterItems();
+        }
+        filter.applyFilter();
+        filter.applyColorHeaders();
+        
+        // load all checkbox items for the checkbox column pop up filter
+        ColumnPopupMenu columnPopupMenu = tab.getColumnPopupMenu();
+        columnPopupMenu.loadAllCheckBoxItems();
+        
+        // set column format
+        float[] colWidthPercent = tab.getColWidthPercent();
+        setColumnFormat(colWidthPercent, table);
+        
+        // set the listeners for the table
+        setTableListeners(table);
+        
+        System.out.println("Table loaded succesfully");
+        
+        return table;
+    }
+    
+    /**
+     * setTableListeners
+     * This adds mouselisteners and keylisteners to tables.
+     * @param table 
+     */
+    public void setTableListeners(final JTable table) { 
+        
+        // this adds a mouselistener to the table header
+        JTableHeader header = table.getTableHeader();
+        if (header != null) {
+            header.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    
+                    if (e.getClickCount() == 2) {
+                        //clearFilterDoubleClick(e, table);
+                    } 
+                }
+                
+                /**
+                 * Popup menus are triggered differently on different platforms
+                 * Therefore, isPopupTrigger should be checked in both 
+                 * mousePressed and mouseReleased events for proper 
+                 * cross-platform functionality.
+                 * @param e 
+                 */
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    if (e.isPopupTrigger()) {
+                        // this calls the column popup menu
+                        tabs.get(table.getName()) 
+                                .getColumnPopupMenu().showPopupMenu(e);
+                    }
+                }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    if (e.isPopupTrigger()) {
+                        // this calls the column popup menu
+                        tabs.get(table.getName()) 
+                                .getColumnPopupMenu().showPopupMenu(e);
+                    }
+                }
+            });
+        }
+        
+        // add mouselistener to the table
+        table.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        
+                        // if left mouse clicks
+                        if(SwingUtilities.isLeftMouseButton(e)){
+                            if (e.getClickCount() == 2 ) {
+                                //filterByDoubleClick(table);
+                            } else if (e.getClickCount() == 1) {
+//                                if (jLabelEdit.getText().equals("ON ")) {
+//                                    selectAllText(e);
+//                                }
+                            }
+                        } // end if left mouse clicks
+                        
+                        // if right mouse clicks
+                        else if(SwingUtilities.isRightMouseButton(e)){
+                            if (e.getClickCount() == 2 ) {
+                                
+                                // make table editable
+                                //makeTableEditable(true);
+                                
+                                // get selected cell
+                                int columnIndex = table.columnAtPoint(e.getPoint()); // this returns the column index
+                                int rowIndex = table.rowAtPoint(e.getPoint()); // this returns the rowIndex index
+                                if (rowIndex != -1 && columnIndex != -1) {
+                                    
+                                    // make it the active editing cell
+                                    table.changeSelection(rowIndex, columnIndex, false, false);
+                                    
+                                    selectAllText(e);
+
+                                } // end not null condition
+                                
+                            } // end if 2 clicks 
+                        } // end if right mouse clicks
+                        
+                    }// end mouseClicked
+
+                    private void selectAllText(MouseEvent e) {// Select all text inside jTextField
+
+                        JTable table = (JTable) e.getComponent();
+                        int row = table.getSelectedRow();
+                        int column = table.getSelectedColumn();
+                        if (column != 0) {
+                            table.getComponentAt(row, column).requestFocus();
+                            table.editCellAt(row, column);
+                            JTextField selectCom = (JTextField) table.getEditorComponent();
+                            if (selectCom != null) {
+                                selectCom.requestFocusInWindow();
+                                selectCom.selectAll();
+                            }
+                        }
+
+                    }
+                }
+        );
+        
+        // add table model listener
+        table.getModel().addTableModelListener(new TableModelListener() {  // add table model listener every time the table model reloaded
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int row = e.getFirstRow();
+                int col = e.getColumn();
+//                String tab = getSelectedTabName();
+//                JTable table = tabs.get(tab).getTable();
+//                ModifiedTableData data = tabs.get(tab).getTableData();
+//                Object oldValue = data.getOldData()[row][col];
+//                Object newValue = table.getModel().getValueAt(row, col);
+//                
+//                // disable the upload changes button
+//                btnUploadChanges.setEnabled(false);
+//
+//                // check that data is different
+//                if(!newValue.equals(oldValue)){
+//
+//                    String tableName = table.getName();
+//                    String columnName = table.getColumnName(col);
+//                    int id = (Integer) table.getModel().getValueAt(row, 0);
+//                    data.getNewData().add(new ModifiedData(tableName, columnName, newValue, id));
+//
+//                    // color the cell
+//                    JTableCellRenderer cellRender = tabs.get(tab).getCellRenderer();
+//                    cellRender.getCells().get(col).add(row);
+//                    table.getColumnModel().getColumn(col).setCellRenderer(cellRender);
+//                }
+            }
+        });
+        
+        // add keyListener to the table
+        table.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_F2) {
+                    
+                    // I believe this is meant to toggle edit mode
+                    // so I passed the conditional
+                    //makeTableEditable(jLabelEdit.getText().equals("ON ")?false:true);
+                } 
+            }
+        });
+    }
+    
+    /**
+     * setTableListeners
+     * This method overloads the seTerminalFunctions 
+     * to take tabs instead of a single table
+     * @param tabs
+     * @return 
+     */
+    public Map<String,Tab> setTableListeners(Map<String,Tab> tabs) {
+        
+        for (Map.Entry<String, Tab> entry : tabs.entrySet())
+        {
+            setTableListeners(tabs.get(entry.getKey()).getTable());
+        }
+        return tabs;
+    }
+    
+    /**
+     * setColumnFormat
+     * sets column format for each table
+     * @param width
+     * @param table 
+     */
+    public void setColumnFormat(float[] width, JTable table) {
+        
+        // Center column content
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        //LEFT column content
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //Center column header
+        int widthFixedColumns = 0;
+        JTableHeader header = table.getTableHeader();
+//        if (!(header.getDefaultRenderer() instanceof AlignmentTableHeaderCellRenderer)) {
+//            header.setDefaultRenderer(new AlignmentTableHeaderCellRenderer(header.getDefaultRenderer()));
+//        }
+
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        switch (table.getName()) {
+//
+//            case REPORTS_TABLE_NAME: {
+//                int i;
+//                for (i = 0; i < width.length; i++) {
+//                    int pWidth = Math.round(width[i]);
+//                    table.getColumnModel().getColumn(i).setPreferredWidth(pWidth);
+//                    if (i >= width.length - 3) {
+//                        table.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
+//                    } else {
+//                        table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+//                    }
+//                    widthFixedColumns += pWidth;
+//                }
+//                Double tw = jPanel5.getSize().getWidth();
+//                int twi = tw.intValue();
+//                table.getColumnModel().getColumn(width.length).setPreferredWidth(twi - (widthFixedColumns + 25));
+//                table.setMinimumSize(new Dimension(908, 300));
+//                table.setPreferredScrollableViewportSize(new Dimension(908, 300));
+//                break;
+//            }
+//            default:
+//                for (int i = 0; i < width.length; i++) {
+//                    int pWidth = Math.round(width[i]);
+//                    table.getColumnModel().getColumn(i).setPreferredWidth(pWidth);
+//                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+//                    widthFixedColumns += pWidth;
+//                }
+//                Double tw = jPanel5.getSize().getWidth();
+//                int twi = tw.intValue();
+//                table.getColumnModel().getColumn(width.length).setPreferredWidth(twi - (widthFixedColumns + 25));
+//                table.setMinimumSize(new Dimension(908, 300));
+//                table.setPreferredScrollableViewportSize(new Dimension(908, 300));
+//                break;
+//
+//        }
+    }
+    
+    /**************************************************************************
+     ******************* SETTERS AND GETTERS **********************************
+     **************************************************************************/
+    
     public Map<String, Tab> getTabs() {
         return tabs;
     }
@@ -776,9 +1228,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     public void setLogWindow(LogWindow logWindow) {
         this.logWindow = logWindow;
     }
-
-    
-    
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
