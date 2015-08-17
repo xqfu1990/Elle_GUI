@@ -1,10 +1,13 @@
 
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.database.DBConnection;
 import com.elle.elle_gui.logic.Tab;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
+import com.elle.elle_gui.logic.ITableConstants;
 import java.awt.BorderLayout;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,14 +22,14 @@ import javax.swing.text.AbstractDocument;
  * @since 8-14-2015
  * @version ELLE_GUI-0.6.9
  */
-public class ELLE_GUI_Frame extends JFrame {
+public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     
     // Edit the version and date it was created for new archives and jars
     private final String CREATION_DATE = "2015-08-14";  
     private final String VERSION = "0.6.9a";   
     
     // attributes
-    private Map<String,Tab> tabs; // stores individual tabName information
+    private Map<String,Tab> tabs; // stores individual tab objects 
     private static Statement statement;
     private String database;
     
@@ -45,7 +48,19 @@ public class ELLE_GUI_Frame extends JFrame {
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         setTitle("Elle GUI");
         
-        instance = this;
+        // the statement is used for sql statements with the database connection
+        // the statement is created in LoginWindow and passed to ELLE_GUI.
+        statement = DBConnection.getStatement();
+        database = DBConnection.getDatabase();
+        instance = this;                         // this is used to call this instance of ELLE_GUI 
+        
+        // initialize tabs
+        tabs = new HashMap();
+        
+        // create tabName objects -> this has to be before initcomponents();
+        tabs.put(POSITIONS, new Tab());
+        tabs.put(TRADES, new Tab());
+        tabs.put(ALLOCATIONS, new Tab());
         
         /**********************************************************************
          * ************************ TESTING ***********************************

@@ -14,9 +14,9 @@ package com.elle.elle_gui.logic;
  */
 public interface ITableConstants {
     
-    public static final String ASSIGNMENTS_TABLE_NAME = "Assignments";
-    public static final String REPORTS_TABLE_NAME = "Reports";
-    public static final String ARCHIVE_TABLE_NAME = "Assignments_Archived";
+    public static final String POSITIONS = "Positions";
+    public static final String TRADES = "Trades";
+    public static final String ALLOCATIONS = "Allocations";
     
     // column header name constants
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
