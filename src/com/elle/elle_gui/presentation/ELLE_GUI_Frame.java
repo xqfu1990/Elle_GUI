@@ -689,10 +689,21 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
 
+        // add positions table to the panel
+        JScrollPane scroll = new JScrollPane(positions);
+        panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        
     }//GEN-LAST:event_btnPositionsActionPerformed
 
     private void btnTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTradesActionPerformed
 
+        // add positions table to the panel
+        JScrollPane scroll = new JScrollPane(trades);
+        panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
     }//GEN-LAST:event_btnTradesActionPerformed
 
     private void menuItemDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDummyActionPerformed
@@ -729,6 +740,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllocationsActionPerformed
 
+        // add positions table to the panel
+        JScrollPane scroll = new JScrollPane(allocations);
+        panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        
     }//GEN-LAST:event_btnAllocationsActionPerformed
 
     private void menuItemLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogActionPerformed

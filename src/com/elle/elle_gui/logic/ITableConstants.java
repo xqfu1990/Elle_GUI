@@ -16,7 +16,7 @@ public interface ITableConstants {
     
     public static final String POSITIONS_TABLE_NAME = "positions";
     public static final String TRADES_TABLE_NAME = "trades";
-    public static final String ALLOCATIONS_TABLE_NAME = "trades";
+    public static final String ALLOCATIONS_TABLE_NAME = "positions";
     
     // column header name constants
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
