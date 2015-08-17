@@ -2,6 +2,8 @@
 package com.elle.elle_gui;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
+import com.elle.elle_gui.presentation.LogWindow;
+import com.elle.elle_gui.presentation.LoginWindow;
 
 /**
  *
@@ -47,7 +49,12 @@ public class ELLE_GUI {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ELLE_GUI_Frame().setVisible(true);
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.setLocationRelativeTo(null);
+                loginWindow.setVisible(true);
+                
+                // debugging
+                loginWindow.dispose();
             }
         });
     }
