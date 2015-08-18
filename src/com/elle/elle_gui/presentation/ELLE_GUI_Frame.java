@@ -575,6 +575,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         MenuItemCheckBoxSQL.setSelected(true);
         MenuItemCheckBoxSQL.setText("SQL Command");
+        MenuItemCheckBoxSQL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemCheckBoxSQLActionPerformed(evt);
+            }
+        });
         menuView.add(MenuItemCheckBoxSQL);
 
         menuItemTrades.setText("Display Trades-All Fields");
@@ -803,6 +808,39 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         labelRecords.setText(recordsText);
         
     }//GEN-LAST:event_btnPositionsActionPerformed
+
+    private void MenuItemCheckBoxSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCheckBoxSQLActionPerformed
+        /**
+         * ************* Strange behavior *************************
+         * The jPanelSQL.getHeight() is the height before 
+         * the jCheckBoxMenuItemViewSQLActionPerformed method was called.
+         * 
+         * The jPanelSQL.setVisible() does not change the size 
+         * of the sql panel after it is executed.
+         * 
+         * The jPanel size will only change after 
+         * the jCheckBoxMenuItemViewSQLActionPerformed is finished.
+         * 
+         * That is why the the actual integer is used rather than  getHeight().
+         * 
+         * Example:
+         * jPanelSQL.setVisible(true);
+         * jPanelSQL.getHeight(); // this returns 0
+         */
+        
+        if(MenuItemCheckBoxSQL.isSelected()){
+            
+            // show sql panel
+            panelSQL.setVisible(true);
+            this.setSize(this.getWidth(), 621 + 128); 
+            
+        }else{
+            
+            // hide sql panel
+            panelSQL.setVisible(false);
+            this.setSize(this.getWidth(), 621);
+        }
+    }//GEN-LAST:event_MenuItemCheckBoxSQLActionPerformed
 
     
     /**
