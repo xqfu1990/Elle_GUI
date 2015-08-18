@@ -241,44 +241,44 @@ public class Tab implements ITableConstants{
         
         String output;
         
-//        switch (getTableName()) {
-//            case ASSIGNMENTS_TABLE_NAME:
-//                output = "<html><pre>"
-//                       + "          Number of records shown: " + getRecordsShown() 
-//                  + "<br/> Number of records in Assignments: " + getTotalRecords()
-//                     + "</pre></html>";
-//                break;
-//            case REPORTS_TABLE_NAME:
-//                output = "<html><pre>"
-//                       + "      Number of records shown: " + getRecordsShown() 
-//                  + "<br/> Number of records in Reports: " + getTotalRecords() 
-//                     + "</pre></html>";
-//                break;
-//            case ARCHIVE_TABLE_NAME:
-//                output = "<html><pre>"
-//                       + "      Number of records shown: " + getRecordsShown() 
-//                  + "<br/> Number of records in Archive: " + getTotalRecords() 
-//                     + "</pre></html>";
-//                break;
-//            default:
-//                // this means an invalid table name constant was passed
-//                // this exception will be handled and thrown here
-//                // the program will still run and show the stack trace for debugging
-//                output = "<html><pre>"
-//                       + "*******ATTENTION*******"
-//                  + "<br/>Not a valid table name constant entered"
-//                     + "</pre></html>";
-//                try {
-//                    String errorMessage = "ERROR: unknown table";
-//                    throw new NoSuchFieldException(errorMessage);
-//                } catch (NoSuchFieldException ex) {
-//                    // post to log.txt
-//                    ELLE_GUI_Frame.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
-//                    ex.printStackTrace();
-//                }
-//        
-//                break;
-//        }
+        switch (getTableName()) {
+            case POSITIONS_TABLE_NAME:
+                output = "<html><pre>"
+                       + "          Number of records shown: " + getRecordsShown() 
+                  + "<br/> Number of records in Assignments: " + getTotalRecords()
+                     + "</pre></html>";
+                break;
+            case TRADES_TABLE_NAME:
+                output = "<html><pre>"
+                       + "      Number of records shown: " + getRecordsShown() 
+                  + "<br/> Number of records in Reports: " + getTotalRecords() 
+                     + "</pre></html>";
+                break;
+            case ALLOCATIONS_TABLE_NAME:
+                output = "<html><pre>"
+                       + "      Number of records shown: " + getRecordsShown() 
+                  + "<br/> Number of records in Archive: " + getTotalRecords() 
+                     + "</pre></html>";
+                break;
+            default:
+                // this means an invalid table name constant was passed
+                // this exception will be handled and thrown here
+                // the program will still run and show the stack trace for debugging
+                output = "<html><pre>"
+                       + "*******ATTENTION*******"
+                  + "<br/>Not a valid table name constant entered"
+                     + "</pre></html>";
+                try {
+                    String errorMessage = "ERROR: unknown table";
+                    throw new NoSuchFieldException(errorMessage);
+                } catch (NoSuchFieldException ex) {
+                    // post to log.txt
+                    ELLE_GUI_Frame.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
+                    ex.printStackTrace();
+                }
+        
+                break;
+        }
         
         output = "Records here : 00000000";
         return output;

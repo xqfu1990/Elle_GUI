@@ -60,7 +60,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     // tables
     private JTable positions;
     private JTable trades;
-    private JTable allocations;
+    //private JTable allocations;
 
     /**
      * ELLE_GUI_Frame
@@ -84,27 +84,27 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // create tabName objects -> this has to be before initcomponents();
         tabs.put(POSITIONS_TABLE_NAME, new Tab());
         tabs.put(TRADES_TABLE_NAME, new Tab());
-        tabs.put(ALLOCATIONS_TABLE_NAME, new Tab());
+//        tabs.put(ALLOCATIONS_TABLE_NAME, new Tab());
         
         // initialize tables
         positions = new JTable();
         trades = new JTable();
-        allocations = new JTable();
+        //allocations = new JTable();
         
         // set table names 
         tabs.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
         tabs.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
-        tabs.get(ALLOCATIONS_TABLE_NAME).setTableName(ALLOCATIONS_TABLE_NAME);
+//        tabs.get(ALLOCATIONS_TABLE_NAME).setTableName(ALLOCATIONS_TABLE_NAME);
         
         // set names to tables (this was in tabbedPanelChanged method)
         positions.setName(POSITIONS_TABLE_NAME);
         trades.setName(TRADES_TABLE_NAME);
-        allocations.setName(ALLOCATIONS_TABLE_NAME);
+        //allocations.setName(ALLOCATIONS_TABLE_NAME);
         
         // set tables to tabName objects
         tabs.get(POSITIONS_TABLE_NAME).setTable(positions);
         tabs.get(TRADES_TABLE_NAME).setTable(trades);
-        tabs.get(ALLOCATIONS_TABLE_NAME).setTable(allocations);
+        //tabs.get(ALLOCATIONS_TABLE_NAME).setTable(allocations);
         
         // set array variable of stored column names of the tables
         // this is just to store and use the information
@@ -112,12 +112,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // through properties in the gui design tabName
         tabs.get(POSITIONS_TABLE_NAME).setTableColNames(positions);
         tabs.get(TRADES_TABLE_NAME).setTableColNames(trades);
-        tabs.get(ALLOCATIONS_TABLE_NAME).setTableColNames(allocations);
+        //tabs.get(ALLOCATIONS_TABLE_NAME).setTableColNames(allocations);
         
         // set column width percents to tables of the tabName objects
         tabs.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
         tabs.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
-        tabs.get(ALLOCATIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_ALLOCATIONS);
+//        tabs.get(ALLOCATIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_ALLOCATIONS);
         
         // this sets the KeyboardFocusManger
         //setKeyboardFocusManager();
@@ -126,7 +126,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // must be before setting ColumnPopupMenu because this is its parameter
         tabs.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(positions));
         tabs.get(TRADES_TABLE_NAME).setFilter(new TableFilter(trades));
-        tabs.get(ALLOCATIONS_TABLE_NAME).setFilter(new TableFilter(allocations));
+        //tabs.get(ALLOCATIONS_TABLE_NAME).setFilter(new TableFilter(allocations));
         
         // initialize columnPopupMenu 
         // - must be before setTerminalFunctions is called
@@ -135,8 +135,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(POSITIONS_TABLE_NAME).getFilter()));
         tabs.get(TRADES_TABLE_NAME)
                 .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(TRADES_TABLE_NAME).getFilter()));
-        tabs.get(ALLOCATIONS_TABLE_NAME)
-                .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(ALLOCATIONS_TABLE_NAME).getFilter()));
+//        tabs.get(ALLOCATIONS_TABLE_NAME)
+//                .setColumnPopupMenu(new ColumnPopupMenu(tabs.get(ALLOCATIONS_TABLE_NAME).getFilter()));
         
         // load data from database to tables
         loadTables(tabs);
@@ -145,41 +145,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // this should only need to be called once at start up of Analyster.
         // total counts are removed or added in the Tab class
         initTotalRowCounts(tabs);
-        
-        
-        
-        /**********************************************************************
-         * ************************ TESTING ***********************************
-         **********************************************************************/
-        // make a test table
-        String[] columnNames = {"First Name",
-                        "Last Name",
-                        "Sport",
-                        "# of Years",
-                        "Vegetarian"};
-        
-        Object[][] data = {
-            {"Kathy", "Smith",
-             "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-             "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-             "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-             "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-             "Pool", new Integer(10), new Boolean(false)}
-        };
-        
-        JTable table = new JTable(data, columnNames);
-        table.setVisible(true);
-        
-        JScrollPane scroll = new JScrollPane(table);
-        scroll.setVisible(true);
-        
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
-        panelShowTables.setVisible(true);
     }
 
     /**
@@ -192,7 +157,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void initComponents() {
 
         panelCTRLPanel = new javax.swing.JPanel();
-        btnPositions = new javax.swing.JButton();
         btnTrades = new javax.swing.JButton();
         btnAllocations = new javax.swing.JButton();
         btnSymbol = new javax.swing.JButton();
@@ -205,6 +169,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         textFieldStartDate = new javax.swing.JTextField();
         textFieldEndDate = new javax.swing.JTextField();
         btnClearAllFilters = new java.awt.Button();
+        btnPositions = new javax.swing.JButton();
         panelSQL = new javax.swing.JPanel();
         scrollPaneSQL = new javax.swing.JScrollPane();
         textAreaSQL = new javax.swing.JTextArea();
@@ -245,16 +210,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuOther = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnPositions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
-        btnPositions.setText("Positions");
-        btnPositions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnPositions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnPositions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPositionsActionPerformed(evt);
-            }
-        });
 
         btnTrades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
         btnTrades.setText("Trades");
@@ -322,19 +277,28 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
+        btnPositions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button1.png"))); // NOI18N
+        btnPositions.setText("Positions");
+        btnPositions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPositions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPositions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPositionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelCTRLPanelLayout = new javax.swing.GroupLayout(panelCTRLPanel);
         panelCTRLPanel.setLayout(panelCTRLPanelLayout);
         panelCTRLPanelLayout.setHorizontalGroup(
             panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addComponent(btnPositions)
+                        .addComponent(btnPositions, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnTrades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelNumOfRecords)))
+                    .addComponent(labelNumOfRecords))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAllocations)
                 .addGap(334, 334, 334)
@@ -365,11 +329,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnTrades)
-                            .addComponent(btnAllocations)
-                            .addComponent(btnPositions))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnAllocations)
+                        .addGap(0, 53, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createSequentialGroup()
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
@@ -388,7 +349,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(checkBoxDateRange)
-                            .addComponent(checkBoxSymbol))))
+                            .addComponent(checkBoxSymbol)))
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPositions)
+                            .addComponent(btnTrades))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -396,8 +362,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                     .addComponent(btnClearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
-        btnPositions.getAccessibleContext().setAccessibleDescription("");
 
         scrollPaneSQL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -459,7 +423,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelShowTablesLayout.setVerticalGroup(
             panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGap(0, 381, Short.MAX_VALUE)
         );
 
         menuFile.setText("File");
@@ -687,16 +651,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
-
-        // add positions table to the panel
-        JScrollPane scroll = new JScrollPane(positions);
-        panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
-        
-    }//GEN-LAST:event_btnPositionsActionPerformed
-
     private void btnTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTradesActionPerformed
 
         // add positions table to the panel
@@ -740,11 +694,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllocationsActionPerformed
 
-        // add positions table to the panel
-        JScrollPane scroll = new JScrollPane(allocations);
+        // empty for now
         panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
         
     }//GEN-LAST:event_btnAllocationsActionPerformed
 
@@ -835,6 +786,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void menuItemTL8949ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTL8949ActionPerformed
 
     }//GEN-LAST:event_menuItemTL8949ActionPerformed
+
+    private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
+        
+        // add positions table to the panel
+        JScrollPane scroll = new JScrollPane(positions);
+        panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        
+    }//GEN-LAST:event_btnPositionsActionPerformed
 
     
     /**
