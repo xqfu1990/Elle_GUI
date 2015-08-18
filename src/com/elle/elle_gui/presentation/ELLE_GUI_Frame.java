@@ -223,6 +223,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         btnAllocations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/button3.png"))); // NOI18N
         btnAllocations.setText("Allocations");
+        btnAllocations.setEnabled(false);
         btnAllocations.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAllocations.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnAllocations.addActionListener(new java.awt.event.ActionListener() {

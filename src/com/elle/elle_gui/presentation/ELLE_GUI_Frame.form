@@ -399,6 +399,7 @@
               <Image iconType="3" name="/com/elle/elle_gui/images/button3.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Allocations"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
