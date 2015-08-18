@@ -51,6 +51,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private Map<String,Tab> tabs; // stores individual tab objects 
     private static Statement statement;
     private String database;
+    private String selectedTab;
     
     // components
     private static ELLE_GUI_Frame instance;
@@ -60,7 +61,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     // tables
     private JTable positions;
     private JTable trades;
-    //private JTable allocations;
+    private JTable allocations;   // not implemented yet
 
     /**
      * ELLE_GUI_Frame
@@ -145,6 +146,17 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // this should only need to be called once at start up of Analyster.
         // total counts are removed or added in the Tab class
         initTotalRowCounts(tabs);
+        
+        // add positions table to the panel (initial start up)
+        setSelectedTab(POSITIONS_TABLE_NAME);
+        JScrollPane scroll = new JScrollPane(positions);
+        panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        Tab tab = tabs.get(POSITIONS_TABLE_NAME);
+        String recordsText = tab.getRecordsLabel();
+        labelRecords.setText(recordsText);
+        
     }
 
     /**
@@ -169,7 +181,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         textFieldEndDate = new javax.swing.JTextField();
         btnClearAllFilters = new java.awt.Button();
         btnPositions = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labelRecords = new javax.swing.JLabel();
         panelSQL = new javax.swing.JPanel();
         scrollPaneSQL = new javax.swing.JScrollPane();
         textAreaSQL = new javax.swing.JTextArea();
@@ -285,7 +297,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
-        jLabel1.setText("records label");
+        labelRecords.setText("records label");
 
         javax.swing.GroupLayout panelCTRLPanelLayout = new javax.swing.GroupLayout(panelCTRLPanel);
         panelCTRLPanel.setLayout(panelCTRLPanelLayout);
@@ -296,7 +308,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(294, 294, 294)
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
@@ -355,7 +367,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                             .addComponent(checkBoxSymbol))
                         .addGap(9, 9, 9)
                         .addComponent(btnClearAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -649,11 +661,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTradesActionPerformed
 
-        // add positions table to the panel
+        // add Trades table to the panel 
+        setSelectedTab(TRADES_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(trades);
         panelShowTables.removeAll();
         panelShowTables.setLayout(new BorderLayout());
         panelShowTables.add(scroll, BorderLayout.CENTER);
+        Tab tab = tabs.get(TRADES_TABLE_NAME);
+        String recordsText = tab.getRecordsLabel();
+        labelRecords.setText(recordsText);
+        
     }//GEN-LAST:event_btnTradesActionPerformed
 
     private void menuItemDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDummyActionPerformed
@@ -690,8 +707,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnAllocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllocationsActionPerformed
 
-        // empty for now
+        // add allocations table to the panel 
+        setSelectedTab(ALLOCATIONS_TABLE_NAME);
+        JScrollPane scroll = new JScrollPane(allocations);
         panelShowTables.removeAll();
+        panelShowTables.setLayout(new BorderLayout());
+        panelShowTables.add(scroll, BorderLayout.CENTER);
+        Tab tab = tabs.get(ALLOCATIONS_TABLE_NAME);
+        String recordsText = tab.getRecordsLabel();
+        labelRecords.setText(recordsText);
         
     }//GEN-LAST:event_btnAllocationsActionPerformed
 
@@ -759,7 +783,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // clear all filters
         //String tabName = getSelectedTabName();
-        String tabName = ALLOCATIONS_TABLE_NAME; //testing
+        String tabName = getSelectedTab(); //testing
         Tab tab = tabs.get(tabName);
         TableFilter filter = tab.getFilter();
         filter.clearAllFilters();
@@ -768,7 +792,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // set label record information
         String recordsLabel = tab.getRecordsLabel();
-        jLabel1.setText(recordsLabel); 
+        labelRecords.setText(recordsLabel); 
     }//GEN-LAST:event_btnClearAllFiltersActionPerformed
 
     private void menuItemShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowMatchesActionPerformed
@@ -785,11 +809,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
         
-        // add positions table to the panel
+        // add allocations table to the panel 
+        setSelectedTab(POSITIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(positions);
         panelShowTables.removeAll();
         panelShowTables.setLayout(new BorderLayout());
         panelShowTables.add(scroll, BorderLayout.CENTER);
+        Tab tab = tabs.get(POSITIONS_TABLE_NAME);
+        String recordsText = tab.getRecordsLabel();
+        labelRecords.setText(recordsText);
         
     }//GEN-LAST:event_btnPositionsActionPerformed
 
@@ -815,7 +843,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             
             if(isFirstTabRecordLabelSet == false){
                 String recordsLabel = tab.getRecordsLabel();
-                jLabel1.setText(recordsLabel);
+                labelRecords.setText(recordsLabel);
                 isFirstTabRecordLabelSet = true; // now its set
             }
         }
@@ -1105,13 +1133,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if (rowIndex != -1) {
             Object selectedField = table.getValueAt(rowIndex, columnIndex);
             //String tabName = getSelectedTabName();
-            String tabName = ALLOCATIONS_TABLE_NAME; //testing
+            String tabName = getSelectedTab(); //testing
             Tab tab = tabs.get(tabName);
             TableFilter filter = tab.getFilter();
             filter.addFilterItem(columnIndex, selectedField);
             filter.applyFilter();
             String recordsLabel = tab.getRecordsLabel();
-            jLabel1.setText(recordsLabel); 
+            labelRecords.setText(recordsLabel); 
         }
     }
 
@@ -1124,7 +1152,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
         //String tabName = getSelectedTabName();
-        String tabName = ALLOCATIONS_TABLE_NAME; //testing
+        String tabName = getSelectedTab(); //testing
         Tab tab = tabs.get(tabName);
         TableFilter filter = tab.getFilter();
         filter.clearColFilter(columnIndex);
@@ -1132,7 +1160,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // update records label
         String recordsLabel = tab.getRecordsLabel();
-        jLabel1.setText(recordsLabel);  
+        labelRecords.setText(recordsLabel);  
     }
     
     /**
@@ -1246,7 +1274,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     }
 
     public JLabel getLabelNumOfRecords() {
-        return jLabel1;
+        return labelRecords;
     }
 
     public LogWindow getLogWindow() {
@@ -1256,6 +1284,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     public void setLogWindow(LogWindow logWindow) {
         this.logWindow = logWindow;
     }
+
+    public String getSelectedTab() {
+        return selectedTab;
+    }
+
+    public void setSelectedTab(String selectedTab) {
+        this.selectedTab = selectedTab;
+    }
+    
+    
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1269,8 +1307,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelHyphen;
+    private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuConnections;
     private javax.swing.JMenu menuEdit;

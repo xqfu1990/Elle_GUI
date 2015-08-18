@@ -287,7 +287,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="300" max="-2" attributes="0"/>
+                          <Component id="labelRecords" min="-2" pref="300" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -365,7 +365,7 @@
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           <Component id="btnClearAllFilters" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="labelRecords" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -474,7 +474,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPositionsActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="labelRecords">
           <Properties>
             <Property name="text" type="java.lang.String" value="records label"/>
           </Properties>
