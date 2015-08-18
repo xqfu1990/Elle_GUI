@@ -211,8 +211,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuLoad = new javax.swing.JMenu();
         menuItemLoadFile = new javax.swing.JMenuItem();
         menuView = new javax.swing.JMenu();
-        menuItemLog = new javax.swing.JMenuItem();
-        menuItemSqlCommand = new javax.swing.JMenuItem();
+        MenuItemCheckBoxLog = new javax.swing.JCheckBoxMenuItem();
+        MenuItemCheckBoxSQL = new javax.swing.JCheckBoxMenuItem();
         menuItemTrades = new javax.swing.JMenuItem();
         menuItemPositions = new javax.swing.JMenuItem();
         menuItemIB = new javax.swing.JMenuItem();
@@ -341,16 +341,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         panelCTRLPanelLayout.setVerticalGroup(
             panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnPositions)
                             .addComponent(btnAllocations)
                             .addComponent(btnTrades))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(labelHyphen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -431,7 +430,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelShowTablesLayout.setVerticalGroup(
             panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
+            .addGap(0, 336, Short.MAX_VALUE)
         );
 
         menuFile.setText("File");
@@ -570,21 +569,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         menuView.setText("View");
 
-        menuItemLog.setText("Log");
-        menuItemLog.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemLogActionPerformed(evt);
-            }
-        });
-        menuView.add(menuItemLog);
+        MenuItemCheckBoxLog.setSelected(true);
+        MenuItemCheckBoxLog.setText("Log");
+        menuView.add(MenuItemCheckBoxLog);
 
-        menuItemSqlCommand.setText("SQL Command");
-        menuItemSqlCommand.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemSqlCommandActionPerformed(evt);
-            }
-        });
-        menuView.add(menuItemSqlCommand);
+        MenuItemCheckBoxSQL.setSelected(true);
+        MenuItemCheckBoxSQL.setText("SQL Command");
+        menuView.add(MenuItemCheckBoxSQL);
 
         menuItemTrades.setText("Display Trades-All Fields");
         menuItemTrades.addActionListener(new java.awt.event.ActionListener() {
@@ -719,10 +710,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
     }//GEN-LAST:event_btnAllocationsActionPerformed
 
-    private void menuItemLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogActionPerformed
-
-    }//GEN-LAST:event_menuItemLogActionPerformed
-
     private void menuItemPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPositionsActionPerformed
 
     }//GEN-LAST:event_menuItemPositionsActionPerformed
@@ -738,10 +725,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void menuItemLoadsTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadsTableActionPerformed
 
     }//GEN-LAST:event_menuItemLoadsTableActionPerformed
-
-    private void menuItemSqlCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSqlCommandActionPerformed
-
-    }//GEN-LAST:event_menuItemSqlCommandActionPerformed
 
     private void menuItemConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemConnectionActionPerformed
 
@@ -1297,6 +1280,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBoxMenuItem MenuItemCheckBoxLog;
+    private javax.swing.JCheckBoxMenuItem MenuItemCheckBoxSQL;
     private javax.swing.JButton btnAllocations;
     private java.awt.Button btnClearAllFilters;
     private javax.swing.JButton btnClearSQL;
@@ -1323,7 +1308,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenuItem menuItemLoadFile;
     private javax.swing.JMenuItem menuItemLoadsTable;
     private javax.swing.JMenuItem menuItemLocal;
-    private javax.swing.JMenuItem menuItemLog;
     private javax.swing.JMenuItem menuItemPositions;
     private javax.swing.JMenuItem menuItemPrintDisplayWindow;
     private javax.swing.JMenuItem menuItemPrintGUI;
@@ -1331,7 +1315,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenuItem menuItemReconcile;
     private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JMenuItem menuItemShowMatches;
-    private javax.swing.JMenuItem menuItemSqlCommand;
     private javax.swing.JMenuItem menuItemTL;
     private javax.swing.JMenuItem menuItemTL8949;
     private javax.swing.JMenuItem menuItemTrades;
