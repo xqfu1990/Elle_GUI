@@ -161,7 +161,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         btnAllocations = new javax.swing.JButton();
         btnSymbol = new javax.swing.JButton();
         btnDateRange = new javax.swing.JButton();
-        labelNumOfRecords = new javax.swing.JLabel();
         checkBoxSymbol = new javax.swing.JCheckBox();
         checkBoxDateRange = new javax.swing.JCheckBox();
         labelHyphen = new javax.swing.JLabel();
@@ -170,6 +169,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         textFieldEndDate = new javax.swing.JTextField();
         btnClearAllFilters = new java.awt.Button();
         btnPositions = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         panelSQL = new javax.swing.JPanel();
         scrollPaneSQL = new javax.swing.JScrollPane();
         textAreaSQL = new javax.swing.JTextArea();
@@ -251,9 +251,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
-        labelNumOfRecords.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        labelNumOfRecords.setText("Number of Records: 0");
-
         checkBoxSymbol.setText("Symbol");
         checkBoxSymbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,37 +285,41 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
+        jLabel1.setText("records label");
+
         javax.swing.GroupLayout panelCTRLPanelLayout = new javax.swing.GroupLayout(panelCTRLPanel);
         panelCTRLPanel.setLayout(panelCTRLPanelLayout);
         panelCTRLPanelLayout.setHorizontalGroup(
             panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addComponent(btnPositions, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTrades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(labelNumOfRecords))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAllocations)
-                .addGap(334, 334, 334)
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(checkBoxSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(294, 294, 294)
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                                .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(checkBoxSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addComponent(btnPositions, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTrades, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAllocations)))
                 .addGap(40, 40, 40)
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxDateRange)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addComponent(textFieldStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelHyphen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                                .addComponent(labelHyphen, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textFieldEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -330,37 +331,31 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addComponent(btnAllocations)
-                        .addGap(0, 53, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createSequentialGroup()
-                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelHyphen)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(textFieldStartDate)
-                                    .addComponent(textFieldEndDate))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkBoxDateRange)
-                            .addComponent(checkBoxSymbol)))
-                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnPositions)
+                            .addComponent(btnAllocations)
                             .addComponent(btnTrades))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelCTRLPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelHyphen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDateRange, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textFieldSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textFieldStartDate)
+                            .addComponent(textFieldEndDate))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(labelNumOfRecords))
-                    .addComponent(btnClearAllFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelCTRLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkBoxDateRange)
+                            .addComponent(checkBoxSymbol))
+                        .addGap(9, 9, 9)
+                        .addComponent(btnClearAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -424,7 +419,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelShowTablesLayout.setVerticalGroup(
             panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 381, Short.MAX_VALUE)
+            .addGap(0, 337, Short.MAX_VALUE)
         );
 
         menuFile.setText("File");
@@ -773,7 +768,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // set label record information
         String recordsLabel = tab.getRecordsLabel();
-        labelNumOfRecords.setText(recordsLabel); 
+        jLabel1.setText(recordsLabel); 
     }//GEN-LAST:event_btnClearAllFiltersActionPerformed
 
     private void menuItemShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowMatchesActionPerformed
@@ -820,7 +815,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             
             if(isFirstTabRecordLabelSet == false){
                 String recordsLabel = tab.getRecordsLabel();
-                labelNumOfRecords.setText(recordsLabel);
+                jLabel1.setText(recordsLabel);
                 isFirstTabRecordLabelSet = true; // now its set
             }
         }
@@ -1116,7 +1111,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             filter.addFilterItem(columnIndex, selectedField);
             filter.applyFilter();
             String recordsLabel = tab.getRecordsLabel();
-            labelNumOfRecords.setText(recordsLabel); 
+            jLabel1.setText(recordsLabel); 
         }
     }
 
@@ -1137,7 +1132,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // update records label
         String recordsLabel = tab.getRecordsLabel();
-        labelNumOfRecords.setText(recordsLabel);  
+        jLabel1.setText(recordsLabel);  
     }
     
     /**
@@ -1251,7 +1246,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     }
 
     public JLabel getLabelNumOfRecords() {
-        return labelNumOfRecords;
+        return jLabel1;
     }
 
     public LogWindow getLogWindow() {
@@ -1274,8 +1269,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelHyphen;
-    private javax.swing.JLabel labelNumOfRecords;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuConnections;
     private javax.swing.JMenu menuEdit;
