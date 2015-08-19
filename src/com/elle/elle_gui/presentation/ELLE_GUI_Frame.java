@@ -145,6 +145,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // total counts are removed or added in the Tab class
         initTotalRowCounts(tabs);
         
+        // hide sql panel by default
+        panelSQL.setVisible(false);
+        this.setSize(this.getWidth(), 493);
+        
         // add positions table to the panel (initial start up)
         setSelectedTab(POSITIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(positions);
