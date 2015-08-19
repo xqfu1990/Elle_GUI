@@ -9,7 +9,6 @@ import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
 import com.elle.elle_gui.logic.TableFilter;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -31,7 +30,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.text.AbstractDocument;
 
@@ -211,8 +209,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuLoad = new javax.swing.JMenu();
         menuItemLoadFile = new javax.swing.JMenuItem();
         menuView = new javax.swing.JMenu();
-        MenuItemCheckBoxLog = new javax.swing.JCheckBoxMenuItem();
-        MenuItemCheckBoxSQL = new javax.swing.JCheckBoxMenuItem();
+        menuItemCheckBoxLog = new javax.swing.JCheckBoxMenuItem();
+        menuItemCheckBoxSQL = new javax.swing.JCheckBoxMenuItem();
         menuItemTrades = new javax.swing.JMenuItem();
         menuItemPositions = new javax.swing.JMenuItem();
         menuItemIB = new javax.swing.JMenuItem();
@@ -569,18 +567,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         menuView.setText("View");
 
-        MenuItemCheckBoxLog.setSelected(true);
-        MenuItemCheckBoxLog.setText("Log");
-        menuView.add(MenuItemCheckBoxLog);
+        menuItemCheckBoxLog.setSelected(true);
+        menuItemCheckBoxLog.setText("Log");
+        menuView.add(menuItemCheckBoxLog);
 
-        MenuItemCheckBoxSQL.setSelected(true);
-        MenuItemCheckBoxSQL.setText("SQL Command");
-        MenuItemCheckBoxSQL.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCheckBoxSQL.setSelected(true);
+        menuItemCheckBoxSQL.setText("SQL Command");
+        menuItemCheckBoxSQL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemCheckBoxSQLActionPerformed(evt);
+                menuItemCheckBoxSQLActionPerformed(evt);
             }
         });
-        menuView.add(MenuItemCheckBoxSQL);
+        menuView.add(menuItemCheckBoxSQL);
 
         menuItemTrades.setText("Display Trades-All Fields");
         menuItemTrades.addActionListener(new java.awt.event.ActionListener() {
@@ -809,7 +807,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
     }//GEN-LAST:event_btnPositionsActionPerformed
 
-    private void MenuItemCheckBoxSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCheckBoxSQLActionPerformed
+    private void menuItemCheckBoxSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckBoxSQLActionPerformed
         /**
          * ************* Strange behavior *************************
          * The jPanelSQL.getHeight() is the height before 
@@ -828,19 +826,19 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
          * jPanelSQL.getHeight(); // this returns 0
          */
         
-        if(MenuItemCheckBoxSQL.isSelected()){
+        if(menuItemCheckBoxSQL.isSelected()){
             
             // show sql panel
             panelSQL.setVisible(true);
-            this.setSize(this.getWidth(), 621 + 128); 
+            this.setSize(this.getWidth(), 493 + 128); 
             
         }else{
             
             // hide sql panel
             panelSQL.setVisible(false);
-            this.setSize(this.getWidth(), 621);
+            this.setSize(this.getWidth(), 493);
         }
-    }//GEN-LAST:event_MenuItemCheckBoxSQLActionPerformed
+    }//GEN-LAST:event_menuItemCheckBoxSQLActionPerformed
 
     
     /**
@@ -1318,8 +1316,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     @SuppressWarnings("unused")
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem MenuItemCheckBoxLog;
-    private javax.swing.JCheckBoxMenuItem MenuItemCheckBoxSQL;
     private javax.swing.JButton btnAllocations;
     private java.awt.Button btnClearAllFilters;
     private javax.swing.JButton btnClearSQL;
@@ -1339,6 +1335,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenu menuFind;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAWS;
+    private javax.swing.JCheckBoxMenuItem menuItemCheckBoxLog;
+    private javax.swing.JCheckBoxMenuItem menuItemCheckBoxSQL;
     private javax.swing.JMenuItem menuItemConnection;
     private javax.swing.JMenuItem menuItemDummy;
     private javax.swing.JMenuItem menuItemIB;
