@@ -1,7 +1,6 @@
 
 package com.elle.elle_gui.logic;
 
-import com.elle.elle_gui.database.ModifiedTableData;
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
 import javax.swing.JTable;
 
@@ -28,8 +27,6 @@ public class Tab implements ITableConstants{
     private String[] searchFields;               // search combobox options
     private String[] batchEditFields;            // batch edit combobox options
     private ColumnPopupMenu ColumnPopupMenu;     // column filter pop up menu
-    private JTableCellRenderer cellRenderer;     // table cell renderer
-    private ModifiedTableData tableData;         // modified table data object
     
     // these items are enabled differently for each tab
     private boolean activateRecordMenuItemEnabled; // enables activate record menu item
@@ -192,22 +189,6 @@ public class Tab implements ITableConstants{
 
     public void setBatchEditBtnVisible(boolean batchEditBtnVisible) {
         this.batchEditBtnVisible = batchEditBtnVisible;
-    }
-
-    public JTableCellRenderer getCellRenderer() {
-        return cellRenderer;
-    }
-
-    public void setCellRenderer(JTableCellRenderer cellRenderer) {
-        this.cellRenderer = cellRenderer;
-    }
-
-    public ModifiedTableData getTableData() {
-        return tableData;
-    }
-
-    public void setTableData(ModifiedTableData tableData) {
-        this.tableData = tableData;
     }
     
 
