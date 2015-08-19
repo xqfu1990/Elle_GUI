@@ -13,6 +13,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -572,6 +574,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView.setText("View");
 
         menuItemCheckBoxLog.setText("Log");
+        menuItemCheckBoxLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCheckBoxLogActionPerformed(evt);
+            }
+        });
         menuView.add(menuItemCheckBoxLog);
 
         menuItemCheckBoxSQL.setText("SQL Command");
@@ -841,6 +848,25 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             this.setSize(this.getWidth(), 493);
         }
     }//GEN-LAST:event_menuItemCheckBoxSQLActionPerformed
+
+    private void menuItemCheckBoxLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckBoxLogActionPerformed
+        if(menuItemCheckBoxLog.isSelected()){
+            
+            logWindow.setLocationRelativeTo(this);
+            logWindow.setVisible(true); // show log window
+            
+            // remove check if window is closed from the window
+            logWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        menuItemCheckBoxLog.setSelected(false);
+                    }
+                });
+        }else{
+            // hide log window
+            logWindow.setVisible(false);
+        }
+    }//GEN-LAST:event_menuItemCheckBoxLogActionPerformed
 
     
     /**
