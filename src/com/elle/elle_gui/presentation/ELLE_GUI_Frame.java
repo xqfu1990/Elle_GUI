@@ -195,9 +195,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuConnections = new javax.swing.JMenu();
-        menuItemLocal = new javax.swing.JMenuItem();
         menuItemAWS = new javax.swing.JMenuItem();
-        menuItemDummy = new javax.swing.JMenuItem();
+        menuItemPupone = new javax.swing.JMenuItem();
+        menuItemLocal = new javax.swing.JMenuItem();
         menuItemRead = new javax.swing.JMenuItem();
         menuPrint = new javax.swing.JMenu();
         menuItemPrintGUI = new javax.swing.JMenuItem();
@@ -441,15 +441,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         menuConnections.setText("Select Connections");
 
-        menuItemLocal.setText("Local");
-        menuItemLocal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemLocalActionPerformed(evt);
-            }
-        });
-        menuConnections.add(menuItemLocal);
-
         menuItemAWS.setText("AWS");
+        menuItemAWS.setEnabled(false);
         menuItemAWS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemAWSActionPerformed(evt);
@@ -457,13 +450,21 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         });
         menuConnections.add(menuItemAWS);
 
-        menuItemDummy.setText("Dummy");
-        menuItemDummy.addActionListener(new java.awt.event.ActionListener() {
+        menuItemPupone.setText("Pupone");
+        menuItemPupone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemDummyActionPerformed(evt);
+                menuItemPuponeActionPerformed(evt);
             }
         });
-        menuConnections.add(menuItemDummy);
+        menuConnections.add(menuItemPupone);
+
+        menuItemLocal.setText("Local");
+        menuItemLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLocalActionPerformed(evt);
+            }
+        });
+        menuConnections.add(menuItemLocal);
 
         menuFile.add(menuConnections);
 
@@ -676,12 +677,20 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
     }//GEN-LAST:event_btnTradesActionPerformed
 
-    private void menuItemDummyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDummyActionPerformed
+    private void menuItemPuponeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPuponeActionPerformed
 
-    }//GEN-LAST:event_menuItemDummyActionPerformed
+        loginWindow = new LoginWindow();
+        loginWindow.getComboBoxServer().setSelectedIndex(0);
+        loginWindow.setLocationRelativeTo(this);
+        loginWindow.setVisible(true);
+    }//GEN-LAST:event_menuItemPuponeActionPerformed
 
     private void menuItemLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLocalActionPerformed
 
+        loginWindow = new LoginWindow();
+        loginWindow.getComboBoxServer().setSelectedIndex(1);
+        loginWindow.setLocationRelativeTo(this);
+        loginWindow.setVisible(true);
     }//GEN-LAST:event_menuItemLocalActionPerformed
 
     private void menuItemAWSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAWSActionPerformed
@@ -1366,7 +1375,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JCheckBoxMenuItem menuItemCheckBoxLog;
     private javax.swing.JCheckBoxMenuItem menuItemCheckBoxSQL;
     private javax.swing.JMenuItem menuItemConnection;
-    private javax.swing.JMenuItem menuItemDummy;
     private javax.swing.JMenuItem menuItemIB;
     private javax.swing.JMenuItem menuItemIB8949;
     private javax.swing.JMenuItem menuItemLoadFile;
@@ -1375,6 +1383,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenuItem menuItemPositions;
     private javax.swing.JMenuItem menuItemPrintDisplayWindow;
     private javax.swing.JMenuItem menuItemPrintGUI;
+    private javax.swing.JMenuItem menuItemPupone;
     private javax.swing.JMenuItem menuItemRead;
     private javax.swing.JMenuItem menuItemReconcile;
     private javax.swing.JMenuItem menuItemSave;

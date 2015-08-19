@@ -411,6 +411,12 @@ public class LoginWindow extends JFrame {
             passwordFieldPW.setText("");
         }
     }
+
+    public JComboBox getComboBoxServer() {
+        return comboBoxServer;
+    }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
