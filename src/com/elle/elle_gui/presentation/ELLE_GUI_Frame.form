@@ -167,13 +167,11 @@
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuItemCheckBoxLog">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Log"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuItemCheckBoxSQL">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="SQL Command"/>
               </Properties>
               <Events>

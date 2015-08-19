@@ -567,11 +567,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         menuView.setText("View");
 
-        menuItemCheckBoxLog.setSelected(true);
         menuItemCheckBoxLog.setText("Log");
         menuView.add(menuItemCheckBoxLog);
 
-        menuItemCheckBoxSQL.setSelected(true);
         menuItemCheckBoxSQL.setText("SQL Command");
         menuItemCheckBoxSQL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
