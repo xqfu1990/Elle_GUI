@@ -816,6 +816,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnClearSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSQLActionPerformed
 
+        ((AbstractDocument) textAreaSQL.getDocument())
+                .setDocumentFilter(new CreateDocumentFilter(0));
+        textAreaSQL.setText("Please input an SQL statement:\n>>");
+        ((AbstractDocument) textAreaSQL.getDocument())
+                .setDocumentFilter(new CreateDocumentFilter(33));
     }//GEN-LAST:event_btnClearSQLActionPerformed
 
     private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
