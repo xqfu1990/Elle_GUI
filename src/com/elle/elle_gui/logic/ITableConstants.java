@@ -22,17 +22,62 @@ public interface ITableConstants {
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
     
     // column width percent constants
-    public static final float[] COL_WIDTH_PER_POSITIONS = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    public static final float[] COL_WIDTH_PER_TRADES =    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static final float[] COL_WIDTH_PER_POSITIONS = { 
+        60, // filecode
+        70, // inputLine
+        45, // wash
+        60, // lineNum
+        165, // Lot_Time
+        40, // OCE
+        165, // OCE_Time
+        25, // LS
+        155, // Symbol
+        80, // Q
+        70, // Qori
+        90, // Adj_Price
+        75, // Adj_Basis
+        45, // Price
+        45, // Basis
+        40, // How
+        55, // Codes
+        65, // Account
+        65, // L_codes
+        65, // SecType
+        40, // Multi
+        85, // Underlying
+        85, // Expiry
+        75, // Strike
+        55, // O_Type
+        55 };// Notes
+    
+    public static final float[] COL_WIDTH_PER_TRADES = { 
+        160, // Trade_Time
+        30, // OC
+        155, // Symbol
+        85, // Q
+        90, // TotalQ
+        85, // Price
+        80, // CommTax
+        75, // Proceeds
+        75, // Basis
+        80, // Processed
+        175, // Lot_Time
+        85, // Realized_PL
+        65, // Codes
+        55, // Notes
+        65, // Account
+        60, // filecode
+        70, // inputLine
+        65, // SecType
+        40, // Multi
+        85, // Underlying
+        85, // Expiry
+        75, // Strike
+        55, // O_Type
+        65, // T_group
+        55, // Lnotes
+        65, // strategy
+        85 };// Xchange
     public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
     
-    // search fields for the comboBox for each table
-    public static final String[] ASSIGNMENTS_SEARCH_FIELDS = {"Symbol","Analyst"};
-    public static final String[] REPORTS_SEARCH_FIELDS = {"Symbol","Author"};
-    public static final String[] ARCHIVE_SEARCH_FIELDS = {"Symbol","Analyst"};
-    
-    // batch edit combobox selections for each table
-    public static final String[] ASSIGNMENTS_BATCHEDIT_CB_FIELDS = {"analyst", "priority", "dateAssigned", "notes", "symbol"};
-    public static final String[] REPORTS_BATCHEDIT_CB_FIELDS = {"author", "analysisDate", "notes", "symbol"};
-    public static final String[] ARCHIVE_BATCHEDIT_CB_FIELDS = {"analyst", "priority", "dateAssigned", "notes", "symbol"};
 }
