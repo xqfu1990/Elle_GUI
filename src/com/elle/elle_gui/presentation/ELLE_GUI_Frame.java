@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -792,6 +793,25 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
 
+        int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
+        String command = textAreaSQL.getText().substring(commandStart);  
+        if (command.toLowerCase().contains("select")){
+            
+            // display on current showingtable
+            String tabName = getSelectedTabName();
+            Tab tab = tabs.get(tabName);
+            JTable table = tab.getTable();
+            
+            loadTable(command, table);
+        } else {
+            try {
+                    statement.executeUpdate(command);
+            } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+            } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEnterSQLActionPerformed
 
     private void btnClearSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSQLActionPerformed
