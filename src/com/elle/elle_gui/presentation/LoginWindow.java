@@ -32,6 +32,10 @@ public class LoginWindow extends JFrame {
     private EditDatabaseWindow editDatabaseList;
     private LogWindow logWindow;
     
+    /**
+     * CONSTRUCTOR
+     * This is used to initialize the application
+     */
     public LoginWindow() {
         
         // initialize
@@ -50,6 +54,24 @@ public class LoginWindow extends JFrame {
         textFieldUsername.setText("root");
         passwordFieldPW.setText("password");
         login();
+    }
+    
+    /**
+     * CONSTRUCTOR
+     * This is used when an instance of ELLE_GUI is already created 
+     * to create a new instance of ELLE_GUI
+     * from the connections menu item options.
+     */
+    public LoginWindow(ELLE_GUI_Frame elle_gui) {
+        
+        // initialize
+        initComponents();
+        this.elle_gui = elle_gui;
+        logWindow = elle_gui.getLogWindow(); // this is for reporting connections to log
+ 
+        // show window
+        this.setTitle("Log in");
+
     }
 
     /**
@@ -381,6 +403,11 @@ public class LoginWindow extends JFrame {
             logWindow.addMessageWithDate("Start to connect local database...");
             DBConnection.connect(selectedServer, selectedDB, userName, userPassword);
             logWindow.addMessageWithDate("Connect successfully!");
+            
+            // if elle gui existed make sure it gets disposed
+            if(elle_gui != null){
+                elle_gui.dispose();
+            }
             
             // create an Analyster object
             elle_gui = new ELLE_GUI_Frame();

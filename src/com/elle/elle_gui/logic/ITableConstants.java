@@ -22,8 +22,8 @@ public interface ITableConstants {
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
     
     // column width percent constants
-    public static final float[] COL_WIDTH_PER_POSITIONS = {35, 65, 80, 70, 99, 99};
-    public static final float[] COL_WIDTH_PER_TRADES = {35, 65, 80, 100, 160, 120, 123};
+    public static final float[] COL_WIDTH_PER_POSITIONS = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static final float[] COL_WIDTH_PER_TRADES =    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
     
     // search fields for the comboBox for each table

@@ -679,7 +679,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemPuponeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPuponeActionPerformed
 
-        loginWindow = new LoginWindow();
+        loginWindow = new LoginWindow(this);
         loginWindow.getComboBoxServer().setSelectedIndex(0);
         loginWindow.setLocationRelativeTo(this);
         loginWindow.setVisible(true);
@@ -687,7 +687,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLocalActionPerformed
 
-        loginWindow = new LoginWindow();
+        loginWindow = new LoginWindow(this);
         loginWindow.getComboBoxServer().setSelectedIndex(1);
         loginWindow.setLocationRelativeTo(this);
         loginWindow.setVisible(true);
