@@ -9,12 +9,16 @@ import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
 import com.elle.elle_gui.logic.TableFilter;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -33,6 +37,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
 
 /**
@@ -1225,60 +1230,17 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * @param width
      * @param table 
      */
-    public void setColumnFormat(float[] width, JTable table) {
-        
-        // Center column content
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        //LEFT column content
-        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
-        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        //Center column header
-        int widthFixedColumns = 0;
-        JTableHeader header = table.getTableHeader();
-//        if (!(header.getDefaultRenderer() instanceof AlignmentTableHeaderCellRenderer)) {
-//            header.setDefaultRenderer(new AlignmentTableHeaderCellRenderer(header.getDefaultRenderer()));
-//        }
+    public void setColumnFormat(float[] colWidths, JTable table) {
 
+        // this is needed for the horizontal scrollbar to appear
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//        switch (table.getName()) {
-//
-//            case REPORTS_TABLE_NAME: {
-//                int i;
-//                for (i = 0; i < width.length; i++) {
-//                    int pWidth = Math.round(width[i]);
-//                    table.getColumnModel().getColumn(i).setPreferredWidth(pWidth);
-//                    if (i >= width.length - 3) {
-//                        table.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
-//                    } else {
-//                        table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//                    }
-//                    widthFixedColumns += pWidth;
-//                }
-//                Double tw = jPanel5.getSize().getWidth();
-//                int twi = tw.intValue();
-//                table.getColumnModel().getColumn(width.length).setPreferredWidth(twi - (widthFixedColumns + 25));
-//                table.setMinimumSize(new Dimension(908, 300));
-//                table.setPreferredScrollableViewportSize(new Dimension(908, 300));
-//                break;
-//            }
-//            default:
-//                for (int i = 0; i < width.length; i++) {
-//                    int pWidth = Math.round(width[i]);
-//                    table.getColumnModel().getColumn(i).setPreferredWidth(pWidth);
-//                    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//                    widthFixedColumns += pWidth;
-//                }
-//                Double tw = jPanel5.getSize().getWidth();
-//                int twi = tw.intValue();
-//                table.getColumnModel().getColumn(width.length).setPreferredWidth(twi - (widthFixedColumns + 25));
-//                table.setMinimumSize(new Dimension(908, 300));
-//                table.setPreferredScrollableViewportSize(new Dimension(908, 300));
-//                break;
-//
-//        }
+        
+        for(int index = 0; index < table.getColumnCount(); index++){
+            int colWidth = (int)colWidths[index];
+            TableColumn column = table.getColumnModel().getColumn(index);
+            column.setPreferredWidth(colWidth);
+            column.setMinWidth(colWidth);
+        }
     }
     
     /**************************************************************************
