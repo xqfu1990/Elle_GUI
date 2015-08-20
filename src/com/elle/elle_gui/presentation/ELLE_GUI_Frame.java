@@ -762,6 +762,28 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSymbolActionPerformed
 
+        // get table column count
+        String tabName = getSelectedTabName();
+        Tab tab = tabs.get(tabName);
+        JTable table = tab.getTable();
+        int columnCount = table.getColumnCount();
+        
+        // get Symbol column index
+        int colIndex;
+        for(colIndex = 0; colIndex < columnCount; colIndex++){
+            String columnName = table.getColumnName(colIndex);
+            if(columnName.equals("Symbol")){
+                break;
+            }
+        }
+        
+        // apply filter for the symbol
+        String filterItem = textFieldSymbol.getText();
+        TableFilter filter = tab.getFilter();
+        filter.addFilterItem(colIndex, filterItem);
+        filter.applyFilter();
+        checkBoxSymbol.setSelected(true);
+        
     }//GEN-LAST:event_btnSymbolActionPerformed
 
     private void btnDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateRangeActionPerformed
@@ -792,7 +814,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // clear all filters
         //String tabName = getSelectedTabName();
-        String tabName = getSelectedTab(); //testing
+        String tabName = getSelectedTabName(); //testing
         Tab tab = tabs.get(tabName);
         TableFilter filter = tab.getFilter();
         filter.clearAllFilters();
@@ -1194,7 +1216,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if (rowIndex != -1) {
             Object selectedField = table.getValueAt(rowIndex, columnIndex);
             //String tabName = getSelectedTabName();
-            String tabName = getSelectedTab(); //testing
+            String tabName = getSelectedTabName(); //testing
             Tab tab = tabs.get(tabName);
             TableFilter filter = tab.getFilter();
             filter.addFilterItem(columnIndex, selectedField);
@@ -1213,7 +1235,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
         //String tabName = getSelectedTabName();
-        String tabName = getSelectedTab(); //testing
+        String tabName = getSelectedTabName(); //testing
         Tab tab = tabs.get(tabName);
         TableFilter filter = tab.getFilter();
         filter.clearColFilter(columnIndex);
@@ -1303,7 +1325,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         this.logWindow = logWindow;
     }
 
-    public String getSelectedTab() {
+    public String getSelectedTabName() {
         return selectedTab;
     }
 
