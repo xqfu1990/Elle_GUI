@@ -820,6 +820,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 TableFilter filter = tab.getFilter();
                 filter.addDateRange(startDateRange, endDateRange);
                 filter.applyFilter();
+                // update records label
+                String recordsLabelStr = tab.getRecordsLabel();
+                labelRecords.setText(recordsLabelStr);
             }
             else{
                 isError = true;
