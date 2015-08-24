@@ -25,6 +25,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -796,10 +800,26 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         String errorMsg = "Not a valid ";
         boolean isError = false;
         Component component = this;
+        Date startDateRange = null;
+        Date endDateRange = null;
         
         if(Validator.isValidDate(startDate)){
             if(Validator.isValidDate(endDate)){
-            
+                // parse the dates
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try{
+                    startDateRange = simpleDateFormat.parse(startDate);
+                    endDateRange = simpleDateFormat.parse(endDate);
+                }
+                catch(ParseException e){
+                    e.printStackTrace();
+                }
+                // execute filter
+                String tabName = getSelectedTabName();
+                Tab tab = tabs.get(tabName);
+                TableFilter filter = tab.getFilter();
+                filter.addDateRange(startDateRange, endDateRange);
+                filter.applyFilter();
             }
             else{
                 isError = true;

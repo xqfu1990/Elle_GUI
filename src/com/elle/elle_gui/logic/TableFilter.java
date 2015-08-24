@@ -3,9 +3,14 @@ package com.elle.elle_gui.logic;
 
 import com.elle.elle_gui.logic.EditableTableModel;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -29,6 +34,7 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
     private Map<Integer,ArrayList<Object>> filterItems;    // distinct items to filter
     private Color color;                                   // color to paint header
     private boolean isFiltering;                           // is filtering items
+    
     
 
     /**
@@ -296,6 +302,44 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
         removeAllFilterItems();      // load all rows
         removeAllColorHeaders();     // remove all header highlighted Colors
         isFiltering = false;         // no filters are applied 
+    }
+    
+    /**
+     * addDateRange
+     * add date ranges to filter
+     * @param startDateRange
+     * @param endDateRange 
+     */
+    public void addDateRange(Date startDateRange, Date endDateRange) {
+        // need column index
+        int col;
+        Object cellValue = null;
+        Date cellValueDate = null;
+        
+        for(col = 0; col < table.getColumnCount(); col++){
+            String colName = table.getColumnName(col);
+            if(colName.equals("Lot_Time") || colName.equals("Trade_Time")){
+                break;
+            }
+        }
+        // get dates to include in filter
+        ArrayList<Object> dates = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for(int row = 0; row < table.getRowCount(); row++){
+            cellValue = table.getModel().getValueAt(row, col);
+            try {
+                cellValueDate = simpleDateFormat.parse(cellValue.toString());
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+            if(!dates.contains(cellValue)
+                    && !cellValueDate.before(startDateRange)
+                    && !cellValueDate.after(endDateRange)){
+                dates.add(cellValue);
+            }
+        }
+        // add dates to filter
+        addFilterItems(col, dates);
     }
 
     /**
