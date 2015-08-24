@@ -817,26 +817,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 try{
                     startDateRange = simpleDateFormat.parse(startDate);
                     endDateRange = simpleDateFormat.parse(endDate);
+                    // execute filter
+                    String tabName = getSelectedTabName();
+                    Tab tab = tabs.get(tabName);
+                    TableFilter filter = tab.getFilter();
+                    int dateColumnIndex = filter.getDateColumnIndex();
+                    filter.removeFilterItems(dateColumnIndex);
+                    filter.addDateRange(startDateRange, endDateRange);
+                    filter.applyFilter();
+                    // apply checkbox selection
+                    boolean isFiltering = filter.isDateRangeFiltering();
+                    checkBoxDateRange.setSelected(isFiltering);
+                    // update records label
+                    String recordsLabelStr = tab.getRecordsLabel();
+                    labelRecords.setText(recordsLabelStr);
                 }
                 catch(ParseException e){
                     e.printStackTrace();
                 }
-                // execute filter
-                String tabName = getSelectedTabName();
-                Tab tab = tabs.get(tabName);
-                TableFilter filter = tab.getFilter();
-                filter.addDateRange(startDateRange, endDateRange);
-                filter.applyFilter();
-                // set checkbox selected 
-                if(filter.isDateRangeFiltering()){
-                    checkBoxDateRange.setSelected(true);
-                }
-                else{
-                    checkBoxDateRange.setSelected(false);
-                }
-                // update records label
-                String recordsLabelStr = tab.getRecordsLabel();
-                labelRecords.setText(recordsLabelStr);
             }
             else{
                 isError = true;
@@ -852,6 +850,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         if(isError){
             JOptionPane.showMessageDialog(component, errorMsg);
+            checkBoxDateRange.setSelected(false);
         }
     }
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
@@ -892,7 +891,23 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void checkBoxDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDateRangeActionPerformed
 
-        
+        if(checkBoxDateRange.isSelected()){
+            applyDateRangeFilter();
+        }
+        else{
+            String tabName = getSelectedTabName();
+            Tab tab = tabs.get(tabName);
+            TableFilter filter = tab.getFilter();
+            int dateColumnIndex = filter.getDateColumnIndex();
+            filter.removeFilterItems(dateColumnIndex);
+            filter.applyFilter();
+            // update records label
+            String recordsLabelStr = tab.getRecordsLabel();
+            labelRecords.setText(recordsLabelStr);
+            // apply checkbox selection
+            boolean isFiltering =filter.isDateRangeFiltering();
+            checkBoxDateRange.setSelected(isFiltering);
+        }
     }//GEN-LAST:event_checkBoxDateRangeActionPerformed
 
     private void checkBoxSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSymbolActionPerformed
@@ -909,6 +924,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         filter.clearAllFilters();
         filter.applyFilter();
         filter.applyColorHeaders();
+        
+        // apply checkbox selection
+        boolean isFiltering =filter.isDateRangeFiltering();
+        checkBoxDateRange.setSelected(isFiltering);
 
         // set label record information
         String recordsLabel = tab.getRecordsLabel();
@@ -1312,6 +1331,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             filter.applyFilter();
             String recordsLabel = tab.getRecordsLabel();
             labelRecords.setText(recordsLabel); 
+            
+            // apply checkbox selection
+            int dateColIndex = filter.getDateColumnIndex();
+            if(columnIndex == dateColIndex){
+                // this is no longer using a date range filter if applicable
+                checkBoxDateRange.setSelected(false);
+            }
         }
     }
 
@@ -1329,6 +1355,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         TableFilter filter = tab.getFilter();
         filter.clearColFilter(columnIndex);
         filter.applyFilter();
+        
+        // apply checkbox selection
+        boolean isFiltering =filter.isDateRangeFiltering();
+        checkBoxDateRange.setSelected(isFiltering);
         
         // update records label
         String recordsLabel = tab.getRecordsLabel();

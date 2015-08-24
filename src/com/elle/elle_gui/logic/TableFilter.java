@@ -34,6 +34,7 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
     private Map<Integer,ArrayList<Object>> filterItems;    // distinct items to filter
     private Color color;                                   // color to paint header
     private boolean isFiltering;                           // is filtering items
+    private int dateColumnIndex;                           // date column for filtering
     
     
 
@@ -50,6 +51,8 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
         color = Color.GREEN; // default color is green
         
         isFiltering = false;
+        
+        setDateColumnIndex();
     }
     
     /**
@@ -312,30 +315,25 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
      */
     public void addDateRange(Date startDateRange, Date endDateRange) {
         // need column index
-        int col;
+        setDateColumnIndex();
+        int col = getDateColumnIndex();
         Object cellValue = null;
         Date cellValueDate = null;
-        
-        for(col = 0; col < table.getColumnCount(); col++){
-            String colName = table.getColumnName(col);
-            if(colName.equals("Lot_Time") || colName.equals("Trade_Time")){
-                break;
-            }
-        }
+
         // get dates to include in filter
         ArrayList<Object> dates = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        for(int row = 0; row < table.getRowCount(); row++){
+        for(int row = 0; row < table.getModel().getRowCount(); row++){
             cellValue = table.getModel().getValueAt(row, col);
             try {
                 cellValueDate = simpleDateFormat.parse(cellValue.toString());
+                if(!dates.contains(cellValue)
+                        && !cellValueDate.before(startDateRange)
+                        && !cellValueDate.after(endDateRange)){
+                    dates.add(cellValue);
+                }
             } catch (ParseException ex) {
                 ex.printStackTrace();
-            }
-            if(!dates.contains(cellValue)
-                    && !cellValueDate.before(startDateRange)
-                    && !cellValueDate.after(endDateRange)){
-                dates.add(cellValue);
             }
         }
         // add dates to filter
@@ -348,6 +346,15 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
      * @return 
      */
     public boolean isDateRangeFiltering(){
+        int col = getDateColumnIndex();
+        return !filterItems.get(col).isEmpty();
+    }
+    
+    /**
+     * setDateColumnIndex
+     * sets the date column index used for filtering the date range
+     */
+    public void setDateColumnIndex(){
         int col;
         for(col = 0; col < table.getColumnCount(); col++){
             String colName = table.getColumnName(col);
@@ -355,8 +362,18 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
                 break;
             }
         }
-        return !filterItems.get(col).isEmpty();
+        dateColumnIndex = col;
     }
+    
+    /**
+     * getDateColumnIndex
+     * returns the date column index used for the date range filtering
+     * @return 
+     */
+    public int getDateColumnIndex(){
+        return dateColumnIndex;
+    }
+    
     /**
      * include
      * @param entry
