@@ -21,16 +21,27 @@ public class Validator {
      * @param value
      * @return 
      */
-    public static boolean isValidDate(String format, String value) {
+    public static boolean isValidDate(String format, String dateValue) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            Date date = simpleDateFormat.parse(value);
-            if (!value.equals(simpleDateFormat.format(date))) {
+            Date date = simpleDateFormat.parse(dateValue);
+            if (!dateValue.equals(simpleDateFormat.format(date))) {
                 return false;
             }
         } catch (ParseException ex) {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * 
+     * This is used to validate the date
+     * @param format
+     * @param value
+     * @return 
+     */
+    public static boolean isValidDate(String dateValue) {
+        return isValidDate("yyyy-MM-dd", dateValue);
     }
 }

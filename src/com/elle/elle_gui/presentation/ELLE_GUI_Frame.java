@@ -8,7 +8,9 @@ import com.elle.elle_gui.logic.CreateDocumentFilter;
 import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
 import com.elle.elle_gui.logic.TableFilter;
+import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -789,6 +791,31 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateRangeActionPerformed
 
+        String startDate = textFieldStartDate.getText();
+        String endDate = textFieldEndDate.getText();
+        String errorMsg = "Not a valid ";
+        boolean isError = false;
+        Component component = this;
+        
+        if(Validator.isValidDate(startDate)){
+            if(Validator.isValidDate(endDate)){
+            
+            }
+            else{
+                isError = true;
+                errorMsg += "end date range";
+                component = textFieldEndDate;
+            }
+        }
+        else{
+            isError = true;
+            errorMsg += "start date range";
+            component = textFieldStartDate;
+        }
+        
+        if(isError){
+            JOptionPane.showMessageDialog(component, errorMsg);
+        }
     }//GEN-LAST:event_btnDateRangeActionPerformed
 
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
