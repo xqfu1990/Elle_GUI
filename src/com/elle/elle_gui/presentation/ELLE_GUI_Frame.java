@@ -795,6 +795,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateRangeActionPerformed
 
+        applyDateRangeFilter();
+    }//GEN-LAST:event_btnDateRangeActionPerformed
+
+    /**
+     * applyDateRangeFilter
+     */
+    private void applyDateRangeFilter(){
         String startDate = textFieldStartDate.getText();
         String endDate = textFieldEndDate.getText();
         String errorMsg = "Not a valid ";
@@ -820,6 +827,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 TableFilter filter = tab.getFilter();
                 filter.addDateRange(startDateRange, endDateRange);
                 filter.applyFilter();
+                // set checkbox selected 
+                if(filter.isDateRangeFiltering()){
+                    checkBoxDateRange.setSelected(true);
+                }
+                else{
+                    checkBoxDateRange.setSelected(false);
+                }
                 // update records label
                 String recordsLabelStr = tab.getRecordsLabel();
                 labelRecords.setText(recordsLabelStr);
@@ -839,8 +853,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if(isError){
             JOptionPane.showMessageDialog(component, errorMsg);
         }
-    }//GEN-LAST:event_btnDateRangeActionPerformed
-
+    }
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
 
         int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
@@ -879,6 +892,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void checkBoxDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDateRangeActionPerformed
 
+        
     }//GEN-LAST:event_checkBoxDateRangeActionPerformed
 
     private void checkBoxSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSymbolActionPerformed

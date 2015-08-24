@@ -343,6 +343,21 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
     }
 
     /**
+     * isDateRangeFiltering
+     * returns true if date range is filtering
+     * @return 
+     */
+    public boolean isDateRangeFiltering(){
+        int col;
+        for(col = 0; col < table.getColumnCount(); col++){
+            String colName = table.getColumnName(col);
+            if(colName.equals("Lot_Time") || colName.equals("Trade_Time")){
+                break;
+            }
+        }
+        return !filterItems.get(col).isEmpty();
+    }
+    /**
      * include
      * @param entry
      * @return 
