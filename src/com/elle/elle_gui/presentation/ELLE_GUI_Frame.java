@@ -776,19 +776,27 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         int columnCount = table.getColumnCount();
         
         // get Symbol column index
-        int colIndex;
+        int colIndex;                    // iterator
+        int colIndexSymbol = 0;          // symbol column index
+        int colIndexUL = 0;              // underlying column index
+        
         for(colIndex = 0; colIndex < columnCount; colIndex++){
             String columnName = table.getColumnName(colIndex);
             if(columnName.equals("Symbol")){
-                break;
+                colIndexSymbol = colIndex;
+            }
+            if(columnName.equals("Underlying")){
+                colIndexUL = colIndex;
             }
         }
         
         // apply filter for the symbol
         String filterItem = textFieldSymbol.getText();
         TableFilter filter = tab.getFilter();
-        filter.addFilterItem(colIndex, filterItem);
+        filter.addFilterItem(colIndexUL, filterItem);
         filter.applyFilter();
+        filter.addColorHeader(colIndexSymbol);
+        filter.removeColorHeader(colIndexUL);
         checkBoxSymbol.setSelected(true);
         
     }//GEN-LAST:event_btnSymbolActionPerformed
