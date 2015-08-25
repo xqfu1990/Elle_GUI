@@ -769,35 +769,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSymbolActionPerformed
 
-        // get table column count
-        String tabName = getSelectedTabName();
-        Tab tab = tabs.get(tabName);
-        JTable table = tab.getTable();
-        int columnCount = table.getColumnCount();
-        
-        // get Symbol column index
-        int colIndex;                    // iterator
-        int colIndexSymbol = 0;          // symbol column index
-        int colIndexUL = 0;              // underlying column index
-        
-        for(colIndex = 0; colIndex < columnCount; colIndex++){
-            String columnName = table.getColumnName(colIndex);
-            if(columnName.equals("Symbol")){
-                colIndexSymbol = colIndex;
-            }
-            if(columnName.equals("Underlying")){
-                colIndexUL = colIndex;
-            }
-        }
-        
-        // apply filter for the symbol
-        String filterItem = textFieldSymbol.getText();
-        TableFilter filter = tab.getFilter();
-        filter.addFilterItem(colIndexUL, filterItem);
-        filter.applyFilter();
-        filter.addColorHeader(colIndexSymbol);
-        filter.removeColorHeader(colIndexUL);
-        checkBoxSymbol.setSelected(true);
+        applySymbolSearchFilter();
         
     }//GEN-LAST:event_btnSymbolActionPerformed
 
@@ -921,6 +893,23 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void checkBoxSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSymbolActionPerformed
 
+        if(checkBoxDateRange.isSelected()){
+            applySymbolSearchFilter();
+        }
+        else{
+            String tabName = getSelectedTabName();
+            Tab tab = tabs.get(tabName);
+            TableFilter filter = tab.getFilter();
+            int dateColumnIndex = filter.getDateColumnIndex();
+            filter.removeFilterItems(dateColumnIndex);
+            filter.applyFilter();
+            // update records label
+            String recordsLabelStr = tab.getRecordsLabel();
+            labelRecords.setText(recordsLabelStr);
+            // apply checkbox selection
+            boolean isFiltering =filter.isDateRangeFiltering();
+            checkBoxDateRange.setSelected(isFiltering);
+        }
     }//GEN-LAST:event_checkBoxSymbolActionPerformed
 
     private void btnClearAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllFiltersActionPerformed
@@ -1393,6 +1382,29 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         }
     }
     
+    /**
+     * applySymbolSearchFilter
+     * apply symbol search filter.
+     */
+    private void applySymbolSearchFilter() {
+        
+        // get selected tab
+        String tabName = getSelectedTabName();
+        Tab tab = tabs.get(tabName);
+ 
+        // apply filter for the symbol
+        String filterItem = textFieldSymbol.getText();
+        TableFilter filter = tab.getFilter();
+        int colIndexUL = filter.getUnderlyingColumnIndex();   // underlying column index
+        filter.addFilterItem(colIndexUL, filterItem);
+        filter.removeColorHeader(colIndexUL);
+        filter.applyFilter();
+        int colIndexSymbol = filter.getSymbolColumnIndex();  // symbol column index
+        filter.addColorHeader(colIndexSymbol);
+        
+        checkBoxSymbol.setSelected(true);
+    }
+    
     /**************************************************************************
      ******************* SETTERS AND GETTERS **********************************
      **************************************************************************/
@@ -1518,5 +1530,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JTextField textFieldStartDate;
     private javax.swing.JTextField textFieldSymbol;
     // End of variables declaration//GEN-END:variables
+
 
 }

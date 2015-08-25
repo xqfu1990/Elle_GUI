@@ -35,6 +35,8 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
     private Color color;                                   // color to paint header
     private boolean isFiltering;                           // is filtering items
     private int dateColumnIndex;                           // date column for filtering
+    private int symbolColumnIndex;                         // symbol column for filtering
+    private int underlyingColumnIndex;                     // underlying column for filtering
     
     
 
@@ -52,7 +54,10 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
         
         isFiltering = false;
         
-        setDateColumnIndex();
+        // initialize the column indexes
+        dateColumnIndex = -1;
+        symbolColumnIndex = -1;
+        underlyingColumnIndex = -1;
     }
     
     /**
@@ -375,7 +380,64 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
      * @return 
      */
     public int getDateColumnIndex(){
+        if(dateColumnIndex == -1){
+            setDateColumnIndex();
+        }
         return dateColumnIndex;
+    }
+    
+    /**
+     * setSymbolColumnIndex
+     * sets the symbol column index used for symbol search filtering
+     */
+    public void setSymbolColumnIndex(){
+        int col;
+        for(col = 0; col < table.getColumnCount(); col++){
+            String colName = table.getColumnName(col);
+            if(colName.equals("Symbol")){
+                break;
+            }
+        }
+        symbolColumnIndex = col;
+    }
+    
+    /**
+     * getSymbolColumnIndex
+     * returns the symbol column index used for symbol search filtering
+     * @return 
+     */
+    public int getSymbolColumnIndex(){
+        if(symbolColumnIndex == -1){
+            setSymbolColumnIndex();
+        }
+        return symbolColumnIndex;
+    }
+    
+    /**
+     * setUnderlyingColumnIndex
+     * sets the underlying column index used for symbol search filtering
+     */
+    public void setUnderlyingColumnIndex(){
+        int col;
+        for(col = 0; col < table.getColumnCount(); col++){
+            String colName = table.getColumnName(col);
+            if(colName.equals("Underlying")){
+                break;
+            }
+        }
+        underlyingColumnIndex = col;
+    }
+    
+    /**
+     * getUnderlyingColumnIndex
+     * returns the underlying column index used for symbol search filtering
+     * @return 
+     */
+    public int getUnderlyingColumnIndex(){
+        if(underlyingColumnIndex == -1){
+            setUnderlyingColumnIndex();
+        }
+        return underlyingColumnIndex;
     }
     
     /**
