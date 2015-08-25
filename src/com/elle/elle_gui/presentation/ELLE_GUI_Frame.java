@@ -893,22 +893,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void checkBoxSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSymbolActionPerformed
 
-        if(checkBoxDateRange.isSelected()){
+        if(checkBoxSymbol.isSelected()){
             applySymbolSearchFilter();
         }
         else{
             String tabName = getSelectedTabName();
             Tab tab = tabs.get(tabName);
             TableFilter filter = tab.getFilter();
-            int dateColumnIndex = filter.getDateColumnIndex();
-            filter.removeFilterItems(dateColumnIndex);
+            int underlyingColumnIndex = filter.getUnderlyingColumnIndex();
+            filter.removeFilterItems(underlyingColumnIndex);
+            int symbolColumnIndex = filter.getSymbolColumnIndex();
+            filter.removeColorHeader(symbolColumnIndex);
             filter.applyFilter();
             // update records label
             String recordsLabelStr = tab.getRecordsLabel();
             labelRecords.setText(recordsLabelStr);
             // apply checkbox selection
-            boolean isFiltering =filter.isDateRangeFiltering();
-            checkBoxDateRange.setSelected(isFiltering);
+//            boolean isFiltering = filter.isDateRangeFiltering();
+//            checkBoxDateRange.setSelected(isFiltering);
         }
     }//GEN-LAST:event_checkBoxSymbolActionPerformed
 
