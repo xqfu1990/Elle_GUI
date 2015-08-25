@@ -336,6 +336,10 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
                 ex.printStackTrace();
             }
         }
+        // if dates return empty
+        if(dates.isEmpty()){
+            dates.add("0000-00-00");       // return empty list
+        }
         // add dates to filter
         addFilterItems(col, dates);
     }
