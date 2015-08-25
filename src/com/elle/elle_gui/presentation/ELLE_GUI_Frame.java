@@ -849,6 +849,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         }
         
         if(isError){
+            errorMsg += "\nDate format not correct: YYYY-MM-DD";
             JOptionPane.showMessageDialog(component, errorMsg);
             checkBoxDateRange.setSelected(false);
         }
