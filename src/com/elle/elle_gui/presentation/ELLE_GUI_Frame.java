@@ -1411,6 +1411,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         filter.addColorHeader(colIndexSymbol);
         
         checkBoxSymbol.setSelected(true);
+        
+        // update records label
+        String recordsLabel = tab.getRecordsLabel();
+        labelRecords.setText(recordsLabel);  
     }
     
     /**************************************************************************
