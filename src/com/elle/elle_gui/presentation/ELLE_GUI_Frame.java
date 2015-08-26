@@ -900,6 +900,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             String tabName = getSelectedTabName();
             Tab tab = tabs.get(tabName);
             TableFilter filter = tab.getFilter();
+            // clear symbol search filter
             int underlyingColumnIndex = filter.getUnderlyingColumnIndex();
             filter.removeFilterItems(underlyingColumnIndex);
             int symbolColumnIndex = filter.getSymbolColumnIndex();
@@ -908,9 +909,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             // update records label
             String recordsLabelStr = tab.getRecordsLabel();
             labelRecords.setText(recordsLabelStr);
-            // apply checkbox selection
-//            boolean isFiltering = filter.isDateRangeFiltering();
-//            checkBoxDateRange.setSelected(isFiltering);
         }
     }//GEN-LAST:event_checkBoxSymbolActionPerformed
 
