@@ -1358,6 +1358,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             int underlyingColumnIndex = filter.getUnderlyingColumnIndex();
             filter.clearColFilter(underlyingColumnIndex);
             filter.removeColorHeader(symbolColumnIndex);
+            checkBoxSymbol.setSelected(false);
         }
         else{
             filter.clearColFilter(columnIndex);
