@@ -10,6 +10,7 @@ import com.elle.elle_gui.logic.ITableConstants;
 import com.elle.elle_gui.logic.TableFilter;
 import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -74,6 +75,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private JTable positions;
     private JTable trades;
     private JTable allocations;   // not implemented yet
+    
+    // button colors
+    private Color colorBtnDefault;
+    private Color colorBtnSelected;
+    
 
     /**
      * ELLE_GUI_Frame
@@ -90,6 +96,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         statement = DBConnection.getStatement();
         database = DBConnection.getDatabase();
         instance = this;                         // this is used to call this instance of ELLE_GUI 
+        colorBtnDefault = btnPositions.getBackground();
+        colorBtnSelected = Color.RED;
         
         // initialize tabs
         tabs = new HashMap();
@@ -172,6 +180,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         Tab tab = tabs.get(POSITIONS_TABLE_NAME);
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
+        
+        // start table with positions button selected
+        btnPositions.setBackground(colorBtnSelected);
+        btnPositions.requestFocus();
         
     }
 
@@ -687,6 +699,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
         
+        // update button colors
+        btnTrades.setBackground(colorBtnSelected);
+        btnPositions.setBackground(colorBtnDefault);
     }//GEN-LAST:event_btnTradesActionPerformed
 
     private void menuItemPuponeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPuponeActionPerformed
@@ -946,7 +961,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
         
-        // add allocations table to the panel 
+        // add positions table to the panel 
         setSelectedTab(POSITIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(positions);
         panelShowTables.removeAll();
@@ -956,6 +971,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
         
+        // update button colors
+        btnPositions.setBackground(colorBtnSelected);
+        btnTrades.setBackground(colorBtnDefault);
     }//GEN-LAST:event_btnPositionsActionPerformed
 
     private void menuItemCheckBoxSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckBoxSQLActionPerformed
