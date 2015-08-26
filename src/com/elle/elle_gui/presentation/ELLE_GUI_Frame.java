@@ -1353,12 +1353,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         String tabName = getSelectedTabName(); //testing
         Tab tab = tabs.get(tabName);
         TableFilter filter = tab.getFilter();
-        filter.clearColFilter(columnIndex);
-        filter.applyFilter();
         
-        // apply checkbox selection
-        boolean isFiltering =filter.isDateRangeFiltering();
-        checkBoxDateRange.setSelected(isFiltering);
+        // clear column filter
+        int symbolColumnIndex = filter.getSymbolColumnIndex();
+        if(columnIndex == symbolColumnIndex){
+            int underlyingColumnIndex = filter.getUnderlyingColumnIndex();
+            filter.clearColFilter(underlyingColumnIndex);
+            filter.removeColorHeader(symbolColumnIndex);
+        }
+        else{
+            filter.clearColFilter(columnIndex);
+        }
+        filter.applyFilter();
         
         // update records label
         String recordsLabel = tab.getRecordsLabel();
