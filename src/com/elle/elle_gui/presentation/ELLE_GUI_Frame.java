@@ -7,6 +7,7 @@ import com.elle.elle_gui.logic.Tab;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
 import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
+import com.elle.elle_gui.logic.PrintWindow;
 import com.elle.elle_gui.logic.TableFilter;
 import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
@@ -37,9 +38,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -824,22 +827,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemPrintGUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintGUIActionPerformed
 
-        PrinterJob job = PrinterJob.getPrinterJob();
-        boolean ok = job.printDialog();
-        if (ok) {
-            try {
-                logWindow.addMessageWithDate("Start to print the GUI...");
-                job.print();
-                logWindow.addMessageWithDate(job.getJobName()
-                        + " is sucessfully printed!\n");
-            } catch (PrinterException ex) {
-                logWindow.addMessageWithDate(ex.getMessage() + "\n");
-            }
-        }
+        print(this);
     }//GEN-LAST:event_menuItemPrintGUIActionPerformed
 
     private void menuItemPrintDisplayWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintDisplayWindowActionPerformed
 
+        // this should print table actually
+        print(panelAccounts);
+        
     }//GEN-LAST:event_menuItemPrintDisplayWindowActionPerformed
 
     private void menuItemTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTradesActionPerformed
@@ -1538,6 +1533,36 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // update records label
         String recordsLabel = tab.getRecordsLabel();
         labelRecords.setText(recordsLabel);  
+    }
+    
+    /**
+     * print
+     * prints the component passed (either JFrame or JPanel)
+     * @param component 
+     */
+    public void print(Component component){
+        
+        PrinterJob job = PrinterJob.getPrinterJob();
+        
+        if(component instanceof JFrame){
+            job.setPrintable(new PrintWindow((JFrame)component));
+        }
+        else if(component instanceof JPanel){
+            job.setPrintable(new PrintWindow((JPanel)component));
+        }
+        
+        boolean ok = job.printDialog();
+        if (ok) {
+            try {
+                job.pageDialog(job.defaultPage());
+                logWindow.addMessageWithDate("Start to print the display window...");
+                job.print();
+                logWindow.addMessageWithDate(job.getJobName()
+                        + " is successfully printed!\n");
+            } catch (PrinterException ex) {
+                logWindow.addMessageWithDate(ex.getMessage() + "\n");
+            }
+        }
     }
     
     /**************************************************************************
