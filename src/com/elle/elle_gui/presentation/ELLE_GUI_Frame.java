@@ -12,21 +12,16 @@ import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,11 +34,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
@@ -174,9 +167,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add positions table to the panel (initial start up)
         setSelectedTab(POSITIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(positions);
-        panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
+        panelAccounts.removeAll();
+        panelAccounts.setLayout(new BorderLayout());
+        panelAccounts.add(scroll, BorderLayout.CENTER);
         Tab tab = tabs.get(POSITIONS_TABLE_NAME);
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
@@ -215,7 +208,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         textAreaSQL = new javax.swing.JTextArea();
         btnEnterSQL = new javax.swing.JButton();
         btnClearSQL = new javax.swing.JButton();
-        panelShowTables = new javax.swing.JPanel();
+        panelAccounts = new javax.swing.JPanel();
+        tabbedPaneAccounts = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuConnections = new javax.swing.JMenu();
@@ -450,15 +448,45 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 .addGap(14, 14, 14))
         );
 
-        javax.swing.GroupLayout panelShowTablesLayout = new javax.swing.GroupLayout(panelShowTables);
-        panelShowTables.setLayout(panelShowTablesLayout);
-        panelShowTablesLayout.setHorizontalGroup(
-            panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        tabbedPaneAccounts.addTab("IB9048", jScrollPane1);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        tabbedPaneAccounts.addTab("Combined", jScrollPane2);
+
+        javax.swing.GroupLayout panelAccountsLayout = new javax.swing.GroupLayout(panelAccounts);
+        panelAccounts.setLayout(panelAccountsLayout);
+        panelAccountsLayout.setHorizontalGroup(
+            panelAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPaneAccounts)
         );
-        panelShowTablesLayout.setVerticalGroup(
-            panelShowTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+        panelAccountsLayout.setVerticalGroup(
+            panelAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPaneAccounts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
         );
 
         menuFile.setText("File");
@@ -676,7 +704,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelShowTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelCTRLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
@@ -684,12 +712,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelCTRLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelShowTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelSQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        panelShowTables.getAccessibleContext().setAccessibleParent(panelShowTables);
+        panelAccounts.getAccessibleContext().setAccessibleParent(panelAccounts);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -699,9 +727,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add Trades table to the panel 
         setSelectedTab(TRADES_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(trades);
-        panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
+        panelAccounts.removeAll();
+        panelAccounts.setLayout(new BorderLayout());
+        panelAccounts.add(scroll, BorderLayout.CENTER);
         Tab tab = tabs.get(TRADES_TABLE_NAME);
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
@@ -756,9 +784,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add allocations table to the panel 
         setSelectedTab(ALLOCATIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(allocations);
-        panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
+        panelAccounts.removeAll();
+        panelAccounts.setLayout(new BorderLayout());
+        panelAccounts.add(scroll, BorderLayout.CENTER);
         Tab tab = tabs.get(ALLOCATIONS_TABLE_NAME);
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
@@ -971,9 +999,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add positions table to the panel 
         setSelectedTab(POSITIONS_TABLE_NAME);
         JScrollPane scroll = new JScrollPane(positions);
-        panelShowTables.removeAll();
-        panelShowTables.setLayout(new BorderLayout());
-        panelShowTables.add(scroll, BorderLayout.CENTER);
+        panelAccounts.removeAll();
+        panelAccounts.setLayout(new BorderLayout());
+        panelAccounts.add(scroll, BorderLayout.CENTER);
         Tab tab = tabs.get(POSITIONS_TABLE_NAME);
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
@@ -1523,6 +1551,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;
@@ -1557,10 +1589,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenu menuReports;
     private javax.swing.JMenu menuTools;
     private javax.swing.JMenu menuView;
+    private javax.swing.JPanel panelAccounts;
     private javax.swing.JPanel panelCTRLPanel;
     private javax.swing.JPanel panelSQL;
-    private javax.swing.JPanel panelShowTables;
     private javax.swing.JScrollPane scrollPaneSQL;
+    private javax.swing.JTabbedPane tabbedPaneAccounts;
     private javax.swing.JTextArea textAreaSQL;
     private javax.swing.JTextField textFieldEndDate;
     private javax.swing.JTextField textFieldStartDate;
