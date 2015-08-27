@@ -533,6 +533,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuEdit.setText("Edit");
 
         menuItemConnection.setText("Connection...");
+        menuItemConnection.setEnabled(false);
         menuItemConnection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemConnectionActionPerformed(evt);

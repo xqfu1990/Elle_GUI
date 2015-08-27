@@ -90,6 +90,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuItemConnection">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Connection..."/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemConnectionActionPerformed"/>
