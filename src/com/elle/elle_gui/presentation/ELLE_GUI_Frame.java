@@ -18,6 +18,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -822,6 +824,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemPrintGUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintGUIActionPerformed
 
+        PrinterJob job = PrinterJob.getPrinterJob();
+        boolean ok = job.printDialog();
+        if (ok) {
+            try {
+                logWindow.addMessageWithDate("Start to print the GUI...");
+                job.print();
+                logWindow.addMessageWithDate(job.getJobName()
+                        + " is sucessfully printed!\n");
+            } catch (PrinterException ex) {
+                logWindow.addMessageWithDate(ex.getMessage() + "\n");
+            }
+        }
     }//GEN-LAST:event_menuItemPrintGUIActionPerformed
 
     private void menuItemPrintDisplayWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintDisplayWindowActionPerformed
