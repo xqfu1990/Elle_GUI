@@ -651,6 +651,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView.add(menuItemTL);
 
         menuItemLoadsTable.setText("Display Loads Table");
+        menuItemLoadsTable.setEnabled(false);
         menuItemLoadsTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemLoadsTableActionPerformed(evt);
