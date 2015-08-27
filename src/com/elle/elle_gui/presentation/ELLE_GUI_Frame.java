@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -984,6 +985,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save File As");
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            logWindow.addMessageWithDate("Save file as: "
+                    + fileToSave.getAbsolutePath() + "\n");
+        }
     }//GEN-LAST:event_menuItemSaveActionPerformed
 
     private void checkBoxDateRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDateRangeActionPerformed
