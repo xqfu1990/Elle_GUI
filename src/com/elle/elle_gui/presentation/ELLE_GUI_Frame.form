@@ -212,6 +212,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuItemTL">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display TL_8949-All Fields"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemTLActionPerformed"/>

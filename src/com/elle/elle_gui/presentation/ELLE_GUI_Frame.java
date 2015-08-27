@@ -642,6 +642,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView.add(menuItemIB);
 
         menuItemTL.setText("Display TL_8949-All Fields");
+        menuItemTL.setEnabled(false);
         menuItemTL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemTLActionPerformed(evt);
