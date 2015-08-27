@@ -587,6 +587,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuLoad.setText("Load");
 
         menuItemLoadFile.setText("Load File...");
+        menuItemLoadFile.setEnabled(false);
         menuItemLoadFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemLoadFileActionPerformed(evt);
