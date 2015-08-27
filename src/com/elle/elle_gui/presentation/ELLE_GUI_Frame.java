@@ -18,6 +18,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -37,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
@@ -761,6 +769,55 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void menuItemReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemReadActionPerformed
 
+        Path path = Paths.get("./IB 9048 AS 2013-0606C.csv");
+        File file = path.toFile();
+        
+        String[] columnNames = new String[0];
+        Object[][] data = new Object[0][0];
+
+        String line = "";
+        String splitSign = ",";
+        int i = 0;
+        try {
+            //initialize the data array
+            BufferedReader br = 
+                     new BufferedReader(
+                     new FileReader(file));
+            while (br.readLine() != null) {
+                i++;
+            }
+            br.close();
+            data = new Object[i - 1][];
+            
+            i = 0;
+            br = new BufferedReader(new FileReader(file));
+            line = br.readLine();
+            columnNames = line.split(splitSign);
+            String[] rowNumber = {"#"};
+            System.arraycopy(rowNumber, 0, columnNames, 0, 1);
+            line = br.readLine();
+            while (line != null) {
+                data[i] = new Object[line.split(splitSign).length + 1];
+                data[i][0] = i + 1;
+                for (int j = 1; j < data[i].length; j++) {
+                    data[i][j] = line.split(splitSign)[j - 1];
+                }
+                i++;
+                line = br.readLine();
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+        // testing the file
+        JTable table = new JTable(data, columnNames);
+        JScrollPane scroll = new JScrollPane(table);
+        panelAccounts.removeAll();
+        panelAccounts.setLayout(new BorderLayout());
+        panelAccounts.add(scroll, BorderLayout.CENTER);
+        
     }//GEN-LAST:event_menuItemReadActionPerformed
 
     private void menuItemPrintGUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPrintGUIActionPerformed
