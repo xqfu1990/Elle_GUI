@@ -615,6 +615,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView.add(menuItemCheckBoxSQL);
 
         menuItemTrades.setText("Display Trades-All Fields");
+        menuItemTrades.setEnabled(false);
         menuItemTrades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemTradesActionPerformed(evt);
