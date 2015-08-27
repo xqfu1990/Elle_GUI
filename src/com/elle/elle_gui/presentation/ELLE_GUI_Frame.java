@@ -624,6 +624,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView.add(menuItemTrades);
 
         menuItemPositions.setText("Display Positions-All Fields");
+        menuItemPositions.setEnabled(false);
         menuItemPositions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemPositionsActionPerformed(evt);
