@@ -224,9 +224,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         btnClearSQL = new javax.swing.JButton();
         panelAccounts = new javax.swing.JPanel();
         tabbedPaneAccounts = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPaneIB9048 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollPaneIB9048b = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        scrollPaneCombined = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -473,9 +475,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        scrollPaneIB9048.setViewportView(jTable1);
 
-        tabbedPaneAccounts.addTab("IB9048", jScrollPane1);
+        tabbedPaneAccounts.addTab("IB9048", scrollPaneIB9048);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPaneIB9048b.setViewportView(jTable3);
+
+        tabbedPaneAccounts.addTab("IB9048b", scrollPaneIB9048b);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -488,15 +505,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        scrollPaneCombined.setViewportView(jTable2);
 
-        tabbedPaneAccounts.addTab("Combined", jScrollPane2);
+        tabbedPaneAccounts.addTab("Combined", scrollPaneCombined);
 
         javax.swing.GroupLayout panelAccountsLayout = new javax.swing.GroupLayout(panelAccounts);
         panelAccounts.setLayout(panelAccountsLayout);
         panelAccountsLayout.setHorizontalGroup(
             panelAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPaneAccounts)
+            .addGroup(panelAccountsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabbedPaneAccounts)
+                .addContainerGap())
         );
         panelAccountsLayout.setVerticalGroup(
             panelAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1656,10 +1676,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;
@@ -1697,6 +1716,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JPanel panelAccounts;
     private javax.swing.JPanel panelCTRLPanel;
     private javax.swing.JPanel panelSQL;
+    private javax.swing.JScrollPane scrollPaneCombined;
+    private javax.swing.JScrollPane scrollPaneIB9048;
+    private javax.swing.JScrollPane scrollPaneIB9048b;
     private javax.swing.JScrollPane scrollPaneSQL;
     private javax.swing.JTabbedPane tabbedPaneAccounts;
     private javax.swing.JTextArea textAreaSQL;
