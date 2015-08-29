@@ -217,9 +217,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // testing 
         JTable table = IB9048_positions.getTable();
         JScrollPane scroll = new JScrollPane(table);
-        panelTab4.removeAll();
-        panelTab4.setLayout(new BorderLayout());
-        panelTab4.add(scroll, BorderLayout.CENTER);
+        panelIB9048.removeAll();
+        panelIB9048.setLayout(new BorderLayout());
+        panelIB9048.add(scroll, BorderLayout.CENTER);
         
     }
 
@@ -253,15 +253,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         btnClearSQL = new javax.swing.JButton();
         panelAccounts = new javax.swing.JPanel();
         tabbedPaneAccounts = new javax.swing.JTabbedPane();
+        panelIB9048 = new javax.swing.JPanel();
         scrollPaneIB9048 = new javax.swing.JScrollPane();
         tableIB9048 = new javax.swing.JTable();
+        panelIB9048b = new javax.swing.JPanel();
         scrollPaneIB9048b = new javax.swing.JScrollPane();
         tableIB9048b = new javax.swing.JTable();
+        panelCombined = new javax.swing.JPanel();
         scrollPaneCombined = new javax.swing.JScrollPane();
         tableCombined = new javax.swing.JTable();
-        panelTab4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuConnections = new javax.swing.JMenu();
@@ -515,7 +515,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         ));
         scrollPaneIB9048.setViewportView(tableIB9048);
 
-        tabbedPaneAccounts.addTab("IB9048", scrollPaneIB9048);
+        javax.swing.GroupLayout panelIB9048Layout = new javax.swing.GroupLayout(panelIB9048);
+        panelIB9048.setLayout(panelIB9048Layout);
+        panelIB9048Layout.setHorizontalGroup(
+            panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGroup(panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(scrollPaneIB9048, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
+        );
+        panelIB9048Layout.setVerticalGroup(
+            panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 433, Short.MAX_VALUE)
+            .addGroup(panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelIB9048Layout.createSequentialGroup()
+                    .addComponent(scrollPaneIB9048, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        tabbedPaneAccounts.addTab("IB9048", panelIB9048);
 
         tableIB9048b.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -530,7 +547,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         ));
         scrollPaneIB9048b.setViewportView(tableIB9048b);
 
-        tabbedPaneAccounts.addTab("IB9048b", scrollPaneIB9048b);
+        javax.swing.GroupLayout panelIB9048bLayout = new javax.swing.GroupLayout(panelIB9048b);
+        panelIB9048b.setLayout(panelIB9048bLayout);
+        panelIB9048bLayout.setHorizontalGroup(
+            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
+        );
+        panelIB9048bLayout.setVerticalGroup(
+            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 433, Short.MAX_VALUE)
+            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelIB9048bLayout.createSequentialGroup()
+                    .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        tabbedPaneAccounts.addTab("IB9048b", panelIB9048b);
 
         tableCombined.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -545,39 +579,24 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         ));
         scrollPaneCombined.setViewportView(tableCombined);
 
-        tabbedPaneAccounts.addTab("Combined", scrollPaneCombined);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.GroupLayout panelTab4Layout = new javax.swing.GroupLayout(panelTab4);
-        panelTab4.setLayout(panelTab4Layout);
-        panelTab4Layout.setHorizontalGroup(
-            panelTab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelCombinedLayout = new javax.swing.GroupLayout(panelCombined);
+        panelCombined.setLayout(panelCombinedLayout);
+        panelCombinedLayout.setHorizontalGroup(
+            panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1150, Short.MAX_VALUE)
-            .addGroup(panelTab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
+            .addGroup(panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(scrollPaneCombined, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
         );
-        panelTab4Layout.setVerticalGroup(
-            panelTab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelCombinedLayout.setVerticalGroup(
+            panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 433, Short.MAX_VALUE)
-            .addGroup(panelTab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelTab4Layout.createSequentialGroup()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCombinedLayout.createSequentialGroup()
+                    .addComponent(scrollPaneCombined, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        tabbedPaneAccounts.addTab("tab4", panelTab4);
+        tabbedPaneAccounts.addTab("Combined", panelCombined);
 
         javax.swing.GroupLayout panelAccountsLayout = new javax.swing.GroupLayout(panelAccounts);
         panelAccounts.setLayout(panelAccountsLayout);
@@ -1839,8 +1858,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;
@@ -1877,8 +1894,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenu menuView;
     private javax.swing.JPanel panelAccounts;
     private javax.swing.JPanel panelCTRLPanel;
+    private javax.swing.JPanel panelCombined;
+    private javax.swing.JPanel panelIB9048;
+    private javax.swing.JPanel panelIB9048b;
     private javax.swing.JPanel panelSQL;
-    private javax.swing.JPanel panelTab4;
     private javax.swing.JScrollPane scrollPaneCombined;
     private javax.swing.JScrollPane scrollPaneIB9048;
     private javax.swing.JScrollPane scrollPaneIB9048b;
