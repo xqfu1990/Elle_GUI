@@ -33,6 +33,7 @@ public class Tab implements ITableConstants{
     private boolean archiveRecordMenuItemEnabled;  // enables archive record menu item
     private boolean addRecordsBtnVisible;          // sets the add records button visible
     private boolean batchEditBtnVisible;           // sets the batch edit button visible
+    private boolean tableSelected;             // sets if this table is selected
     
 
     
@@ -50,6 +51,7 @@ public class Tab implements ITableConstants{
         archiveRecordMenuItemEnabled = false;
         addRecordsBtnVisible = false;
         batchEditBtnVisible = false;
+        tableSelected = false;
     }
     
     /**
@@ -66,6 +68,7 @@ public class Tab implements ITableConstants{
         recordsShown = 0;
         filter = new TableFilter(table);
         ColumnPopupMenu = new ColumnPopupMenu(filter);
+        tableSelected = false;
         
         // store the column names for the table
         for (int i = 0; i < table.getColumnCount(); i++) 
@@ -118,6 +121,7 @@ public class Tab implements ITableConstants{
     }
 
     public void setTableName(String tableName) {
+        table.setName(tableName);
         this.tableName = tableName;
     }
 
@@ -190,6 +194,15 @@ public class Tab implements ITableConstants{
     public void setBatchEditBtnVisible(boolean batchEditBtnVisible) {
         this.batchEditBtnVisible = batchEditBtnVisible;
     }
+
+    public boolean isTableSelected() {
+        return tableSelected;
+    }
+
+    public void setTableSelected(boolean tableSelected) {
+        this.tableSelected = tableSelected;
+    }
+    
     
 
     /**************************************************************************

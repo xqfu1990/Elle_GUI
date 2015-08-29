@@ -1,5 +1,6 @@
-package com.elle.elle_gui.old;
+package com.elle.elle_gui.logic;
 
+import com.elle.elle_gui.old.CreateTables;
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -10,14 +11,14 @@ import javax.swing.*;
 public class PrintWindow implements Printable {
 
 	JFrame frameToPrint;
-	CreateTables tableToPrint;
+	JPanel tableToPrint;
 
 	public PrintWindow(JFrame f) {
 		frameToPrint = f;
 		tableToPrint = null;
 	}
 
-	public PrintWindow(CreateTables t) {
+	public PrintWindow(JPanel t) {
 		tableToPrint = t;
 		frameToPrint = null;
 	}

@@ -44,7 +44,7 @@ public class ColumnPopupMenu extends JPopupMenu{
     
     // for updating the records label when a filter is applied
     private ELLE_GUI_Frame elle_gui;
-    private Map<String,Tab> tabs;
+    private Map<String,Map<String,Tab>> tabs;
     
     /**
      * CONSTRUCTOR
@@ -466,8 +466,8 @@ public class ColumnPopupMenu extends JPopupMenu{
         filter.applyFilter();
         
         // update record label
-        String tabName = table.getName();
-        Tab tab = tabs.get(tabName);
+        String tabName = elle_gui.getSelectedTabName();
+        Tab tab = tabs.get(tabName).get(table.getName());
         String recordsLabelText = tab.getRecordsLabel();
         JLabel recordsLabel = elle_gui.getLabelNumOfRecords();
         recordsLabel.setText(recordsLabelText);
