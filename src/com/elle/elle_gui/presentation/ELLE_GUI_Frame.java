@@ -1189,22 +1189,35 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnPositionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPositionsActionPerformed
 
+        // local variables
+        String tabName = getSelectedTabName();
+        Tab tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
+        JTable table = tab.getTable();
+        TableFilter filter = tab.getFilter();
+        JScrollPane scroll = new JScrollPane(table);
+        
         // update button colors
         btnPositions.setBackground(colorBtnSelected);
         btnTrades.setBackground(colorBtnDefault);
-        
-        // change table to trades
-        String tabName = getSelectedTabName();
-        JTable table = getSelectedTabPanel();
-        Tab tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
-        table = tab.getTable();
         
         // set the positions table as selected
         tabs.get(tabName).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         tabs.get(tabName).get(TRADES_TABLE_NAME).setTableSelected(false);
         
+        // change panel table to positions
+        JPanel panel = getSelectedTabPanel();
+        panel.removeAll();
+        panel.setLayout(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+        
+        // apply filter for the positions table
+        filter.applyFilter();
+        filter.applyColorHeaders();
+        
+        // update records label
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
+        
     }//GEN-LAST:event_btnPositionsActionPerformed
 
     private void menuItemCheckBoxSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckBoxSQLActionPerformed
