@@ -14,6 +14,12 @@ package com.elle.elle_gui.logic;
  */
 public interface ITableConstants {
     
+    // account names
+    public static final String IB9048_ACCOUNT_NAME = "IB9048";
+    public static final String IB9048B_ACCOUNT_NAME = "IB9048b";
+    public static final String COMBINED_ACCOUNT_NAME = "Combined";
+    
+    // table names
     public static final String POSITIONS_TABLE_NAME = "positions";
     public static final String TRADES_TABLE_NAME = "trades";
     public static final String ALLOCATIONS_TABLE_NAME = "allocations";
