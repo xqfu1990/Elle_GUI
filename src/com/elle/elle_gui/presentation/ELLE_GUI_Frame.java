@@ -201,9 +201,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // show IB9048 positions table (initial start up)
         Tab IB9048_positions = tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME);
-        scrollPaneIB9048.remove(tableIB9048);
-        //scrollPaneIB9048.add(IB9048_positions.getTable());
-        //tableIB9048.setModel(IB9148_positions.getTable().getModel());
+        JTable table = IB9048_positions.getTable();
+        JScrollPane scroll = new JScrollPane(table);
+        panelIB9048.removeAll();
+        panelIB9048.setLayout(new BorderLayout());
+        panelIB9048.add(scroll, BorderLayout.CENTER);
         IB9048_positions.setTableSelected(true);
         
         // set initial records label
@@ -213,13 +215,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // start table with positions button selected
         btnPositions.setBackground(colorBtnSelected);
         btnPositions.requestFocus();
-        
-        // testing 
-        JTable table = IB9048_positions.getTable();
-        JScrollPane scroll = new JScrollPane(table);
-        panelIB9048.removeAll();
-        panelIB9048.setLayout(new BorderLayout());
-        panelIB9048.add(scroll, BorderLayout.CENTER);
         
     }
 
