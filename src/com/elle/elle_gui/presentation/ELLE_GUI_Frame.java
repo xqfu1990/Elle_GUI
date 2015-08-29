@@ -842,20 +842,32 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     private void btnTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTradesActionPerformed
 
+        // local variables
+        String tabName = getSelectedTabName();
+        Tab tab = tabs.get(tabName).get(TRADES_TABLE_NAME);
+        JTable table = tab.getTable();
+        TableFilter filter = tab.getFilter();
+        JScrollPane scroll = new JScrollPane(table);
+        
         // update button colors
         btnTrades.setBackground(colorBtnSelected);
         btnPositions.setBackground(colorBtnDefault);
-        
-        // change table to trades
-        String tabName = getSelectedTabName();
-        JTable table = getSelectedTabTable();
-        Tab tab = tabs.get(tabName).get(TRADES_TABLE_NAME);
-        table = tab.getTable();
         
         // set the trades table as selected
         tabs.get(tabName).get(TRADES_TABLE_NAME).setTableSelected(true);
         tabs.get(tabName).get(POSITIONS_TABLE_NAME).setTableSelected(false);
         
+        // change panel table to trades
+        JPanel panel = getSelectedTabPanel();
+        panel.removeAll();
+        panel.setLayout(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+        
+        // apply filter for the trades table
+        filter.applyFilter();
+        filter.applyColorHeaders();
+        
+        // update records label
         String recordsText = tab.getRecordsLabel();
         labelRecords.setText(recordsText);
 
@@ -1183,7 +1195,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // change table to trades
         String tabName = getSelectedTabName();
-        JTable table = getSelectedTabTable();
+        JTable table = getSelectedTabPanel();
         Tab tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
         table = tab.getTable();
         
@@ -1720,7 +1732,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if(tabs != null){
             // get the account
             String tabName = getSelectedTabName();
-            JTable tabTable = getSelectedTabTable();
+            JTable tabTable = getSelectedTabPanel();
 
             // get the table
             String tableName ="";
@@ -1822,7 +1834,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         return tabbedPaneAccounts.getTitleAt(tabbedPaneAccounts.getSelectedIndex());
     }
     
-    public JTable getSelectedTabTable(){
+    public JPanel getSelectedTabPanel(){
         
         // not sure of the index of the table
         //return (JTable)tabbedPaneAccounts.getComponentAt(0);
@@ -1831,13 +1843,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         String tabName = getSelectedTabName();
 
         if(tabName == "IB9048"){
-            return tableIB9048;
+            return panelIB9048;
         }
         else if(tabName == "IB9048b"){
-            return tableIB9048b;
+            return panelIB9048b;
         }
         else{
-            return tableCombined;
+            return panelCombined;
         }
     }
 
