@@ -2,7 +2,7 @@
 package com.elle.elle_gui.logic;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
-import com.elle.elle_gui.logic.Tab;
+import com.elle.elle_gui.logic.AccountTable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -44,7 +44,7 @@ public class ColumnPopupMenu extends JPopupMenu{
     
     // for updating the records label when a filter is applied
     private ELLE_GUI_Frame elle_gui;
-    private Map<String,Map<String,Tab>> tabs;
+    private Map<String,Map<String,AccountTable>> tabs;
     
     /**
      * CONSTRUCTOR
@@ -467,7 +467,7 @@ public class ColumnPopupMenu extends JPopupMenu{
         
         // update record label
         String tabName = elle_gui.getSelectedTabName();
-        Tab tab = tabs.get(tabName).get(table.getName());
+        AccountTable tab = tabs.get(tabName).get(table.getName());
         String recordsLabelText = tab.getRecordsLabel();
         JLabel recordsLabel = elle_gui.getLabelNumOfRecords();
         recordsLabel.setText(recordsLabelText);

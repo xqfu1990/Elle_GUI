@@ -14,7 +14,7 @@ import javax.swing.JTable;
  * @since June 10, 2015
  * @version 0.6.3
  */
-public class Tab implements ITableConstants{
+public class AccountTable implements ITableConstants{
 
     // attributes
     private String tableName;                    // name of the JTable
@@ -42,7 +42,7 @@ public class Tab implements ITableConstants{
      * Tab
      * This is used if no table is ready such as before initComponents of a frame.
      */
-    public Tab() {
+    public AccountTable() {
         tableName = "";
         table = new JTable();
         totalRecords = 0;
@@ -61,7 +61,7 @@ public class Tab implements ITableConstants{
      * then the table can be added
      * @param table 
      */
-    public Tab(JTable table) {
+    public AccountTable(JTable table) {
         tableName = "";
         this.table = table;
         totalRecords = 0;

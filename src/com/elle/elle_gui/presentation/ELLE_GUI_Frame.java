@@ -3,7 +3,7 @@ package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.database.DBConnection;
 import com.elle.elle_gui.logic.ColumnPopupMenu;
-import com.elle.elle_gui.logic.Tab;
+import com.elle.elle_gui.logic.AccountTable;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
 import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
@@ -69,7 +69,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private final String VERSION = "0.6.9a";   
     
     // attributes
-    private Map<String,Map<String,Tab>> tabs; // stores individual tab objects 
+    private Map<String,Map<String,AccountTable>> tabs; // stores individual tab objects 
     private static Statement statement;
     private String database;
     private String selectedTab;
@@ -111,9 +111,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         tabs = new HashMap();
         
         // create hashmap for IB9048 tables
-        Map<String,Tab> tabIB9048 = new HashMap();
-        tabIB9048.put(POSITIONS_TABLE_NAME, new Tab());
-        tabIB9048.put(TRADES_TABLE_NAME, new Tab());
+        Map<String,AccountTable> tabIB9048 = new HashMap();
+        tabIB9048.put(POSITIONS_TABLE_NAME, new AccountTable());
+        tabIB9048.put(TRADES_TABLE_NAME, new AccountTable());
         // initialize tables for IB9048 -Postions table
         tabIB9048.get(POSITIONS_TABLE_NAME).setTable(new JTable());
         tabIB9048.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
@@ -200,7 +200,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         this.setSize(this.getWidth(), 493);
         
         // show IB9048 positions table (initial start up)
-        Tab IB9048_positions = tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME);
+        AccountTable IB9048_positions = tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME);
         JTable table = IB9048_positions.getTable();
         JScrollPane scroll = new JScrollPane(table);
         panelIB9048.removeAll();
@@ -844,7 +844,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // local variables
         String tabName = getSelectedTabName();
-        Tab tab = tabs.get(tabName).get(TRADES_TABLE_NAME);
+        AccountTable tab = tabs.get(tabName).get(TRADES_TABLE_NAME);
         JTable table = tab.getTable();
         TableFilter filter = tab.getFilter();
         JScrollPane scroll = new JScrollPane(table);
@@ -1036,7 +1036,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                     startDateRange = simpleDateFormat.parse(startDate);
                     endDateRange = simpleDateFormat.parse(endDate);
                     // execute filter
-                    Tab tab = getSelectedTab();
+                    AccountTable tab = getSelectedTab();
                     TableFilter filter = tab.getFilter();
                     int dateColumnIndex = filter.getDateColumnIndex();
                     filter.removeFilterItems(dateColumnIndex);
@@ -1071,6 +1071,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             checkBoxDateRange.setSelected(false);
         }
     }
+    
+    /**
+     * btnEnterSQLActionPerformed
+     * @param evt 
+     */
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
 
         int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
@@ -1078,7 +1083,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if (command.toLowerCase().contains("select")){
             
             // display on current showingtable
-            Tab tab = getSelectedTab();
+            AccountTable tab = getSelectedTab();
             JTable table = tab.getTable();
             String tableName = table.getName();
             String accountName = getSelectedTabName();
@@ -1122,7 +1127,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             applyDateRangeFilter();
         }
         else{
-            Tab tab = getSelectedTab();
+            AccountTable tab = getSelectedTab();
             TableFilter filter = tab.getFilter();
             int dateColumnIndex = filter.getDateColumnIndex();
             filter.removeFilterItems(dateColumnIndex);
@@ -1142,7 +1147,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             applySymbolSearchFilter();
         }
         else{
-            Tab tab = getSelectedTab();
+            AccountTable tab = getSelectedTab();
             TableFilter filter = tab.getFilter();
             // clear symbol search filter
             int underlyingColumnIndex = filter.getUnderlyingColumnIndex();
@@ -1160,7 +1165,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // clear all filters
         //String tabName = getSelectedTabName();
-        Tab tab = getSelectedTab();
+        AccountTable tab = getSelectedTab();
         TableFilter filter = tab.getFilter();
         filter.clearAllFilters();
         filter.applyFilter();
@@ -1191,7 +1196,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // local variables
         String tabName = getSelectedTabName();
-        Tab tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
+        AccountTable tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
         JTable table = tab.getTable();
         TableFilter filter = tab.getFilter();
         JScrollPane scroll = new JScrollPane(table);
@@ -1285,15 +1290,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * @param tabs
      * @return 
      */
-    public Map<String,Tab> initTotalRowCounts(Map<String,Tab> tabs) {
+        
+    public Map<String,AccountTable> initTotalRowCounts(Map<String,AccountTable> tabs) {
         
         int totalRecords;
  
         boolean isFirstTabRecordLabelSet = false;
         
-        for (Map.Entry<String, Tab> entry : tabs.entrySet())
+        for (Map.Entry<String, AccountTable> entry : tabs.entrySet())
         {
-            Tab tab = tabs.get(entry.getKey());
+            AccountTable tab = tabs.get(entry.getKey());
             JTable table = tab.getTable();
             totalRecords = table.getRowCount();
             tab.setTotalRecords(totalRecords);
@@ -1315,14 +1321,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * @param tabs
      * @return 
      */
-    public Map<String,Map<String,Tab>> loadTables(Map<String,Map<String,Tab>> tabs) {
+    public Map<String,Map<String,AccountTable>> loadTables(Map<String,Map<String,AccountTable>> tabs) {
         
-        for (Map.Entry<String, Map<String,Tab>> tabEntry : tabs.entrySet()){
+        for (Map.Entry<String, Map<String,AccountTable>> tabEntry : tabs.entrySet()){
             String accountName = tabEntry.getKey();
-            Map<String,Tab> tables = tabs.get(accountName);
-            for (Map.Entry<String,Tab> tableEntry : tables.entrySet()){
+            Map<String,AccountTable> tables = tabs.get(accountName);
+            for (Map.Entry<String,AccountTable> tableEntry : tables.entrySet()){
                 String tableName = tableEntry.getKey();
-                Tab tab = tables.get(tableName);
+                AccountTable tab = tables.get(tableName);
                 JTable table = tab.getTable();
                 loadTable(table, tableName, accountName);
                 setTableListeners(tab);
@@ -1410,7 +1416,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         table.setModel(model);
         
         // check that the filter items are initialized
-        Tab tab = tabs.get(accountName).get(tableName);
+        AccountTable tab = tabs.get(accountName).get(tableName);
         TableFilter filter = tab.getFilter();
         if(filter.getFilterItems() == null){
             filter.initFilterItems();
@@ -1440,7 +1446,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * This adds mouselisteners and keylisteners to tables.
      * @param table 
      */
-    public void setTableListeners(final Tab tab) { 
+    public void setTableListeners(final AccountTable tab) { 
         
         JTable table = tab.getTable();
         ColumnPopupMenu columnPopupMenu = tab.getColumnPopupMenu();
@@ -1593,9 +1599,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * @param tabs
      * @return 
      */
-    public Map<String,Tab> setTableListeners(Map<String,Tab> tabs) {
+    public Map<String,AccountTable> setTableListeners(Map<String,AccountTable> tabs) {
         
-        for (Map.Entry<String, Tab> entry : tabs.entrySet())
+        for (Map.Entry<String, AccountTable> entry : tabs.entrySet())
         {
             setTableListeners(tabs.get(entry.getKey()));
         }
@@ -1614,7 +1620,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if (rowIndex != -1) {
             Object selectedField = table.getValueAt(rowIndex, columnIndex);
             //String tabName = getSelectedTabName();
-            Tab tab = getSelectedTab();
+            AccountTable tab = getSelectedTab();
             TableFilter filter = tab.getFilter();
             filter.addFilterItem(columnIndex, selectedField);
             filter.applyFilter();
@@ -1639,7 +1645,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
         //String tabName = getSelectedTabName();
-        Tab tab = getSelectedTab();
+        AccountTable tab = getSelectedTab();
         TableFilter filter = tab.getFilter();
         
         // clear column filter
@@ -1686,7 +1692,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void applySymbolSearchFilter() {
         
         // get selected tab
-        Tab tab = getSelectedTab();
+        AccountTable tab = getSelectedTab();
  
         // apply filter for the symbol
         String filterItem = textFieldSymbol.getText();
@@ -1771,7 +1777,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      * Returns the selected tab and table selected
      * @return 
      */
-    public Tab getSelectedTab(){
+    public AccountTable getSelectedTab(){
         String tabName = getSelectedTabName();
         if(tabs.get(tabName).get(POSITIONS_TABLE_NAME).isTableSelected()){
             return tabs.get(tabName).get(POSITIONS_TABLE_NAME);
@@ -1780,18 +1786,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             return tabs.get(tabName).get(TRADES_TABLE_NAME);
         }
         // this should never be reached
-        return new Tab();
+        return new AccountTable();
     }
     
     /**************************************************************************
      ******************* SETTERS AND GETTERS **********************************
      **************************************************************************/
     
-    public Map<String, Map<String, Tab>> getTabs() {
+    public Map<String, Map<String, AccountTable>> getTabs() {
         return tabs;
     }
 
-    public void setTabs(Map<String, Map<String, Tab>> tabs) {
+    public void setTabs(Map<String, Map<String, AccountTable>> tabs) {
         this.tabs = tabs;
     }
 
