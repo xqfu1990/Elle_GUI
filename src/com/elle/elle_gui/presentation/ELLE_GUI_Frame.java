@@ -110,6 +110,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // initialize tabs
         tabs = new HashMap();
         
+        /***************** IB9048 Account ****************************/
         // create hashmap for IB9048 tables
         Map<String,AccountTable> tabIB9048 = new HashMap();
         tabIB9048.put(POSITIONS_TABLE_NAME, new AccountTable());
@@ -131,53 +132,49 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add tables to the IB9048 account tab
         tabs.put(IB9048_ACCOUNT_NAME, tabIB9048);
         
-        // commented out for now for testing
-//        // create hashmap for IB9048b tables
-//        Map<String,Tab> tabIB9048b = new HashMap();
-//        tabIB9048b.put(POSITIONS_TABLE_NAME, new Tab());
-//        tabIB9048b.put(TRADES_TABLE_NAME, new Tab());
-//        // initialize tables for IB9048b -Postions table
-//        tabIB9048b.get(POSITIONS_TABLE_NAME).setTable(new JTable());
-//        tabIB9048b.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
-//        tabIB9048b.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-//        tabIB9048b.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(POSITIONS_TABLE_NAME).getTable()));
-//        tabIB9048b.get(POSITIONS_TABLE_NAME)
-//                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(POSITIONS_TABLE_NAME).getFilter()));
-//        // initialize tables for IB9048b -Trades table
-//        tabIB9048b.get(TRADES_TABLE_NAME).setTable(new JTable());
-//        tabIB9048b.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
-//        tabIB9048b.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-//        tabIB9048b.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(TRADES_TABLE_NAME).getTable()));
-//        tabIB9048b.get(TRADES_TABLE_NAME)
-//                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(TRADES_TABLE_NAME).getFilter()));
-//        // add tables to the IB9048b account tab
-//        tabs.put(IB9048_ACCOUNT_NAME, tabIB9048b);
-//        
-//        // create hashmap for Combined tables
-//        Map<String,Tab> tabCombined = new HashMap();
-//        tabCombined.put(POSITIONS_TABLE_NAME, new Tab());
-//        tabCombined.put(TRADES_TABLE_NAME, new Tab());
-//        // initialize tables for Combined -Postions table
-//        tabCombined.get(POSITIONS_TABLE_NAME).setTable(new JTable());
-//        tabCombined.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
-//        tabCombined.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-//        tabCombined.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabCombined.get(POSITIONS_TABLE_NAME).getTable()));
-//        tabCombined.get(POSITIONS_TABLE_NAME)
-//                .setColumnPopupMenu(new ColumnPopupMenu(tabCombined.get(POSITIONS_TABLE_NAME).getFilter()));
-//        // initialize tables for Combined -Trades table
-//        tabCombined.get(TRADES_TABLE_NAME).setTable(new JTable());
-//        tabCombined.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
-//        tabCombined.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-//        tabCombined.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabCombined.get(TRADES_TABLE_NAME).getTable()));
-//        tabCombined.get(TRADES_TABLE_NAME)
-//                .setColumnPopupMenu(new ColumnPopupMenu(tabCombined.get(TRADES_TABLE_NAME).getFilter()));
-//        // add tables to the Combined account tab
-//        tabs.put(IB9048_ACCOUNT_NAME, tabCombined);
+        /***************** IB9048b Account ****************************/
+        // create hashmap for IB9048b tables
+        Map<String,AccountTable> tabIB9048b = new HashMap();
+        tabIB9048b.put(POSITIONS_TABLE_NAME, new AccountTable());
+        tabIB9048b.put(TRADES_TABLE_NAME, new AccountTable());
+        // initialize tables for IB9048b -Postions table
+        tabIB9048b.get(POSITIONS_TABLE_NAME).setTable(new JTable());
+        tabIB9048b.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
+        tabIB9048b.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
+        tabIB9048b.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(POSITIONS_TABLE_NAME).getTable()));
+        tabIB9048b.get(POSITIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(POSITIONS_TABLE_NAME).getFilter()));
+        // initialize tables for IB9048b -Trades table
+        tabIB9048b.get(TRADES_TABLE_NAME).setTable(new JTable());
+        tabIB9048b.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
+        tabIB9048b.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabIB9048b.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(TRADES_TABLE_NAME).getTable()));
+        tabIB9048b.get(TRADES_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(TRADES_TABLE_NAME).getFilter()));
+        // add tables to the IB9048b account tab
+        tabs.put(IB9048B_ACCOUNT_NAME, tabIB9048b);
         
-        // for testing same tables for each tab
-        tabs.put(IB9048B_ACCOUNT_NAME, new HashMap(tabIB9048));
-        tabs.put(COMBINED_ACCOUNT_NAME, new HashMap(tabIB9048));
-        
+        /***************** Combined Accounts ****************************/
+        // create hashmap for Combined tables
+        Map<String,AccountTable> tabCombined = new HashMap();
+        tabCombined.put(POSITIONS_TABLE_NAME, new AccountTable());
+        tabCombined.put(TRADES_TABLE_NAME, new AccountTable());
+        // initialize tables for Combined -Postions table
+        tabCombined.get(POSITIONS_TABLE_NAME).setTable(new JTable());
+        tabCombined.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
+        tabCombined.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
+        tabCombined.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabCombined.get(POSITIONS_TABLE_NAME).getTable()));
+        tabCombined.get(POSITIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabCombined.get(POSITIONS_TABLE_NAME).getFilter()));
+        // initialize tables for Combined -Trades table
+        tabCombined.get(TRADES_TABLE_NAME).setTable(new JTable());
+        tabCombined.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
+        tabCombined.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabCombined.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabCombined.get(TRADES_TABLE_NAME).getTable()));
+        tabCombined.get(TRADES_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabCombined.get(TRADES_TABLE_NAME).getFilter()));
+        // add tables to the Combined account tab
+        tabs.put(COMBINED_ACCOUNT_NAME, tabCombined);
         
         // this sets the KeyboardFocusManger
         //setKeyboardFocusManager();
@@ -215,6 +212,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // start table with positions button selected
         btnPositions.setBackground(colorBtnSelected);
         btnPositions.requestFocus();
+        
+        // start the other tables initially on positions
+        tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
+        tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         
     }
 
@@ -1354,15 +1355,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         sql = "SELECT * FROM " + tableName 
                 + " ORDER BY symbol ASC";
         
-//        if(accountName == "Combined"){
-//            sql = "SELECT * FROM " + tableName 
-//                + " ORDER BY symbol ASC";
-//        }
-//        else{
-//            sql = "SELECT * FROM " + tableName 
-//                + " WHERE Account = '" + accountName
-//                + "' ORDER BY symbol ASC";
-//        }
+        if(accountName == "Combined"){
+            sql = "SELECT * FROM " + tableName 
+                + " ORDER BY symbol ASC";
+        }
+        else if (accountName == "IB9048b"){
+            sql = "SELECT * FROM " + tableName 
+                + " WHERE Account = '" + "TOS3622"
+                + "' ORDER BY symbol ASC";
+        }
         
         return loadTable(sql, table, tableName, accountName);
     }
