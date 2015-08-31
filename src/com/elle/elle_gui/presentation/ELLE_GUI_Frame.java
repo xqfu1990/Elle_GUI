@@ -1196,9 +1196,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // local variables
         String tabName = getSelectedTabName();
-        AccountTable tab = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
-        JTable table = tab.getTable();
-        TableFilter filter = tab.getFilter();
+        AccountTable accountTable = tabs.get(tabName).get(POSITIONS_TABLE_NAME);
+        JTable table = accountTable.getTable();
+        TableFilter filter = accountTable.getFilter();
         JScrollPane scroll = new JScrollPane(table);
         
         // update button colors
@@ -1220,7 +1220,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         filter.applyColorHeaders();
         
         // update records label
-        String recordsText = tab.getRecordsLabel();
+        String recordsText = accountTable.getRecordsLabel();
         labelRecords.setText(recordsText);
         
     }//GEN-LAST:event_btnPositionsActionPerformed
@@ -1280,7 +1280,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void tabbedPaneAccountsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneAccountsStateChanged
         
         // display correct table
-        //displayTable();  // shows the correct table depending on tab and button selected
+        displayTable();  // shows the correct table depending on tab and button selected
     }//GEN-LAST:event_tabbedPaneAccountsStateChanged
 
     
@@ -1750,24 +1750,42 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // called by init components so just skip if tabs is null
         if(tabs != null){
             // get the account
-            String tabName = getSelectedTabName();
-            JTable tabTable = getSelectedTabPanel();
+            String tabName = getSelectedTabName();        // tab/account name
 
-            // get the table
+            // get the table name
             String tableName ="";
             if(tabs.get(tabName).get(POSITIONS_TABLE_NAME).isTableSelected()){
                 tableName = POSITIONS_TABLE_NAME;
+                // update button colors
+                btnPositions.setBackground(colorBtnSelected);
+                btnTrades.setBackground(colorBtnDefault);
             }
             else if(tabs.get(tabName).get(TRADES_TABLE_NAME).isTableSelected()){
                 tableName = TRADES_TABLE_NAME;
+                // update button colors
+                btnTrades.setBackground(colorBtnSelected);
+                btnPositions.setBackground(colorBtnDefault);
             }
+            
+            // get the account table
+            AccountTable accountTable = tabs.get(tabName).get(tableName);
+            JTable table = accountTable.getTable();
+            TableFilter filter = accountTable.getFilter();
+            JScrollPane scroll = new JScrollPane(table);
 
-            // Change table
-            tabTable = tabs.get(tabName).get(tableName).getTable();
+            // change panel table
+            JPanel panel = getSelectedTabPanel();         // tab panel used to display the account table
+            panel.removeAll();
+            panel.setLayout(new BorderLayout());
+            panel.add(scroll, BorderLayout.CENTER);
 
-            // apply filter
-            TableFilter filter = tabs.get(tabName).get(tableName).getFilter();
+            // apply filter for the positions table
             filter.applyFilter();
+            filter.applyColorHeaders();
+
+            // update records label
+            String recordsText = accountTable.getRecordsLabel();
+            labelRecords.setText(recordsText);
         }
         
     }
