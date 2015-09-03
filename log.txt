@@ -790,3 +790,7 @@
 2015-05-27 09:22:01 AM: Read successfully!
 
 
+
+-------------------------2015-08-30 09:58:07 AM-------------------------
+2015-08-30 09:58:07 AM: Start to connect local database...
+2015-08-30 09:58:07 AM: Connect successfully!
