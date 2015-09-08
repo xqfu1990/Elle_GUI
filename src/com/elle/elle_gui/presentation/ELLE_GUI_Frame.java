@@ -13,6 +13,7 @@ import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -32,6 +33,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,11 +50,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
 
@@ -200,6 +205,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         AccountTable IB9048_positions = tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME);
         JTable table = IB9048_positions.getTable();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);                  // fix issue with scroll bar dissappearing
         panelIB9048.removeAll();
         panelIB9048.setLayout(new BorderLayout());
         panelIB9048.add(scroll, BorderLayout.CENTER);
@@ -849,6 +855,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         JTable table = tab.getTable();
         TableFilter filter = tab.getFilter();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
         
         // update button colors
         btnTrades.setBackground(colorBtnSelected);
@@ -1201,6 +1208,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         JTable table = accountTable.getTable();
         TableFilter filter = accountTable.getFilter();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
         
         // update button colors
         btnPositions.setBackground(colorBtnSelected);
@@ -1368,7 +1376,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         return loadTable(sql, table, tableName, accountName);
     }
     
-    
     /**
      * loadTable
      * @param sql
@@ -1437,9 +1444,231 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // set the listeners for the table
         setTableListeners(tab);
         
+        // format the table
+        formatTable(table);
+        
         System.out.println("Table loaded succesfully");
         
         return table;
+    }
+    
+    /**
+     * formatTable
+     * This formats the table
+     * @author Xiaoqian Fu
+     * @param table 
+     */
+    private void formatTable(JTable table) {
+
+        tableHeaderRenderer(table); // Make table headers align CENTER
+
+        tableCellAlignment(table);   // Make table cells align CENTER
+
+        tableCellDecimalFormat(table); // Make table cells have four decimals
+        
+        tableTimeCellFormat(table); // Make the table cells which shows time have
+        
+                                    // "yyyy-mm-dd hh:mm:ss" format
+        
+        //rename selected columns
+        
+        for (int i = 0; i<table.getColumnCount(); i++){
+            if(table.getColumnName(i).equalsIgnoreCase("wash")){
+                table.getTableHeader().getColumnModel().getColumn(i).setHeaderValue("W");
+            }
+        }
+
+    }
+    
+    /**
+     * setScrollBarFormat
+     * This formats the scroll bar so that it is always visible.
+     * This fixes the default behavior because the scrollbar
+     * becomes smaller and smaller until it dissappears.
+     * @param scroll 
+     */
+    private void setScrollBarFormat(JScrollPane scroll, JTable table){
+        
+        scroll.setViewportView(table);
+        scroll.setPreferredSize(new Dimension(924, 900));
+        table.setPreferredSize(new Dimension(2000, 2000));
+    }
+
+    /**
+     * tableHeaderRenderer
+     * This is the table header renderer
+     * @author Xiaoqian Fu
+     * @param table 
+     */
+    private void tableHeaderRenderer(JTable table) {
+
+        JTableHeader header = table.getTableHeader();
+        header.setDefaultRenderer(new HeaderRenderer(table));
+
+    }
+
+    /**
+     * tableCellDecimalFormat
+     * This is the table cell decimal format 
+     * @author Xiaoqian Fu
+     * @param table 
+     */
+    private void tableCellDecimalFormat(JTable table) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+
+            TableColumn tableColumnI = table.getColumnModel().getColumn(i);
+
+            if (table.getColumnName(i).toLowerCase().equals("price")
+                    || table.getColumnName(i).toLowerCase().equals("adj_price")) {
+
+                tableColumnI.setCellRenderer(new DecimalFormatRenderer());
+
+            }
+        }
+    }
+
+    /**
+     * tableCellAlignment
+     * This is the table cell alignment
+     * @author Xiaoqian Fu
+     * @param table 
+     */
+    private void tableCellAlignment(JTable table) {
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+
+            TableColumn tableColumnI = table.getColumnModel().getColumn(i);
+
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+
+            if (table.getColumnName(i).toLowerCase().equals("price")
+                    || table.getColumnName(i).toLowerCase().equals("adj_price")
+                    || table.getColumnName(i).toLowerCase().equals("q")
+                    || table.getColumnName(i).toLowerCase().equals("basis")
+                    || table.getColumnName(i).toLowerCase().equals("strike")
+                    || table.getColumnName(i).toLowerCase().equals("qori")
+                    || table.getColumnName(i).toLowerCase().equals("adj_basis")
+                    || table.getColumnName(i).toLowerCase().equals("totalq")
+                    || table.getColumnName(i).toLowerCase().equals("realized_pl")) {
+
+                renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            } else {
+
+                renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+            }
+
+            tableColumnI.setCellRenderer(renderer);
+
+        }
+    }
+
+    /**
+     * tableTimeCellFormat
+     * This is the table time cell format
+     * @author Xiaoqian Fu
+     * @param table 
+     */
+    private void tableTimeCellFormat(JTable table) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            
+            TableColumn tableColumnI = table.getColumnModel().getColumn(i);
+            
+            if (table.getColumnName(i).toLowerCase().contains("time")) {
+                
+                tableColumnI.setCellRenderer(new DataRenderer());
+            }
+        }
+    }
+    
+    /**
+     * DataRenderer
+     * This is the data renderer
+     * @author Xiaoqian Fu
+     */
+    private static class DataRenderer extends DefaultTableCellRenderer {
+        
+        private SimpleDateFormat dateFormatNewValue = 
+                new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        private String valueToString;
+        
+        public DataRenderer() {
+            super();
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+        
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int col) {
+            
+            if(value !=null){
+                valueToString = dateFormatNewValue.format(value);
+                value = valueToString;
+            }
+            
+            return super.getTableCellRendererComponent(table,
+                    value, isSelected, hasFocus, row, col);
+            
+        }
+        
+    }
+
+    /**
+     * HeaderRenderer
+     * This is the header renderer
+     * @author Xiaoqian Fu
+     */
+    private static class HeaderRenderer implements TableCellRenderer {
+
+        DefaultTableCellRenderer renderer;
+
+        public HeaderRenderer(JTable table) {
+            renderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
+            renderer.setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int col) {
+            return renderer.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, col);
+        }
+
+    }
+
+    /**
+     * DecimalFormatRenderer
+     * This is the decimal format renderer
+     * @author Xiaoqian Fu
+     */
+    private static class DecimalFormatRenderer extends DefaultTableCellRenderer {
+
+        private static final DecimalFormat formatter = new DecimalFormat("#.0000");
+
+        public DecimalFormatRenderer() {
+            super();
+            setHorizontalAlignment(JLabel.RIGHT);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int col) {
+
+            Double doubleValue = 0.0;
+
+            if (value != null) {
+                doubleValue = Double.parseDouble(value.toString());
+                value = formatter.format((Number) doubleValue);
+            }
+
+            return super.getTableCellRendererComponent(table,
+                    value, isSelected, hasFocus, row, col);
+        }
+          
     }
     
     /**
@@ -1773,6 +2002,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             JTable table = accountTable.getTable();
             TableFilter filter = accountTable.getFilter();
             JScrollPane scroll = new JScrollPane(table);
+            setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
 
             // change panel table
             JPanel panel = getSelectedTabPanel();         // tab panel used to display the account table
