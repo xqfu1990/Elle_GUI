@@ -13,6 +13,7 @@ import com.elle.elle_gui.logic.Validator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -204,6 +205,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         AccountTable IB9048_positions = tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME);
         JTable table = IB9048_positions.getTable();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);                  // fix issue with scroll bar dissappearing
         panelIB9048.removeAll();
         panelIB9048.setLayout(new BorderLayout());
         panelIB9048.add(scroll, BorderLayout.CENTER);
@@ -853,6 +855,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         JTable table = tab.getTable();
         TableFilter filter = tab.getFilter();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
         
         // update button colors
         btnTrades.setBackground(colorBtnSelected);
@@ -1205,6 +1208,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         JTable table = accountTable.getTable();
         TableFilter filter = accountTable.getFilter();
         JScrollPane scroll = new JScrollPane(table);
+        setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
         
         // update button colors
         btnPositions.setBackground(colorBtnSelected);
@@ -1474,6 +1478,20 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         }
 
+    }
+    
+    /**
+     * setScrollBarFormat
+     * This formats the scroll bar so that it is always visible.
+     * This fixes the default behavior because the scrollbar
+     * becomes smaller and smaller until it dissappears.
+     * @param scroll 
+     */
+    private void setScrollBarFormat(JScrollPane scroll, JTable table){
+        
+        scroll.setViewportView(table);
+        scroll.setPreferredSize(new Dimension(924, 900));
+        table.setPreferredSize(new Dimension(2000, 2000));
     }
 
     /**
@@ -1984,6 +2002,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             JTable table = accountTable.getTable();
             TableFilter filter = accountTable.getFilter();
             JScrollPane scroll = new JScrollPane(table);
+            setScrollBarFormat(scroll, table);            // fix issue with scroll bar dissappearing
 
             // change panel table
             JPanel panel = getSelectedTabPanel();         // tab panel used to display the account table
