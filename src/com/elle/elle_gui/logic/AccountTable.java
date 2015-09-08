@@ -203,6 +203,10 @@ public class AccountTable implements ITableConstants{
         this.tableSelected = tableSelected;
     }
     
+    public void setTableParticularColName(int col, String str){
+        System.out.println(tableColNames.length);
+        tableColNames[col]= str;
+    }
     
 
     /**************************************************************************
