@@ -45,13 +45,10 @@ public class ELLE_GUI {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.setLocationRelativeTo(null);
-                loginWindow.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.setLocationRelativeTo(null);
+            loginWindow.setVisible(true);
         });
     }
 }
