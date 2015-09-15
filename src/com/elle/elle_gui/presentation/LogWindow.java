@@ -4,6 +4,7 @@ package com.elle.elle_gui.presentation;
 import com.elle.elle_gui.logic.LogMessage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -76,17 +77,13 @@ public class LogWindow extends JFrame{
 
         // create buttons 
         btnClearAllButToday = new JButton("Clear All But Today");
-        btnClearAllButToday.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearAllButTodayActionPerformed(evt);
-            }
+        btnClearAllButToday.addActionListener((ActionEvent evt) -> {
+            btnClearAllButTodayActionPerformed(evt);
         });
 
         btnDeleteAllButToday = new JButton("Delete All But Today");
-        btnDeleteAllButToday.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteAllButTodayActionPerformed(evt);
-            }
+        btnDeleteAllButToday.addActionListener((ActionEvent evt) -> {
+            btnDeleteAllButTodayActionPerformed(evt);
         });
 
         /********* THIS IS THE CHECKBOX ORDER FEATURE *****************/
@@ -99,10 +96,8 @@ public class LogWindow extends JFrame{
 ////                jLabelOrder = new JLabel("Order");
 
         showAll = new JButton("Show All");
-        showAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showAllActionPerformed(evt);
-            }
+        showAll.addActionListener((ActionEvent evt) -> {
+            showAllActionPerformed(evt);
         });
 
 
