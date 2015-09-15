@@ -4,7 +4,6 @@ package com.elle.elle_gui.presentation;
 import com.elle.elle_gui.logic.LogMessage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
