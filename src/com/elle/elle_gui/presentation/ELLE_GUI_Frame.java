@@ -2102,7 +2102,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if(tabName == "IB9048"){
             return panelIB9048;
         }
-        else if(tabName == "IB9048b"){
+        else if(tabName == "TOS3622"){
             return panelTOS3622;
         }
         else{
