@@ -2,7 +2,6 @@
 package com.elle.elle_gui;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
-import com.elle.elle_gui.presentation.LogWindow;
 import com.elle.elle_gui.presentation.LoginWindow;
 
 /**
