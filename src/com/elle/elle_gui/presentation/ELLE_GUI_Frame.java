@@ -1480,7 +1480,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         scroll.setViewportView(table);
         scroll.setPreferredSize(new Dimension(924, 900));
-        table.setPreferredSize(new Dimension(2000, 2000));
+        //table.setPreferredSize(new Dimension(2000, 2000));
     }
 
     /**
