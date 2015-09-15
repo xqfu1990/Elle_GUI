@@ -1,6 +1,5 @@
 package com.elle.elle_gui.logic;
 
-import com.elle.elle_gui.old.CreateTables;
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
