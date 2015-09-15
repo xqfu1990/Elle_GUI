@@ -249,9 +249,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         panelIB9048 = new javax.swing.JPanel();
         scrollPaneIB9048 = new javax.swing.JScrollPane();
         tableIB9048 = new javax.swing.JTable();
-        panelIB9048b = new javax.swing.JPanel();
-        scrollPaneIB9048b = new javax.swing.JScrollPane();
-        tableIB9048b = new javax.swing.JTable();
+        panelTOS3622 = new javax.swing.JPanel();
+        scrollPaneTOS3622 = new javax.swing.JScrollPane();
+        tableTOS3622 = new javax.swing.JTable();
         panelCombined = new javax.swing.JPanel();
         scrollPaneCombined = new javax.swing.JScrollPane();
         tableCombined = new javax.swing.JTable();
@@ -527,7 +527,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         tabbedPaneAccounts.addTab("IB9048", panelIB9048);
 
-        tableIB9048b.setModel(new javax.swing.table.DefaultTableModel(
+        tableTOS3622.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -538,26 +538,26 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        scrollPaneIB9048b.setViewportView(tableIB9048b);
+        scrollPaneTOS3622.setViewportView(tableTOS3622);
 
-        javax.swing.GroupLayout panelIB9048bLayout = new javax.swing.GroupLayout(panelIB9048b);
-        panelIB9048b.setLayout(panelIB9048bLayout);
-        panelIB9048bLayout.setHorizontalGroup(
-            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelTOS3622Layout = new javax.swing.GroupLayout(panelTOS3622);
+        panelTOS3622.setLayout(panelTOS3622Layout);
+        panelTOS3622Layout.setHorizontalGroup(
+            panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1150, Short.MAX_VALUE)
-            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
+            .addGroup(panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(scrollPaneTOS3622, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
         );
-        panelIB9048bLayout.setVerticalGroup(
-            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelTOS3622Layout.setVerticalGroup(
+            panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 467, Short.MAX_VALUE)
-            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelIB9048bLayout.createSequentialGroup()
-                    .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelTOS3622Layout.createSequentialGroup()
+                    .addComponent(scrollPaneTOS3622, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        tabbedPaneAccounts.addTab("TOS3622", panelIB9048b);
+        tabbedPaneAccounts.addTab("TOS3622", panelTOS3622);
 
         tableCombined.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2105,7 +2105,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             return panelIB9048;
         }
         else if(tabName == "IB9048b"){
-            return panelIB9048b;
+            return panelTOS3622;
         }
         else{
             return panelCombined;
@@ -2162,16 +2162,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JPanel panelCTRLPanel;
     private javax.swing.JPanel panelCombined;
     private javax.swing.JPanel panelIB9048;
-    private javax.swing.JPanel panelIB9048b;
     private javax.swing.JPanel panelSQL;
+    private javax.swing.JPanel panelTOS3622;
     private javax.swing.JScrollPane scrollPaneCombined;
     private javax.swing.JScrollPane scrollPaneIB9048;
-    private javax.swing.JScrollPane scrollPaneIB9048b;
     private javax.swing.JScrollPane scrollPaneSQL;
+    private javax.swing.JScrollPane scrollPaneTOS3622;
     private javax.swing.JTabbedPane tabbedPaneAccounts;
     private javax.swing.JTable tableCombined;
     private javax.swing.JTable tableIB9048;
-    private javax.swing.JTable tableIB9048b;
+    private javax.swing.JTable tableTOS3622;
     private javax.swing.JTextArea textAreaSQL;
     private javax.swing.JTextField textFieldEndDate;
     private javax.swing.JTextField textFieldStartDate;
