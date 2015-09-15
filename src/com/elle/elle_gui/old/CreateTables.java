@@ -389,26 +389,27 @@ public class CreateTables extends JPanel {
         }
         table.addMouseListener(new MouseListener() {
 
+            // commented out for now so that the project can be built
             @Override
             public void mouseClicked(MouseEvent e) { // <-- mouse click event listener here!
                 if (e.getClickCount() == 2) {
                     if (isFiltering) {
-                        ELLE_GUI_Frame.monitorTableChange(-1);
-                        int column = table.getSelectedColumn();
-                        String columnName = table.getColumnName(column);
-                        setMyRowFilter(e, sorter);      // <-- set row filter here!
-                        table.setRowSorter(sorter);
-                        int index = table.getColumnModel()
-                                .getColumnIndex(columnName);
-                        ELLE_GUI_Frame.monitorTableChange(index);
-                    } else {
-                        int column = table.getSelectedColumn();
-                        String columnName = table.getColumnName(column);
-                        setMyRowFilter(e, sorter);      // <-- set row filter here!
-                        table.setRowSorter(sorter);
-                        int index = table.getColumnModel()
-                                .getColumnIndex(columnName);
-                        ELLE_GUI_Frame.monitorTableChange(index);
+//                        ELLE_GUI_Frame.monitorTableChange(-1);
+//                        int column = table.getSelectedColumn();
+//                        String columnName = table.getColumnName(column);
+//                        setMyRowFilter(e, sorter);      // <-- set row filter here!
+//                        table.setRowSorter(sorter);
+//                        int index = table.getColumnModel()
+//                                .getColumnIndex(columnName);
+//                        ELLE_GUI_Frame.monitorTableChange(index);
+//                    } else {
+//                        int column = table.getSelectedColumn();
+//                        String columnName = table.getColumnName(column);
+//                        setMyRowFilter(e, sorter);      // <-- set row filter here!
+//                        table.setRowSorter(sorter);
+//                        int index = table.getColumnModel()
+//                                .getColumnIndex(columnName);
+//                        ELLE_GUI_Frame.monitorTableChange(index);
                     }
                 }
 
@@ -544,7 +545,7 @@ public class CreateTables extends JPanel {
         int columnIndex = table.getColumnModel().getColumnIndexAtX(e.getX());
 //        TableRowFilterSupport.forTable(table).searchable(true).actions(true)
 //                .apply();
-        ELLE_GUI_Frame.monitorTableChange(-1);// clean green background
+//        ELLE_GUI_Frame.monitorTableChange(-1);// clean green background
 
     }
 
@@ -1680,7 +1681,7 @@ public class CreateTables extends JPanel {
                 // A NullPointerException generated natively has a null message.
 //                if (e.getMessage().equals(""))
                 JOptionPane.showMessageDialog(table, "You have not yet logged in");
-                ELLE_GUI_Frame.status = false;
+//                ELLE_GUI_Frame.status = false;
             }
         }
 
