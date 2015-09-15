@@ -148,7 +148,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         tabIB9048b.get(TRADES_TABLE_NAME)
                 .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(TRADES_TABLE_NAME).getFilter()));
         // add tables to the IB9048b account tab
-        tabs.put(IB9048B_ACCOUNT_NAME, tabIB9048b);
+        tabs.put(TOS3622_ACCOUNT_NAME, tabIB9048b);
         
         /***************** Combined Accounts ****************************/
         // create hashmap for Combined tables
@@ -183,8 +183,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // this may not even be needed for this application
         tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
         tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
-        tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
-        tabs.get(IB9048B_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(IB9048B_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
         tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
         
@@ -211,7 +211,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         btnPositions.requestFocus();
         
         // start the other tables initially on positions
-        tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
+        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         
     }
