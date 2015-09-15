@@ -40,8 +40,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,7 +53,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -77,17 +74,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private Map<String,Map<String,AccountTable>> tabs; // stores individual tab objects 
     private static Statement statement;
     private String database;
-    private String selectedTab;
     
     // components
     private static ELLE_GUI_Frame instance;
     private LogWindow logWindow;
     private LoginWindow loginWindow;
-    
-    // tables
-    private JTable positions;
-    private JTable trades;
-    private JTable allocations;   // not implemented yet
     
     // button colors
     private Color colorBtnDefault;
@@ -527,7 +518,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelIB9048Layout.setVerticalGroup(
             panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelIB9048Layout.createSequentialGroup()
                     .addComponent(scrollPaneIB9048, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -559,14 +550,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelIB9048bLayout.setVerticalGroup(
             panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelIB9048bLayout.createSequentialGroup()
                     .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        tabbedPaneAccounts.addTab("IB9048b", panelIB9048b);
+        tabbedPaneAccounts.addTab("TOS3622", panelIB9048b);
 
         tableCombined.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -591,7 +582,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelCombinedLayout.setVerticalGroup(
             panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelCombinedLayout.createSequentialGroup()
                     .addComponent(scrollPaneCombined, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
