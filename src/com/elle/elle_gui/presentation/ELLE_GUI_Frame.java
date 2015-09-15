@@ -128,27 +128,27 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add tables to the IB9048 account tab
         tabs.put(IB9048_ACCOUNT_NAME, tabIB9048);
         
-        /***************** IB9048b Account ****************************/
-        // create hashmap for IB9048b tables
-        Map<String,AccountTable> tabIB9048b = new HashMap();
-        tabIB9048b.put(POSITIONS_TABLE_NAME, new AccountTable());
-        tabIB9048b.put(TRADES_TABLE_NAME, new AccountTable());
-        // initialize tables for IB9048b -Postions table
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setTable(new JTable());
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(POSITIONS_TABLE_NAME).getTable()));
-        tabIB9048b.get(POSITIONS_TABLE_NAME)
-                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(POSITIONS_TABLE_NAME).getFilter()));
-        // initialize tables for IB9048b -Trades table
-        tabIB9048b.get(TRADES_TABLE_NAME).setTable(new JTable());
-        tabIB9048b.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
-        tabIB9048b.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
-        tabIB9048b.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(TRADES_TABLE_NAME).getTable()));
-        tabIB9048b.get(TRADES_TABLE_NAME)
-                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(TRADES_TABLE_NAME).getFilter()));
-        // add tables to the IB9048b account tab
-        tabs.put(TOS3622_ACCOUNT_NAME, tabIB9048b);
+        /***************** TOS3622 Account ****************************/
+        // create hashmap for TOS3622 tables
+        Map<String,AccountTable> tabTOS3622 = new HashMap();
+        tabTOS3622.put(POSITIONS_TABLE_NAME, new AccountTable());
+        tabTOS3622.put(TRADES_TABLE_NAME, new AccountTable());
+        // initialize tables for TOS3622 -Postions table
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setTable(new JTable());
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabTOS3622.get(POSITIONS_TABLE_NAME).getTable()));
+        tabTOS3622.get(POSITIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabTOS3622.get(POSITIONS_TABLE_NAME).getFilter()));
+        // initialize tables for TOS3622 -Trades table
+        tabTOS3622.get(TRADES_TABLE_NAME).setTable(new JTable());
+        tabTOS3622.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
+        tabTOS3622.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabTOS3622.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabTOS3622.get(TRADES_TABLE_NAME).getTable()));
+        tabTOS3622.get(TRADES_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabTOS3622.get(TRADES_TABLE_NAME).getFilter()));
+        // add tables to the TOS3622 account tab
+        tabs.put(TOS3622_ACCOUNT_NAME, tabTOS3622);
         
         /***************** Combined Accounts ****************************/
         // create hashmap for Combined tables
@@ -1350,17 +1350,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     */
     public JTable loadTable(JTable table, String tableName, String accountName) {
         
-        String sql = "";
-        sql = "SELECT * FROM " + tableName 
-                + " ORDER BY symbol ASC";
+        String sql;  // sql query
         
         if(accountName == "Combined"){
             sql = "SELECT * FROM " + tableName 
                 + " ORDER BY symbol ASC";
         }
-        else if (accountName == "IB9048b"){
+        else {
             sql = "SELECT * FROM " + tableName 
-                + " WHERE Account = '" + "TOS3622"
+                + " WHERE Account = '" + accountName
                 + "' ORDER BY symbol ASC";
         }
         
