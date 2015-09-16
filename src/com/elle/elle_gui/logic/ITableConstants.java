@@ -16,7 +16,7 @@ public interface ITableConstants {
     
     // account names
     public static final String IB9048_ACCOUNT_NAME = "IB9048";
-    public static final String IB9048B_ACCOUNT_NAME = "IB9048b";
+    public static final String TOS3622_ACCOUNT_NAME = "TOS3622";
     public static final String COMBINED_ACCOUNT_NAME = "Combined";
     
     // table names

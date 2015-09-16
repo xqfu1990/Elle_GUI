@@ -40,8 +40,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,7 +53,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -70,24 +67,18 @@ import javax.swing.text.AbstractDocument;
 public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     
     // Edit the version and date it was created for new archives and jars
-    private final String CREATION_DATE = "2015-08-14";  
-    private final String VERSION = "0.6.9a";   
+    private final String CREATION_DATE = "2015-09-15";  
+    private final String VERSION = "0.7.0";   
     
     // attributes
     private Map<String,Map<String,AccountTable>> tabs; // stores individual tab objects 
     private static Statement statement;
     private String database;
-    private String selectedTab;
     
     // components
     private static ELLE_GUI_Frame instance;
     private LogWindow logWindow;
     private LoginWindow loginWindow;
-    
-    // tables
-    private JTable positions;
-    private JTable trades;
-    private JTable allocations;   // not implemented yet
     
     // button colors
     private Color colorBtnDefault;
@@ -137,27 +128,27 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // add tables to the IB9048 account tab
         tabs.put(IB9048_ACCOUNT_NAME, tabIB9048);
         
-        /***************** IB9048b Account ****************************/
-        // create hashmap for IB9048b tables
-        Map<String,AccountTable> tabIB9048b = new HashMap();
-        tabIB9048b.put(POSITIONS_TABLE_NAME, new AccountTable());
-        tabIB9048b.put(TRADES_TABLE_NAME, new AccountTable());
-        // initialize tables for IB9048b -Postions table
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setTable(new JTable());
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
-        tabIB9048b.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(POSITIONS_TABLE_NAME).getTable()));
-        tabIB9048b.get(POSITIONS_TABLE_NAME)
-                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(POSITIONS_TABLE_NAME).getFilter()));
-        // initialize tables for IB9048b -Trades table
-        tabIB9048b.get(TRADES_TABLE_NAME).setTable(new JTable());
-        tabIB9048b.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
-        tabIB9048b.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
-        tabIB9048b.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabIB9048b.get(TRADES_TABLE_NAME).getTable()));
-        tabIB9048b.get(TRADES_TABLE_NAME)
-                .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048b.get(TRADES_TABLE_NAME).getFilter()));
-        // add tables to the IB9048b account tab
-        tabs.put(IB9048B_ACCOUNT_NAME, tabIB9048b);
+        /***************** TOS3622 Account ****************************/
+        // create hashmap for TOS3622 tables
+        Map<String,AccountTable> tabTOS3622 = new HashMap();
+        tabTOS3622.put(POSITIONS_TABLE_NAME, new AccountTable());
+        tabTOS3622.put(TRADES_TABLE_NAME, new AccountTable());
+        // initialize tables for TOS3622 -Postions table
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setTable(new JTable());
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setTableName(POSITIONS_TABLE_NAME);
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_POSITIONS);
+        tabTOS3622.get(POSITIONS_TABLE_NAME).setFilter(new TableFilter(tabTOS3622.get(POSITIONS_TABLE_NAME).getTable()));
+        tabTOS3622.get(POSITIONS_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabTOS3622.get(POSITIONS_TABLE_NAME).getFilter()));
+        // initialize tables for TOS3622 -Trades table
+        tabTOS3622.get(TRADES_TABLE_NAME).setTable(new JTable());
+        tabTOS3622.get(TRADES_TABLE_NAME).setTableName(TRADES_TABLE_NAME);
+        tabTOS3622.get(TRADES_TABLE_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabTOS3622.get(TRADES_TABLE_NAME).setFilter(new TableFilter(tabTOS3622.get(TRADES_TABLE_NAME).getTable()));
+        tabTOS3622.get(TRADES_TABLE_NAME)
+                .setColumnPopupMenu(new ColumnPopupMenu(tabTOS3622.get(TRADES_TABLE_NAME).getFilter()));
+        // add tables to the TOS3622 account tab
+        tabs.put(TOS3622_ACCOUNT_NAME, tabTOS3622);
         
         /***************** Combined Accounts ****************************/
         // create hashmap for Combined tables
@@ -192,8 +183,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // this may not even be needed for this application
         tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
         tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
-        tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
-        tabs.get(IB9048B_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(IB9048B_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
         tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_NAME).getTable());
         
@@ -220,7 +211,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         btnPositions.requestFocus();
         
         // start the other tables initially on positions
-        tabs.get(IB9048B_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
+        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         
     }
@@ -258,9 +249,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         panelIB9048 = new javax.swing.JPanel();
         scrollPaneIB9048 = new javax.swing.JScrollPane();
         tableIB9048 = new javax.swing.JTable();
-        panelIB9048b = new javax.swing.JPanel();
-        scrollPaneIB9048b = new javax.swing.JScrollPane();
-        tableIB9048b = new javax.swing.JTable();
+        panelTOS3622 = new javax.swing.JPanel();
+        scrollPaneTOS3622 = new javax.swing.JScrollPane();
+        tableTOS3622 = new javax.swing.JTable();
         panelCombined = new javax.swing.JPanel();
         scrollPaneCombined = new javax.swing.JScrollPane();
         tableCombined = new javax.swing.JTable();
@@ -527,7 +518,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelIB9048Layout.setVerticalGroup(
             panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(panelIB9048Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelIB9048Layout.createSequentialGroup()
                     .addComponent(scrollPaneIB9048, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -536,7 +527,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         tabbedPaneAccounts.addTab("IB9048", panelIB9048);
 
-        tableIB9048b.setModel(new javax.swing.table.DefaultTableModel(
+        tableTOS3622.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -547,26 +538,26 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        scrollPaneIB9048b.setViewportView(tableIB9048b);
+        scrollPaneTOS3622.setViewportView(tableTOS3622);
 
-        javax.swing.GroupLayout panelIB9048bLayout = new javax.swing.GroupLayout(panelIB9048b);
-        panelIB9048b.setLayout(panelIB9048bLayout);
-        panelIB9048bLayout.setHorizontalGroup(
-            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelTOS3622Layout = new javax.swing.GroupLayout(panelTOS3622);
+        panelTOS3622.setLayout(panelTOS3622Layout);
+        panelTOS3622Layout.setHorizontalGroup(
+            panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1150, Short.MAX_VALUE)
-            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
+            .addGroup(panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(scrollPaneTOS3622, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
         );
-        panelIB9048bLayout.setVerticalGroup(
-            panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
-            .addGroup(panelIB9048bLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelIB9048bLayout.createSequentialGroup()
-                    .addComponent(scrollPaneIB9048b, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+        panelTOS3622Layout.setVerticalGroup(
+            panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(panelTOS3622Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelTOS3622Layout.createSequentialGroup()
+                    .addComponent(scrollPaneTOS3622, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        tabbedPaneAccounts.addTab("IB9048b", panelIB9048b);
+        tabbedPaneAccounts.addTab("TOS3622", panelTOS3622);
 
         tableCombined.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -591,7 +582,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         );
         panelCombinedLayout.setVerticalGroup(
             panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(panelCombinedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelCombinedLayout.createSequentialGroup()
                     .addComponent(scrollPaneCombined, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1359,17 +1350,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     */
     public JTable loadTable(JTable table, String tableName, String accountName) {
         
-        String sql = "";
-        sql = "SELECT * FROM " + tableName 
-                + " ORDER BY symbol ASC";
+        String sql;  // sql query
         
         if(accountName == "Combined"){
             sql = "SELECT * FROM " + tableName 
                 + " ORDER BY symbol ASC";
         }
-        else if (accountName == "IB9048b"){
+        else {
             sql = "SELECT * FROM " + tableName 
-                + " WHERE Account = '" + "TOS3622"
+                + " WHERE Account = '" + accountName
                 + "' ORDER BY symbol ASC";
         }
         
@@ -1491,7 +1480,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         scroll.setViewportView(table);
         scroll.setPreferredSize(new Dimension(924, 900));
-        table.setPreferredSize(new Dimension(2000, 2000));
+        //table.setPreferredSize(new Dimension(2000, 2000));
     }
 
     /**
@@ -2113,8 +2102,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if(tabName == "IB9048"){
             return panelIB9048;
         }
-        else if(tabName == "IB9048b"){
-            return panelIB9048b;
+        else if(tabName == "TOS3622"){
+            return panelTOS3622;
         }
         else{
             return panelCombined;
@@ -2171,16 +2160,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JPanel panelCTRLPanel;
     private javax.swing.JPanel panelCombined;
     private javax.swing.JPanel panelIB9048;
-    private javax.swing.JPanel panelIB9048b;
     private javax.swing.JPanel panelSQL;
+    private javax.swing.JPanel panelTOS3622;
     private javax.swing.JScrollPane scrollPaneCombined;
     private javax.swing.JScrollPane scrollPaneIB9048;
-    private javax.swing.JScrollPane scrollPaneIB9048b;
     private javax.swing.JScrollPane scrollPaneSQL;
+    private javax.swing.JScrollPane scrollPaneTOS3622;
     private javax.swing.JTabbedPane tabbedPaneAccounts;
     private javax.swing.JTable tableCombined;
     private javax.swing.JTable tableIB9048;
-    private javax.swing.JTable tableIB9048b;
+    private javax.swing.JTable tableTOS3622;
     private javax.swing.JTextArea textAreaSQL;
     private javax.swing.JTextField textFieldEndDate;
     private javax.swing.JTextField textFieldStartDate;
