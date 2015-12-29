@@ -1,3 +1,4 @@
 /build/
 /target/
 /dist
+/src/com/elle/elle_gui/database/servers.xml
