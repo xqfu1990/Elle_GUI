@@ -67,8 +67,8 @@ import javax.swing.text.AbstractDocument;
 public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     
     // Edit the version and date it was created for new archives and jars
-    private final String CREATION_DATE = "2015-09-15";  
-    private final String VERSION = "0.7.0";   
+    private final String CREATION_DATE = "2015-12-30";  
+    private final String VERSION = "0.8.0";   
     
     // attributes
     private Map<String,Map<String,AccountTable>> tabs; // stores individual tab objects 
