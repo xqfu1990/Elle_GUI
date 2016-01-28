@@ -168,7 +168,7 @@ public class LoginWindow extends JFrame {
 
         jLabel5.setText("Database");
 
-        comboBoxDatabase.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dummy", "Elle2015", "pupone_dummy", "pupone_Analyster" }));
+        comboBoxDatabase.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pupone_dummy" }));
         comboBoxDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxDatabaseActionPerformed(evt);
