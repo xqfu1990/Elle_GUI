@@ -67,8 +67,8 @@ import javax.swing.text.AbstractDocument;
 public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     
     // Edit the version and date it was created for new archives and jars
-    private final String CREATION_DATE = "2015-12-30";  
-    private final String VERSION = "0.8.0";   
+    private final String CREATION_DATE = "2016-01-28";  
+    private final String VERSION = "0.9.0";   
     
     // attributes
     private Map<String,Map<String,AccountTable>> tabs; // stores individual tab objects 
@@ -1330,6 +1330,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 String tableName = tableEntry.getKey();
                 AccountTable tab = tables.get(tableName);
                 JTable table = tab.getTable();
+                System.out.println(tableName + " " + accountName);
                 loadTable(table, tableName, accountName);
                 setTableListeners(tab);
                 // set initial total records
@@ -1361,6 +1362,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 + " WHERE Account = '" + accountName
                 + "' ORDER BY symbol ASC";
         }
+        System.out.println(sql);
         
         return loadTable(sql, table, tableName, accountName);
     }
@@ -1428,6 +1430,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // set column format
         float[] colWidthPercent = tab.getColWidthPercent();
+        System.out.println("colWidthPercent: " + colWidthPercent.length);
         setColumnFormat(colWidthPercent, table);
         
         // set the listeners for the table

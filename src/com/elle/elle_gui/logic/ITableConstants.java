@@ -6,29 +6,29 @@
 package com.elle.elle_gui.logic;
 
 /**
- * ITableConstants
- * This interface stores all the table constants
+ * ITableConstants This interface stores all the table constants
+ *
  * @author Carlos Igreja
  * @since June 10, 2015
  * @version 0.6.3
  */
 public interface ITableConstants {
-    
+
     // account names
     public static final String IB9048_ACCOUNT_NAME = "IB9048";
     public static final String TOS3622_ACCOUNT_NAME = "TOS3622";
     public static final String COMBINED_ACCOUNT_NAME = "Combined";
-    
+
     // table names
     public static final String POSITIONS_TABLE_NAME = "positions";
-    public static final String TRADES_TABLE_NAME = "trades";
+    public static final String TRADES_TABLE_NAME = "Trades_DefaultView";
     public static final String ALLOCATIONS_TABLE_NAME = "allocations";
-    
+
     // column header name constants
     public static final String SYMBOL_COLUMN_NAME = "Symbol";
-    
+
     // column width percent constants
-    public static final float[] COL_WIDTH_PER_POSITIONS = { 
+    public static final float[] COL_WIDTH_PER_POSITIONS = {
         60, // filecode
         62, // inputLine
         20, // wash
@@ -54,9 +54,11 @@ public interface ITableConstants {
         88, // Expiry
         75, // Strike
         55, // O_Type
-        55 };// Notes
-    
-    public static final float[] COL_WIDTH_PER_TRADES = { 
+        55};// Notes
+
+    public static final float[] COL_WIDTH_PER_TRADES = {
+        60,  // T_Group
+        40,  // id
         160, // Trade_Time
         30, // OC
         155, // Symbol
@@ -80,10 +82,11 @@ public interface ITableConstants {
         88, // Expiry
         75, // Strike
         55, // O_Type
-        65, // T_group
         55, // Lnotes
-        65, // strategy
-        85 };// Xchange
+        50, // strategy
+        85, // Xchange
+        40, // order
+        30}; // fill
     public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
-    
+
 }

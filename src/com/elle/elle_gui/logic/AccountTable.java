@@ -238,6 +238,7 @@ public class AccountTable implements ITableConstants{
     public String getRecordsLabel(){
         
         String output;
+        System.out.println("here " + getTableName());
         
         switch (getTableName()) {
             case POSITIONS_TABLE_NAME:
