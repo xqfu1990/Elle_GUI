@@ -40,6 +40,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -1330,7 +1332,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 String tableName = tableEntry.getKey();
                 AccountTable tab = tables.get(tableName);
                 JTable table = tab.getTable();
-                System.out.println(tableName + " " + accountName);
+//                System.out.println(tableName + " " + accountName); 
                 loadTable(table, tableName, accountName);
                 setTableListeners(tab);
                 // set initial total records
@@ -1377,6 +1379,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         Vector data = new Vector();
         Vector columnNames = new Vector();
+        Vector columnClass = new Vector();
         int columns;
 
         ResultSet rs = null;
@@ -1391,7 +1394,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         try {
             columns = metaData.getColumnCount();
             for (int i = 1; i <= columns; i++) {
+                columnClass.addElement(metaData.getColumnClassName(i));
                 columnNames.addElement(metaData.getColumnName(i));
+                System.out.println(metaData.getColumnName(i) + " original: " + metaData.getColumnClassName(i));
             }
             while (rs.next()) {
                 Vector row = new Vector(columns);
@@ -1407,12 +1412,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             ex.printStackTrace();
         }
         
-        EditableTableModel model = new EditableTableModel(data, columnNames);
+        EditableTableModel model = new EditableTableModel(data, columnNames, columnClass);
 
         // this has to be set here or else I get errors
         // I tried passing the model to the filter and setting it there
         // but it caused errors
         table.setModel(model);
+        for(int i = 0; i < table.getColumnCount(); i++){
+            System.out.println(table.getColumnName(i) + "class name: " + table.getColumnClass(i));
+        }
         
         // check that the filter items are initialized
         AccountTable tab = tabs.get(accountName).get(tableName);
@@ -1430,7 +1438,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         
         // set column format
         float[] colWidthPercent = tab.getColWidthPercent();
-        System.out.println("colWidthPercent: " + colWidthPercent.length);
         setColumnFormat(colWidthPercent, table);
         
         // set the listeners for the table
@@ -1458,9 +1465,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         tableCellDecimalFormat(table); // Make table cells have four decimals
         
-        tableTimeCellFormat(table); // Make the table cells which shows time have
-        
-                                    // "yyyy-mm-dd hh:mm:ss" format
+        tableTimeCellFormat(table); 
+        // Make the table cells which shows time have "yyyy-mm-dd hh:mm:ss" format
         
         //rename selected columns
         
@@ -1565,11 +1571,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void tableTimeCellFormat(JTable table) {
         for (int i = 0; i < table.getColumnCount(); i++) {
             
-            TableColumn tableColumnI = table.getColumnModel().getColumn(i);
-            
             if (table.getColumnName(i).toLowerCase().contains("time")) {
+                System.out.println(i + " " + table.getColumnName(i));
                 
-                tableColumnI.setCellRenderer(new DataRenderer());
+                table.getColumnModel().getColumn(i).setCellRenderer(new DataRenderer());
             }
         }
     }
@@ -1581,8 +1586,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      */
     private static class DataRenderer extends DefaultTableCellRenderer {
         
+//        private SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss.s");
+        
         private SimpleDateFormat dateFormatNewValue = 
-                new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         private String valueToString;
         
         public DataRenderer() {
@@ -1598,6 +1605,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             if(value !=null){
                 valueToString = dateFormatNewValue.format(value);
                 value = valueToString;
+                System.out.println(value);
             }
             
             return super.getTableCellRendererComponent(table,
