@@ -98,7 +98,7 @@ public interface ITableConstants {
         85, // Q
         85, // Price
         80, // CommTax
-        75, // Proceeds
+        85, // Proceeds
         80, // Basis
         175, // Lot_Time
         85, // Realized_PL

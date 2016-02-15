@@ -123,7 +123,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // initialize tables for IB9048 -Trades table
         tabIB9048.get(TRADES_TABLE_VIEW_NAME).setTable(new JTable());
         tabIB9048.get(TRADES_TABLE_VIEW_NAME).setTableName(TRADES_TABLE_VIEW_NAME);
-        tabIB9048.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabIB9048.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES_VIEW);
         tabIB9048.get(TRADES_TABLE_VIEW_NAME).setFilter(new TableFilter(tabIB9048.get(TRADES_TABLE_VIEW_NAME).getTable()));
         tabIB9048.get(TRADES_TABLE_VIEW_NAME)
                 .setColumnPopupMenu(new ColumnPopupMenu(tabIB9048.get(TRADES_TABLE_VIEW_NAME).getFilter()));
@@ -147,7 +147,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // initialize tables for TOS3622 -Trades table
         tabTOS3622.get(TRADES_TABLE_VIEW_NAME).setTable(new JTable());
         tabTOS3622.get(TRADES_TABLE_VIEW_NAME).setTableName(TRADES_TABLE_VIEW_NAME);
-        tabTOS3622.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabTOS3622.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES_VIEW);
         tabTOS3622.get(TRADES_TABLE_VIEW_NAME).setFilter(new TableFilter(tabTOS3622.get(TRADES_TABLE_VIEW_NAME).getTable()));
         tabTOS3622.get(TRADES_TABLE_VIEW_NAME)
                 .setColumnPopupMenu(new ColumnPopupMenu(tabTOS3622.get(TRADES_TABLE_VIEW_NAME).getFilter()));
@@ -171,7 +171,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // initialize tables for Combined -Trades table
         tabCombined.get(TRADES_TABLE_VIEW_NAME).setTable(new JTable());
         tabCombined.get(TRADES_TABLE_VIEW_NAME).setTableName(TRADES_TABLE_VIEW_NAME);
-        tabCombined.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES);
+        tabCombined.get(TRADES_TABLE_VIEW_NAME).setColWidthPercent(COL_WIDTH_PER_TRADES_VIEW);
         tabCombined.get(TRADES_TABLE_VIEW_NAME).setFilter(new TableFilter(tabCombined.get(TRADES_TABLE_VIEW_NAME).getTable()));
         tabCombined.get(TRADES_TABLE_VIEW_NAME)
                 .setColumnPopupMenu(new ColumnPopupMenu(tabCombined.get(TRADES_TABLE_VIEW_NAME).getFilter()));
