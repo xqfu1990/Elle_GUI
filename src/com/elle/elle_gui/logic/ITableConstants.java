@@ -21,7 +21,8 @@ public interface ITableConstants {
 
     // table names
     public static final String POSITIONS_TABLE_NAME = "positions";
-    public static final String TRADES_TABLE_NAME = "Trades_DefaultView";
+    public static final String TRADES_TABLE_NAME = "trades";
+    public static final String TRADES_TABLE_VIEW_NAME = "Trades_DefaultView";
     public static final String ALLOCATIONS_TABLE_NAME = "allocations";
 
     // column header name constants
@@ -87,6 +88,26 @@ public interface ITableConstants {
         85, // Xchange
         40, // order
         30}; // fill
+    
+     public static final float[] COL_WIDTH_PER_TRADES_VIEW = {
+        45,  // T_Group
+        40,  // id
+        160, // Trade_Time
+        30, // OC
+        155, // Symbol
+        85, // Q
+        85, // Price
+        80, // CommTax
+        85, // Proceeds
+        80, // Basis
+        175, // Lot_Time
+        85, // Realized_PL
+        65, // Codes
+        55, // Notes
+        65, // Account
+        40, // order
+        30}; // fill
+     
     public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
 
 }
