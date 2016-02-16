@@ -1,20 +1,18 @@
-
 package com.elle.elle_gui.logic;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
 import javax.swing.JTable;
 
 /**
- * Tab
- * This class is used to create a tab object.
- * This object contains all the components of the tab on Analyster.
- * Each tab may have its own attributes and that is what this class
- * is for.
+ * Tab This class is used to create a tab object. This object contains all the
+ * components of the tab on Analyster. Each tab may have its own attributes and
+ * that is what this class is for.
+ *
  * @author Carlos Igreja
  * @since June 10, 2015
  * @version 0.6.3
  */
-public class AccountTable implements ITableConstants{
+public class AccountTable implements ITableConstants {
 
     // attributes
     private String tableName;                    // name of the JTable
@@ -27,20 +25,17 @@ public class AccountTable implements ITableConstants{
     private String[] searchFields;               // search combobox options
     private String[] batchEditFields;            // batch edit combobox options
     private ColumnPopupMenu ColumnPopupMenu;     // column filter pop up menu
-    
+
     // these items are enabled differently for each tab
     private boolean activateRecordMenuItemEnabled; // enables activate record menu item
     private boolean archiveRecordMenuItemEnabled;  // enables archive record menu item
     private boolean addRecordsBtnVisible;          // sets the add records button visible
     private boolean batchEditBtnVisible;           // sets the batch edit button visible
     private boolean tableSelected;             // sets if this table is selected
-    
 
-    
     /**
-     * CONSTRUCTOR
-     * Tab
-     * This is used if no table is ready such as before initComponents of a frame.
+     * CONSTRUCTOR Tab This is used if no table is ready such as before
+     * initComponents of a frame.
      */
     public AccountTable() {
         tableName = "";
@@ -53,13 +48,13 @@ public class AccountTable implements ITableConstants{
         batchEditBtnVisible = false;
         tableSelected = false;
     }
-    
+
     /**
-     * CONSTRUCTOR
-     * This would be the ideal constructor, but there are issues with 
-     * the initcomponents in Analyster so the tab must be initialized first
+     * CONSTRUCTOR This would be the ideal constructor, but there are issues
+     * with the initcomponents in Analyster so the tab must be initialized first
      * then the table can be added
-     * @param table 
+     *
+     * @param table
      */
     public AccountTable(JTable table) {
         tableName = "";
@@ -69,17 +64,18 @@ public class AccountTable implements ITableConstants{
         filter = new TableFilter(table);
         ColumnPopupMenu = new ColumnPopupMenu(filter);
         tableSelected = false;
-        
-        // store the column names for the table
-        for (int i = 0; i < table.getColumnCount(); i++) 
-            tableColNames[i] = table.getColumnName(i);
-    }
-    
-    /**************************************************************************
-     ********************** Setters & Getters *********************************
-     **************************************************************************/
 
-    
+        // store the column names for the table
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            tableColNames[i] = table.getColumnName(i);
+        }
+    }
+
+    /**
+     * ************************************************************************
+     ********************** Setters & Getters *********************************
+     *************************************************************************
+     */
     public JTable getTable() {
         return table;
     }
@@ -103,7 +99,7 @@ public class AccountTable implements ITableConstants{
     public void setColWidthPercent(float[] colWidthPercent) {
         this.colWidthPercent = colWidthPercent;
     }
-    
+
     public int getTotalRecords() {
         return totalRecords;
     }
@@ -148,11 +144,12 @@ public class AccountTable implements ITableConstants{
     public void setTableColNames(String[] tableColNames) {
         this.tableColNames = tableColNames;
     }
-    
+
     public void setTableColNames(JTable table) {
         tableColNames = new String[table.getColumnCount()];
-        for (int i = 0; i < table.getColumnCount(); i++) 
+        for (int i = 0; i < table.getColumnCount(); i++) {
             tableColNames[i] = table.getColumnName(i);
+        }
     }
 
     public String[] getSearchFields() {
@@ -202,71 +199,81 @@ public class AccountTable implements ITableConstants{
     public void setTableSelected(boolean tableSelected) {
         this.tableSelected = tableSelected;
     }
-    
-    public void setTableParticularColName(int col, String str){
-        System.out.println(tableColNames.length);
-        tableColNames[col]= str;
-    }
-    
 
-    /**************************************************************************
-     *************************** Methods **************************************
-     **************************************************************************/
-    
+    public void setTableParticularColName(int col, String str) {
+        System.out.println(tableColNames.length);
+        tableColNames[col] = str;
+    }
+
     /**
-     * This method subtracts an amount from the totalRecords value
-     * This is used when records are deleted to update the totalRecords value
-     * @param amountOfRecordsDeleted 
+     * ************************************************************************
+     *************************** Methods **************************************
+     *************************************************************************
+     */
+    /**
+     * This method subtracts an amount from the totalRecords value This is used
+     * when records are deleted to update the totalRecords value
+     *
+     * @param amountOfRecordsDeleted
      */
     public void subtractFromTotalRowCount(int amountOfRecordsDeleted) {
         totalRecords = totalRecords - amountOfRecordsDeleted;
     }
-    
+
     /**
-     * This method subtracts an amount from the totalRecords value
-     * This is used when records are deleted to update the totalRecords value
-     * @param amountOfRecordsDeleted 
+     * This method subtracts an amount from the totalRecords value This is used
+     * when records are deleted to update the totalRecords value
+     *
+     * @param amountOfRecordsDeleted
      */
     public void addToTotalRowCount(int amountOfRecordsAdded) {
         totalRecords = totalRecords + amountOfRecordsAdded;
     }
-    
+
     /**
      * This method returns a string that displays the records.
-     * @return String This returns a string that has the records for both total and shown
+     *
+     * @return String This returns a string that has the records for both total
+     * and shown
      */
-    public String getRecordsLabel(){
-        
+    public String getRecordsLabel() {
+
         String output;
         System.out.println("here " + getTableName());
-        
+
         switch (getTableName()) {
             case POSITIONS_TABLE_NAME:
                 output = "<html><pre>"
-                       + "        Number of records shown: " + getRecordsShown() 
-                  + "<br/> Number of records in Positions: " + getTotalRecords()
-                     + "</pre></html>";
+                        + "        Number of records shown: " + getRecordsShown()
+                        + "<br/> Number of records in Positions: " + getTotalRecords()
+                        + "</pre></html>";
                 break;
             case TRADES_TABLE_NAME:
                 output = "<html><pre>"
-                       + "     Number of records shown: " + getRecordsShown() 
-                  + "<br/> Number of records in Trades: " + getTotalRecords() 
-                     + "</pre></html>";
+                        + "     Number of records shown: " + getRecordsShown()
+                        + "<br/> Number of records in Trades: " + getTotalRecords()
+                        + "</pre></html>";
                 break;
             case ALLOCATIONS_TABLE_NAME:
                 output = "<html><pre>"
-                       + "          Number of records shown: " + getRecordsShown() 
-                  + "<br/> Number of records in Allocations: " + getTotalRecords() 
-                     + "</pre></html>";
+                        + "          Number of records shown: " + getRecordsShown()
+                        + "<br/> Number of records in Allocations: " + getTotalRecords()
+                        + "</pre></html>";
+                break;
+            case TRADES_TABLE_VIEW_NAME:
+                output = "<html><pre>"
+                        + "     Number of records shown: " + getRecordsShown()
+                        + "<br/> Number of records in Trades: " + getTotalRecords()
+                        + "</pre></html>";
                 break;
             default:
                 // this means an invalid table name constant was passed
                 // this exception will be handled and thrown here
                 // the program will still run and show the stack trace for debugging
                 output = "<html><pre>"
-                       + "*******ATTENTION*******"
-                  + "<br/>Not a valid table name constant entered"
-                     + "</pre></html>";
+                        + "*******ATTENTION*******"
+                        + "<br/>Not a valid table name constant entered"
+                        + "</pre></html>";
                 try {
                     String errorMessage = "ERROR: unknown table";
                     throw new NoSuchFieldException(errorMessage);
@@ -275,11 +282,11 @@ public class AccountTable implements ITableConstants{
                     ELLE_GUI_Frame.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
                     ex.printStackTrace();
                 }
-        
+
                 break;
         }
 
         return output;
     }
-    
+
 }// end Tab

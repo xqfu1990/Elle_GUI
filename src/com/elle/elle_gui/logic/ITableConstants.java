@@ -70,8 +70,8 @@ public interface ITableConstants {
         75, // Proceeds
         75, // Basis
         80, // Processed
-        175, // Lot_Time
         85, // Realized_PL
+        175, // Lot_Time
         65, // Codes
         55, // Notes
         65, // Account
@@ -80,13 +80,13 @@ public interface ITableConstants {
         65, // SecType
         40, // Multi
         85, // Underlying
-        88, // Expiry
+        95, // Expiry
         75, // Strike
         55, // O_Type
         55, // Lnotes
-        50, // strategy
+        60, // strategy
         85, // Xchange
-        40, // order
+        50, // order
         30}; // fill
     
      public static final float[] COL_WIDTH_PER_TRADES_VIEW = {
@@ -100,8 +100,8 @@ public interface ITableConstants {
         80, // CommTax
         85, // Proceeds
         80, // Basis
-        175, // Lot_Time
         85, // Realized_PL
+        175, // Lot_Time
         65, // Codes
         55, // Notes
         65, // Account

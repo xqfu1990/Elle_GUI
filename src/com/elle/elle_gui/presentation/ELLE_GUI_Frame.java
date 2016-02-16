@@ -285,7 +285,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView = new javax.swing.JMenu();
         menuItemCheckBoxLog = new javax.swing.JCheckBoxMenuItem();
         menuItemCheckBoxSQL = new javax.swing.JCheckBoxMenuItem();
-        menuItemTrades = new javax.swing.JMenuItem();
+        menuItemTrades = new javax.swing.JCheckBoxMenuItem();
         menuItemPositions = new javax.swing.JMenuItem();
         menuItemIB = new javax.swing.JMenuItem();
         menuItemTL = new javax.swing.JMenuItem();
@@ -961,29 +961,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     }//GEN-LAST:event_menuItemPrintDisplayWindowActionPerformed
 
-    private void menuItemTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTradesActionPerformed
-//        System.out.println("clicked!");
-//        for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
-//            String accountName = tabEntry.getKey();
-//            System.out.println("1: " + accountName);
-//
-//            Map<String, AccountTable> tables = tabs.get(accountName);
-//            for (Map.Entry<String, AccountTable> tableEntry : tables.entrySet()) {
-//                String tableName = tableEntry.getKey();
-//                System.out.println("2: " + tableName + " " + TRADES_TABLE_VIEW_NAME);
-//                if (tableName == TRADES_TABLE_VIEW_NAME) {
-//                    AccountTable tab = tables.get(tableName);
-//                    JTable table = tab.getTable();
-//                    loadTable(table, TRADES_TABLE_NAME, accountName);
-//                    setTableListeners(tab);
-//                    // set initial total records
-//                    int totalRecords = table.getRowCount();
-//                    tab.setTotalRecords(totalRecords);
-//                }
-//            }
-//        }
-    }//GEN-LAST:event_menuItemTradesActionPerformed
-
     private void menuItemLoadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadFileActionPerformed
 
     }//GEN-LAST:event_menuItemLoadFileActionPerformed
@@ -1301,6 +1278,66 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         displayTable();  // shows the correct table depending on tab and button selected
     }//GEN-LAST:event_tabbedPaneAccountsStateChanged
 
+    private void menuItemTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTradesActionPerformed
+
+        String tableName = TRADES_TABLE_NAME;
+        String originalTableName = TRADES_TABLE_VIEW_NAME;
+        if (menuItemTrades.isSelected()) {
+            for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
+                String accountName = tabEntry.getKey();
+                Map<String, AccountTable> tables = tabs.get(accountName);
+                AccountTable tab = tables.get(originalTableName);
+                JTable table = tab.getTable();
+                tab.setColWidthPercent(COL_WIDTH_PER_TRADES);
+//                System.out.println(tableName + " " + accountName);
+                String sql;  // sql query
+                if (accountName == "Combined") {
+                    sql = "SELECT * FROM " + tableName
+                            + " ORDER BY symbol ASC";
+                } else {
+                    sql = "SELECT * FROM " + tableName
+                            + " WHERE Account = '" + accountName
+                            + "' ORDER BY symbol ASC";
+                }
+                System.out.println(sql);
+
+                loadTable(sql, table, originalTableName, accountName);
+                setTableListeners(tab);
+                // set initial total records
+                int totalRecords = table.getRowCount();
+                tab.setTotalRecords(totalRecords);
+
+            }
+
+        }else{
+            for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
+                String accountName = tabEntry.getKey();
+                Map<String, AccountTable> tables = tabs.get(accountName);
+                AccountTable tab = tables.get(originalTableName);
+                JTable table = tab.getTable();
+                tab.setColWidthPercent(COL_WIDTH_PER_TRADES_VIEW);
+//                System.out.println(tableName + " " + accountName);
+                String sql;  // sql query
+                if (accountName == "Combined") {
+                    sql = "SELECT * FROM " + originalTableName
+                            + " ORDER BY symbol ASC";
+                } else {
+                    sql = "SELECT * FROM " + originalTableName
+                            + " WHERE Account = '" + accountName
+                            + "' ORDER BY symbol ASC";
+                }
+                System.out.println(sql);
+
+                loadTable(sql, table, originalTableName, accountName);
+                setTableListeners(tab);
+                // set initial total records
+                int totalRecords = table.getRowCount();
+                tab.setTotalRecords(totalRecords);
+
+            }
+        }
+    }//GEN-LAST:event_menuItemTradesActionPerformed
+
     /**
      * initTotalRowCounts called once to initialize the total rowIndex counts of
      * each tabs table
@@ -1380,8 +1417,11 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                     + "' ORDER BY symbol ASC";
         }
         System.out.println(sql);
+        table = loadTable(sql, table, tableName, accountName);
+        // format the table
+        formatTable(table);
 
-        return loadTable(sql, table, tableName, accountName);
+        return table;
     }
 
     /**
@@ -1459,9 +1499,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // set the listeners for the table
         setTableListeners(tab);
 
-        // format the table
-        formatTable(table);
-
         System.out.println("Table loaded succesfully");
 
         return table;
@@ -1516,6 +1553,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private void tableHeaderRenderer(JTable table) {
 
         JTableHeader header = table.getTableHeader();
+        header.removeAll();
         header.setDefaultRenderer(new HeaderRenderer(table));
 
     }
@@ -2167,7 +2205,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenuItem menuItemShowMatches;
     private javax.swing.JMenuItem menuItemTL;
     private javax.swing.JMenuItem menuItemTL8949;
-    private javax.swing.JMenuItem menuItemTrades;
+    private javax.swing.JCheckBoxMenuItem menuItemTrades;
     private javax.swing.JMenu menuLoad;
     private javax.swing.JMenu menuOther;
     private javax.swing.JMenu menuPrint;
