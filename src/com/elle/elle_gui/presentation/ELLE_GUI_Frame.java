@@ -1,6 +1,7 @@
 package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.database.DBConnection;
+import com.elle.elle_gui.logic.ATrade;
 import com.elle.elle_gui.logic.ColumnPopupMenu;
 import com.elle.elle_gui.logic.AccountTable;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
@@ -81,6 +82,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private static ELLE_GUI_Frame instance;
     private LogWindow logWindow;
     private LoginWindow loginWindow;
+    private ATrade aTradeInView;
+    private ViewATradeWindow viewATradeWindow;
 
     // button colors
     private Color colorBtnDefault;
@@ -186,13 +189,13 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // now that the tables are loaded, 
         // the columnnames string array can be loaded for each table
         // this may not even be needed for this application
-        tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
-        tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNames(tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
-        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
-        tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNames(tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
-        tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
-        tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNames(tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
-
+        tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNamesAndIDList(tabs.get(IB9048_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
+        tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNamesAndIDList(tabs.get(IB9048_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNamesAndIDList(tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
+        tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNamesAndIDList(tabs.get(TOS3622_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
+        tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableColNamesAndIDList(tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).getTable());
+        tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).setTableColNamesAndIDList(tabs.get(COMBINED_ACCOUNT_NAME).get(TRADES_TABLE_VIEW_NAME).getTable());
+        
         // hide sql panel by default
         panelSQL.setVisible(false);
         this.setSize(this.getWidth(), 493);
@@ -285,6 +288,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuView = new javax.swing.JMenu();
         menuItemCheckBoxLog = new javax.swing.JCheckBoxMenuItem();
         menuItemCheckBoxSQL = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuItemTrades = new javax.swing.JCheckBoxMenuItem();
         menuItemPositions = new javax.swing.JMenuItem();
         menuItemIB = new javax.swing.JMenuItem();
@@ -764,6 +768,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
         menuView.add(menuItemCheckBoxSQL);
+
+        jMenuItem1.setText("Display Selected Trade");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuView.add(jMenuItem1);
 
         menuItemTrades.setText("Display Trades-All Fields");
         menuItemTrades.addActionListener(new java.awt.event.ActionListener() {
@@ -1309,7 +1321,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
             }
 
-        }else{
+        } else {
             for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
                 String accountName = tabEntry.getKey();
                 Map<String, AccountTable> tables = tabs.get(accountName);
@@ -1337,6 +1349,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         }
     }//GEN-LAST:event_menuItemTradesActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        AccountTable selectedTab = getSelectedTab();
+        JTable selectedTable =  selectedTab.getTable(); 
+        int row = selectedTable.getSelectedRow();
+        aTradeInView = new ATrade(row, selectedTab);
+        viewATradeWindow = new ViewATradeWindow(aTradeInView);
+        viewATradeWindow.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * initTotalRowCounts called once to initialize the total rowIndex counts of
@@ -1743,7 +1764,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
                     if (e.getClickCount() == 2) {
                         clearFilterDoubleClick(e, table);
-                    }
+                    } 
                 }
 
                 /**
@@ -1782,10 +1803,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                         if (SwingUtilities.isLeftMouseButton(e)) {
                             if (e.getClickCount() == 2) {
                                 filterByDoubleClick(table);
+//                                System.out.println(table.getName());
+//                                for (int i = 0; i < table.getModel().getRowCount(); i++) {
+//                                    System.out.println(tab.getIDList()[i] + " and " + table.getModel().getValueAt(i, 1));
+//                                }
                             } else if (e.getClickCount() == 1) {
 //                                if (jLabelEdit.getText().equals("ON ")) {
 //                                    selectAllText(e);
 //                                }
+                                
                             }
                         } // end if left mouse clicks
                         // if right mouse clicks
@@ -2178,6 +2204,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;

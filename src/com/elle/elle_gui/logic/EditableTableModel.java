@@ -64,6 +64,10 @@ public class EditableTableModel extends DefaultTableModel {
     public void setCellEditable(boolean cellEditable) {
         this.cellEditable = cellEditable;
     }
+    
+    public void getSelectedRowContent(int Id){
+        
+    }
 
     /**
      * Override getColumnClass() in DefaultTableModel

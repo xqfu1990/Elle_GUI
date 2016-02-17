@@ -1,6 +1,7 @@
 package com.elle.elle_gui.logic;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
+import java.util.Vector;
 import javax.swing.JTable;
 
 /**
@@ -21,9 +22,10 @@ public class AccountTable implements ITableConstants {
     private float[] colWidthPercent;             // column width for each column
     private int totalRecords;                    // total records in table model
     private int recordsShown;                    // number of records shown on table
-    private String[] tableColNames;              // column header names
+    private Vector<String> tableColNames;              // column header names
     private String[] searchFields;               // search combobox options
     private String[] batchEditFields;            // batch edit combobox options
+    private Object [] idList;
     private ColumnPopupMenu ColumnPopupMenu;     // column filter pop up menu
 
     // these items are enabled differently for each tab
@@ -67,7 +69,7 @@ public class AccountTable implements ITableConstants {
 
         // store the column names for the table
         for (int i = 0; i < table.getColumnCount(); i++) {
-            tableColNames[i] = table.getColumnName(i);
+            tableColNames.addElement(table.getColumnName(i));
         }
     }
 
@@ -137,18 +139,30 @@ public class AccountTable implements ITableConstants {
         this.archiveRecordMenuItemEnabled = archiveRecordMenuItemEnabled;
     }
 
-    public String[] getTableColNames() {
+    public Vector<String> getTableColNames() {
+        for(String a : tableColNames){
+            System.out.println("colName: " + a);
+        }
         return tableColNames;
     }
+    
+    public Object[] getIDList(){
+        return idList;
+    }
 
-    public void setTableColNames(String[] tableColNames) {
+    public void setTableColNames(Vector<String> tableColNames) {
         this.tableColNames = tableColNames;
     }
 
-    public void setTableColNames(JTable table) {
-        tableColNames = new String[table.getColumnCount()];
+    public void setTableColNamesAndIDList(JTable table) {
+        tableColNames = new Vector<String>();
         for (int i = 0; i < table.getColumnCount(); i++) {
-            tableColNames[i] = table.getColumnName(i);
+            tableColNames.addElement(table.getColumnName(i));
+        }
+        idList = new Object[table.getRowCount()];
+        for (int j = 0; j < table.getRowCount(); j++ ){
+            
+            idList[j] = table.getValueAt(j, 1);
         }
     }
 
@@ -201,8 +215,8 @@ public class AccountTable implements ITableConstants {
     }
 
     public void setTableParticularColName(int col, String str) {
-        System.out.println(tableColNames.length);
-        tableColNames[col] = str;
+        System.out.println(tableColNames.size());
+        tableColNames.setElementAt(str, col);
     }
 
     /**
