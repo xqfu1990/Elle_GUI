@@ -7,6 +7,7 @@ import com.elle.elle_gui.logic.AccountTable;
 import com.elle.elle_gui.logic.CreateDocumentFilter;
 import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.ITableConstants;
+import com.elle.elle_gui.logic.LoggingAspect;
 import com.elle.elle_gui.logic.PrintWindow;
 import com.elle.elle_gui.logic.TableFilter;
 import com.elle.elle_gui.logic.Validator;
@@ -947,9 +948,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 line = br.readLine();
             }
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            LoggingAspect.afterThrown(ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            LoggingAspect.afterThrown(ex);
         }
 
         // testing the file
@@ -1060,7 +1061,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                     String recordsLabelStr = tab.getRecordsLabel();
                     labelRecords.setText(recordsLabelStr);
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    LoggingAspect.afterThrown(e);
                 }
             } else {
                 isError = true;
@@ -1102,9 +1103,9 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             try {
                 statement.executeUpdate(command);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+                LoggingAspect.afterThrown(e);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+                LoggingAspect.afterThrown(e);
             }
         }
     }//GEN-LAST:event_btnEnterSQLActionPerformed
@@ -1465,8 +1466,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             rs = statement.executeQuery(sql);
             metaData = rs.getMetaData();
         } catch (Exception ex) {
-            System.out.println("SQL Error:");
-            ex.printStackTrace();
+            LoggingAspect.afterThrown(ex);
         }
         try {
             columns = metaData.getColumnCount();
@@ -1485,8 +1485,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             rs.close();
 
         } catch (SQLException ex) {
-            System.out.println("SQL Error:");
-            ex.printStackTrace();
+            LoggingAspect.afterThrown(ex);
         }
 
         EditableTableModel model = new EditableTableModel(data, columnNames, columnClass);
@@ -2036,12 +2035,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         if (ok) {
             try {
                 job.pageDialog(job.defaultPage());
-                logWindow.addMessageWithDate("Start to print the display window...");
+                LoggingAspect.addLogMsgWthDate("Start to print the display window...");
                 job.print();
-                logWindow.addMessageWithDate(job.getJobName()
+                LoggingAspect.addLogMsgWthDate(job.getJobName()
                         + " is successfully printed!\n");
             } catch (PrinterException ex) {
-                logWindow.addMessageWithDate(ex.getMessage() + "\n");
+                LoggingAspect.afterThrown(ex);
             }
         }
     }
