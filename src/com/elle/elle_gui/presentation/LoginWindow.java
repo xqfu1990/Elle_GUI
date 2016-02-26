@@ -8,6 +8,7 @@
 package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.database.DBConnection;
+import com.elle.elle_gui.logic.LoggingAspect;
 import static com.elle.elle_gui.presentation.LogWindow.HYPHENS;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -373,13 +374,13 @@ public class LoginWindow extends JFrame {
                 comboBoxDatabase.setModel(new DefaultComboBoxModel(arr));
             }
         } catch (Exception e) {
-
+            LoggingAspect.afterThrown(e);
         } finally {
             if (buf != null) {
                 try {
                     buf.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LoggingAspect.afterThrown(e);
                 }
             }
         }
@@ -443,7 +444,7 @@ public class LoginWindow extends JFrame {
                     "Error Message",
                     JOptionPane.ERROR_MESSAGE);
 
-            logWindow.addMessageWithDate(ex.getMessage());
+            LoggingAspect.afterThrown(ex);
             passwordFieldPW.setText("");
         }
     }
