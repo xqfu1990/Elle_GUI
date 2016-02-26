@@ -30,22 +30,20 @@ public interface ITableConstants {
 
     // column width percent constants
     public static final float[] COL_WIDTH_PER_POSITIONS = {
-        60, // filecode
-        62, // inputLine
-        20, // wash
-        57, // lineNum
+        155, // Symbol
         165, // Lot_Time
+        80, // Q
+        50, //line
         40, // OCE
         165, // OCE_Time
         25, // LS
-        155, // Symbol
-        80, // Q
         70, // Qori
         90, // Adj_Price
         75, // Adj_Basis
         45, // Price
         45, // Basis
         40, // How
+        20, // wash
         55, // Codes
         65, // Account
         65, // L_codes
@@ -55,7 +53,10 @@ public interface ITableConstants {
         88, // Expiry
         75, // Strike
         55, // O_Type
-        55};// Notes
+        55,// Notes
+        60, // filecode
+        62, // inputLine
+        50}; // post_id
 
     public static final float[] COL_WIDTH_PER_TRADES = {
         60,  // T_Group
@@ -103,7 +104,6 @@ public interface ITableConstants {
         85, // Realized_PL
         175, // Lot_Time
         65, // Codes
-        55, // Notes
         65, // Account
         40, // order
         30}; // fill
