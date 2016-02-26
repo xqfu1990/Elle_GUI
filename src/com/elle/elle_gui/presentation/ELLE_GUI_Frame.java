@@ -72,7 +72,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
     // Edit the version and date it was created for new archives and jars
     private final String CREATION_DATE = "2016-02-25";
-    private final String VERSION = "0.9.3";
+    private final String VERSION = "0.9.4";
 
     // attributes
     private Map<String, Map<String, AccountTable>> tabs; // stores individual tab objects 
@@ -1982,7 +1982,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // this is needed for the horizontal scrollbar to appear
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         for (int index = 0; index < table.getColumnCount(); index++) {
             int colWidth = (int) colWidths[index];
             TableColumn column = table.getColumnModel().getColumn(index);
