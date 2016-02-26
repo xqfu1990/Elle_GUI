@@ -1,6 +1,7 @@
 
 package com.elle.elle_gui.database;
 
+import com.elle.elle_gui.logic.LoggingAspect;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +69,7 @@ public class DBConnection {
         // connect to server
         connection = DriverManager.getConnection(url, userName, userPassword);
         statement = connection.createStatement();
-        System.out.println("Connection successfully");
+        LoggingAspect.afterReturn("Connection successful");
              
     }
     
@@ -237,8 +238,9 @@ public class DBConnection {
                 }
                 reader.next();
             }
+            LoggingAspect.afterReturn("read servers file successful");
         }catch(XMLStreamException e){
-            System.out.println(e);
+            LoggingAspect.afterThrown(e);
         }
         return servers;
     }
@@ -273,8 +275,9 @@ public class DBConnection {
             writer.writeEndElement();
             writer.flush();
             writer.close();
+            LoggingAspect.afterReturn("write to servers file successful");
         }catch(IOException | XMLStreamException e){
-            System.out.println(e);
+            LoggingAspect.afterThrown(e);
         }
     }
 }

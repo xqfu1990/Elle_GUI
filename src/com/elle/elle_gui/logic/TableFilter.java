@@ -338,7 +338,7 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
                     dates.add(cellValue);
                 }
             } catch (ParseException ex) {
-                ex.printStackTrace();
+                LoggingAspect.afterThrown(ex);
             }
         }
         // if dates return empty

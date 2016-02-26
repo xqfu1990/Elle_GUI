@@ -292,9 +292,7 @@ public class AccountTable implements ITableConstants {
                     String errorMessage = "ERROR: unknown table";
                     throw new NoSuchFieldException(errorMessage);
                 } catch (NoSuchFieldException ex) {
-                    // post to log.txt
-                    ELLE_GUI_Frame.getInstance().getLogWindow().addMessageWithDate(ex.getMessage());
-                    ex.printStackTrace();
+                    LoggingAspect.afterThrown(ex);
                 }
 
                 break;
