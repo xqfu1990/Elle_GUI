@@ -426,8 +426,32 @@ public class LogWindow extends JFrame{
         }
     }
 
+       public void setUserLogFileDir(String userName) {
+        
+        String OS = System.getProperty("os.name").toLowerCase();
+        
+        if (OS.startsWith("mac")) {
+            String ELLE_GUI = "/Users/" + System.getProperty("user.name") + "/Library/Application Support/ELLE_GUI/";
+            File dir = new File(ELLE_GUI);
+            dir.mkdir();
+            fileName = ELLE_GUI + "ELLE_GUI_" + userName + "_log.txt";
+            
+        } else {
+
+            String ELLE_GUI =  "C:\\Users\\" + System.getProperty("user.name") + "\\Documents\\ELLE_GUI\\";
+            File dir = new File(ELLE_GUI);
+            dir.mkdir();
+            fileName = ELLE_GUI + "ELLE_GUI_" + userName + "_log.txt";
+        }
+    }
+    
+    
+    
     public static void setParent(Component parent) {
         LogWindow.parent = parent;
     }
+    
 }
+
+
 

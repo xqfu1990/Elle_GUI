@@ -1,4 +1,3 @@
-
 /**
  * @author Louis W.
  * @author Carlos Igreja
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class LoginWindow extends JFrame {
 
     // class attributes 
@@ -29,26 +27,23 @@ public class LoginWindow extends JFrame {
     private String selectedDB;                  // selected database
     private String userName;                    // user name to login 
     private String userPassword;                // user password to login
-    
+
     // class component instances
     private ELLE_GUI_Frame elle_gui;
     private EditDatabaseWindow editDatabaseList;
     private LogWindow logWindow;
-    
+
     /**
-     * CONSTRUCTOR
-     * This is used to initialize the application
+     * CONSTRUCTOR This is used to initialize the application
      */
     public LoginWindow() {
-        
+
         // initialize
         initComponents();
         logWindow = new LogWindow(); // this is for reporting connections to log
-        
+
         // load selectedDB selections from the text file for the combobox
         // loadDBList();  // this loads from a file which is not really used (it's for use with edit database window)
-        
-        
 //        comboBoxDatabase.setSelectedIndex(2);
         comboBoxServer.setSelectedIndex(0);
 //        textFieldUsername.setText("pupone_Xiao");
@@ -56,20 +51,19 @@ public class LoginWindow extends JFrame {
         // show window
         this.setTitle("Log in");
     }
-    
+
     /**
-     * CONSTRUCTOR
-     * This is used when an instance of ELLE_GUI is already created 
-     * to create a new instance of ELLE_GUI
-     * from the connections menu item options.
+     * CONSTRUCTOR This is used when an instance of ELLE_GUI is already created
+     * to create a new instance of ELLE_GUI from the connections menu item
+     * options.
      */
     public LoginWindow(ELLE_GUI_Frame elle_gui) {
-        
+
         // initialize
         initComponents();
         this.elle_gui = elle_gui;
         logWindow = elle_gui.getLogWindow(); // this is for reporting connections to log
- 
+
         // show window
         this.setTitle("Log in");
 
@@ -293,13 +287,13 @@ public class LoginWindow extends JFrame {
 
     private void btnCancelActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.close();
-        
+
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * Close down application properly
      */
-    public void close(){
+    public void close() {
 
         // terminate window and return resources
         this.dispose();
@@ -325,7 +319,7 @@ public class LoginWindow extends JFrame {
     }//GEN-LAST:event_comboBoxServerActionPerformed
 
     private void btnEditDBActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnEditDBActionPerformed
-        
+
         // create a new edit selectedDB window
         editDatabaseList = new EditDatabaseWindow(this); // maybe we can make it not dependant on this
         editDatabaseList.setLocationRelativeTo(this);
@@ -339,11 +333,20 @@ public class LoginWindow extends JFrame {
     private void passwordFieldPWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldPWActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldPWActionPerformed
+    public String getUserName() {
+        // local host testing or if does not contain pupone
+        if (userName.startsWith("pupone")) {
+            String userNameToAL = userName.substring(7);
+            return userNameToAL;
+        } else {
+            return userName;
+        }
+    }
 
     /**
-     *  Loads the names of the databases from a text file
-     * this is if the actual selectedDB list is edited in EditDatabaseWindow
-     * then it updates the combobox with the new values in LoginWindow.
+     * Loads the names of the databases from a text file this is if the actual
+     * selectedDB list is edited in EditDatabaseWindow then it updates the
+     * combobox with the new values in LoginWindow.
      */
     public void loadDBList() {
         String temp = null;
@@ -391,17 +394,17 @@ public class LoginWindow extends JFrame {
      * login
      */
     public void login() {
-        
+
         // get user data
         selectedServer = comboBoxServer.getSelectedItem().toString();
         selectedDB = comboBoxDatabase.getSelectedItem().toString();
         userName = textFieldUsername.getText();
         char[] pw = passwordFieldPW.getPassword();
         userPassword = String.valueOf(pw);
-        
+
         // logwindow
-        logWindow = new LogWindow(); 
-        //logWindow.setUserLogFileDir(this.getUserName()); // needs Impl
+        logWindow = new LogWindow();
+        logWindow.setUserLogFileDir(this.getUserName()); // needs Impl
         // write to log file
         String date = logWindow.dateFormat.format(new Date());
         logWindow.addMessage(HYPHENS + date + HYPHENS);
@@ -409,16 +412,16 @@ public class LoginWindow extends JFrame {
 
         // connect to database
         try {
-            
+
             logWindow.addMessageWithDate("Start to connect local database...");
             DBConnection.connect(selectedServer, selectedDB, userName, userPassword);
             logWindow.addMessageWithDate("Connect successfully!");
-            
+
             // if elle gui existed make sure it gets disposed
-            if(elle_gui != null){
+            if (elle_gui != null) {
                 elle_gui.dispose();
             }
-            
+
             // create an Analyster object
             elle_gui = new ELLE_GUI_Frame();
 
@@ -435,9 +438,8 @@ public class LoginWindow extends JFrame {
 
             // terminate this object
             this.dispose(); // returns used resources
-            
-        } 
-        catch (SQLException ex) {
+
+        } catch (SQLException ex) {
 
             JOptionPane.showMessageDialog(null,
                     "Invalid password. Try again.",
@@ -452,9 +454,8 @@ public class LoginWindow extends JFrame {
     public JComboBox getComboBoxServer() {
         return comboBoxServer;
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEditDB;
