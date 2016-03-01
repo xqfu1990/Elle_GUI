@@ -1,6 +1,7 @@
 
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.logic.LogMessage;
 import com.elle.elle_gui.logic.LoggingAspect;
 import java.awt.*;
@@ -127,6 +128,7 @@ public class LogWindow extends JFrame{
 
         this.pack();
         this.setVisible(false);    
+        Authorization.authorize(this);
     }
     
     /**

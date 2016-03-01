@@ -1,6 +1,7 @@
 
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.logic.LoggingAspect;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +32,7 @@ public class EditDatabaseWindow extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         loadList();
+        Authorization.authorize(this);
     }
     
     // Call this class from log in window

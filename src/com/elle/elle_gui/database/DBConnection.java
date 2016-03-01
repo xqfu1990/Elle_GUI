@@ -2,6 +2,7 @@
 package com.elle.elle_gui.database;
 
 import com.elle.elle_gui.logic.LoggingAspect;
+import java.awt.Component;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -36,6 +38,7 @@ public class DBConnection {
     private static Connection connection;
     private static Statement statement;
     private static final String SERVERS_FILENAME = "servers.xml";
+    private static Component parentComponent;
     
     /**
      * connect
@@ -45,31 +48,36 @@ public class DBConnection {
      * @param selectedDB
      * @param userName
      * @param userPassword
-     * @throws SQLException 
+     * @return boolean true if successful and false if an error occurred
      */
-    public static void connect(String selectedServer, String selectedDB, String userName, String userPassword) throws SQLException{
+    public static boolean connect(String selectedServer, String selectedDB, String userName, String userPassword){
         
-        DBConnection.server = selectedServer;
-        DBConnection.database = selectedDB;
-        DBConnection.userName = userName;
-        DBConnection.userPassword = userPassword;
-        
-        
-        String url = "";
-        ArrayList<Server> servers = readServers();
-        
-        // load url for server
-        for(Server server: servers){
-            if(server.getName().equals(selectedServer))
-                url += server.getUrl();
+        try {
+            DBConnection.server = selectedServer;
+            DBConnection.database = selectedDB;
+            DBConnection.userName = userName;
+            DBConnection.userPassword = userPassword;
+            
+            String url = "";
+            ArrayList<Server> servers = readServers();
+            
+            // load url for server
+            for(Server server: servers){
+                if(server.getName().equals(selectedServer))
+                    url += server.getUrl();
+            }
+            
+            url += selectedDB;
+            
+            // connect to server
+            connection = DriverManager.getConnection(url, userName, userPassword);
+            statement = connection.createStatement();
+            LoggingAspect.afterReturn("Connection successful");
+            return true;
+        } catch (SQLException ex) {
+            LoggingAspect.afterThrown(ex);
+            return false;
         }
-        
-        url += selectedDB;
-
-        // connect to server
-        connection = DriverManager.getConnection(url, userName, userPassword);
-        statement = connection.createStatement();
-        LoggingAspect.afterReturn("Connection successful");
              
     }
     
@@ -78,10 +86,10 @@ public class DBConnection {
      * opens the connection to the server and database.
      * This is used to reopen connections and prevent timeouts
      * from servers.
-     * @throws SQLException 
+     * @return boolean true if successful and false if an error occurred
      */
-    public static void open() throws SQLException{
-        connect(server, database, userName, userPassword);
+    public static boolean open(){
+        return connect(server, database, userName, userPassword);
     }
     
     /**
@@ -89,11 +97,33 @@ public class DBConnection {
      * closes the connection to the server and database.
      * This is used to close the connection when the transaction
      * is finished.
-     * @throws SQLException 
+     * @return boolean true if successful and false if an error occurred
      */
-    public static void close() throws SQLException{
-        statement.close();
-        connection.close();
+    public static boolean close(){
+        try {
+            statement.close();
+            connection.close();
+            LoggingAspect.afterReturn("Connection closed successful");
+            return true;
+        } catch (SQLException ex) {
+            LoggingAspect.afterThrown(ex);
+            return false;
+        }
+    }
+    
+    public static boolean isClosed(){
+        try {
+            
+            if(connection.isClosed()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            LoggingAspect.afterThrown(ex);
+            return true;
+        }
     }
 
     /**
@@ -238,7 +268,7 @@ public class DBConnection {
                 }
                 reader.next();
             }
-            LoggingAspect.afterReturn("read servers file successful");
+            LoggingAspect.afterReturn("read servers file successfully");
         }catch(XMLStreamException e){
             LoggingAspect.afterThrown(e);
         }
@@ -275,9 +305,29 @@ public class DBConnection {
             writer.writeEndElement();
             writer.flush();
             writer.close();
-            LoggingAspect.afterReturn("write to servers file successful");
+            LoggingAspect.afterReturn("write to servers successful");
         }catch(IOException | XMLStreamException e){
             LoggingAspect.afterThrown(e);
         }
     }
+
+    private static void handleSQLexWithMessageBox(SQLException ex) {
+        
+        String message = ex.getMessage();
+        
+        // message dialog box 
+        String title = "Error";
+        int messageType = JOptionPane.ERROR_MESSAGE;
+        JOptionPane.showMessageDialog( null, message, title, messageType);
+    }
+
+    /**
+     * Set the parent component to show message boxes relative to.
+     * @param parentComponent 
+     */
+    public static void setParentComponent(Component parentComponent) {
+        DBConnection.parentComponent = parentComponent;
+    }
+    
+    
 }

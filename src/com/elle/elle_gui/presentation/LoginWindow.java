@@ -6,6 +6,7 @@
  */
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.database.DBConnection;
 import com.elle.elle_gui.logic.LoggingAspect;
 import static com.elle.elle_gui.presentation.LogWindow.HYPHENS;
@@ -50,6 +51,7 @@ public class LoginWindow extends JFrame {
 //        passwordFieldPW.setText("XiaoXXXX8");
         // show window
         this.setTitle("Log in");
+        Authorization.authorize(this);
     }
 
     /**
@@ -411,11 +413,17 @@ public class LoginWindow extends JFrame {
         logWindow.readMessages(); // read log messages from the log file
 
         // connect to database
-        try {
+        LoggingAspect.afterReturn("Start to connect local database...");
+        if (DBConnection.connect(selectedServer, selectedDB, userName, userPassword)) {
+            LoggingAspect.afterReturn("Connect successfully!");
 
-            logWindow.addMessageWithDate("Start to connect local database...");
-            DBConnection.connect(selectedServer, selectedDB, userName, userPassword);
-            logWindow.addMessageWithDate("Connect successfully!");
+            // authorize user
+            if (!Authorization.getInfoFromDB()) {
+
+                logWindow.addMessageWithDate("This user has not been authorized!"
+                        + "\n Access denied!");
+                JOptionPane.showMessageDialog(this, "You have not been authorized. Default user access.");
+            }
 
             // if elle gui existed make sure it gets disposed
             if (elle_gui != null) {
@@ -438,15 +446,14 @@ public class LoginWindow extends JFrame {
 
             // terminate this object
             this.dispose(); // returns used resources
-
-        } catch (SQLException ex) {
+        }
+        else{
 
             JOptionPane.showMessageDialog(null,
                     "Invalid password. Try again.",
                     "Error Message",
                     JOptionPane.ERROR_MESSAGE);
 
-            LoggingAspect.afterThrown(ex);
             passwordFieldPW.setText("");
         }
     }
