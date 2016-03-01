@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class Authorization {
     
     // database constants
-    private static final String DB_TABLE_NAME = "PM_accessLevel_tbl";
+    private static final String DB_TABLE_NAME = "ellegui_accessLevel_tbl";
     private static final String DB_COLUMN_1 = "user";
     private static final String DB_COLUMN_2 = "accessLevel";
     
