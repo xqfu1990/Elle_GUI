@@ -51,6 +51,7 @@ public class LoginWindow extends JFrame {
 //        passwordFieldPW.setText("XiaoXXXX8");
         // show window
         this.setTitle("Log in");
+        Authorization.authorize(this);
     }
 
     /**
