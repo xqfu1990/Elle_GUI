@@ -50,6 +50,7 @@ public interface ITableConstants {
         20, // wash
         55, //ksflag
         55, // Codes
+        55, // ksflag
         65, // Account
         65, // L_codes
         58, // SecType

@@ -5,6 +5,7 @@
  */
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.logic.ATrade;
 import com.elle.elle_gui.logic.EditableTableModel;
 import java.awt.Dimension;
@@ -35,6 +36,8 @@ public class ViewATradeWindow extends javax.swing.JFrame {
         ELLEGUI = ELLE_GUI_Frame.getInstance();  
         this.setPreferredSize(new Dimension(300, 600));
         this.setLocationRelativeTo(ELLEGUI);
+        
+        Authorization.authorize(this);
     }
 
     /**

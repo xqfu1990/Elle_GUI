@@ -1,5 +1,6 @@
 package com.elle.elle_gui.presentation;
 
+import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.database.DBConnection;
 import com.elle.elle_gui.logic.ATrade;
 import com.elle.elle_gui.logic.ColumnPopupMenu;
@@ -41,8 +42,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -290,10 +289,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // start the other tables initially on positions
         tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
-
-        //set btnTradePressed 
-        btnTradeSelected = false;
-
+        
+        Authorization.authorize(this);
     }
 
     /**
