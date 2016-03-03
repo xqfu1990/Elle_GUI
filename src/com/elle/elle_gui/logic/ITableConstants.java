@@ -15,8 +15,8 @@ package com.elle.elle_gui.logic;
 public interface ITableConstants {
     
     // Edit the version and date it was created for new archives and jars
-    public static final String CREATION_DATE = "2016-02-25";
-    public static final String VERSION = "0.9.4";
+    public static final String CREATION_DATE = "2016-03-02";
+    public static final String VERSION = "0.9.6";
 
     // account names
     public static final String IB9048_ACCOUNT_NAME = "IB9048";
@@ -50,7 +50,6 @@ public interface ITableConstants {
         20, // wash
         55, //ksflag
         55, // Codes
-        55, // ksflag
         65, // Account
         65, // L_codes
         58, // SecType

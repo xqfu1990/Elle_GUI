@@ -389,7 +389,6 @@
                           <Component id="labelRecords" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnTableDisplayState" min="-2" pref="18" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -504,6 +503,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="btnTableDisplayState">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="99" red="33" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Default Views"/>
           </Properties>
           <Events>

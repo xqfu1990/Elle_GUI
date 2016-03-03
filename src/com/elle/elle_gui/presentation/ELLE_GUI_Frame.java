@@ -38,6 +38,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +70,6 @@ import javax.swing.text.AbstractDocument;
  */
 public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
-
     // attributes
     private Map<String, Map<String, AccountTable>> tabs; // stores individual tab objects 
     private static Statement statement;
@@ -85,8 +85,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     // button colors
     private Color colorBtnDefault;
     private Color colorBtnSelected;
-
-    private boolean btnTradeSelected;
 
     /**
      * ELLE_GUI_Frame Creates the ELLE_GUI_Frame which is the main window of the
@@ -289,7 +287,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // start the other tables initially on positions
         tabs.get(TOS3622_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
         tabs.get(COMBINED_ACCOUNT_NAME).get(POSITIONS_TABLE_NAME).setTableSelected(true);
-        
+
         Authorization.authorize(this);
     }
 
@@ -444,6 +442,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         labelRecords.setText("records label");
 
+        btnTableDisplayState.setForeground(new java.awt.Color(51, 153, 0));
         btnTableDisplayState.setText("Default Views");
         btnTableDisplayState.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -525,8 +524,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                     .addGroup(panelCTRLPanelLayout.createSequentialGroup()
                         .addComponent(labelRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTableDisplayState, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0))))
+                        .addComponent(btnTableDisplayState, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         scrollPaneSQL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1680,10 +1678,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         // set column format
         float[] colWidthPercent = tab.getColWidthPercent();
-        if (colWidthPercent.length == table.getColumnCount()) {
-
-            setColumnFormat(colWidthPercent, table);
+        if (colWidthPercent.length != table.getColumnCount()) {
+            colWidthPercent = new float[table.getColumnCount()];
+            Arrays.fill(colWidthPercent, 80);
         }
+
+        setColumnFormat(colWidthPercent, table);
 
         // set the listeners for the table
         setTableListeners(tab);
