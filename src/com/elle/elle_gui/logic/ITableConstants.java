@@ -13,6 +13,10 @@ package com.elle.elle_gui.logic;
  * @version 0.6.3
  */
 public interface ITableConstants {
+    
+    // Edit the version and date it was created for new archives and jars
+    public static final String CREATION_DATE = "2016-03-02";
+    public static final String VERSION = "0.9.6";
 
     // account names
     public static final String IB9048_ACCOUNT_NAME = "IB9048";
@@ -31,11 +35,11 @@ public interface ITableConstants {
     // column width percent constants
     public static final float[] COL_WIDTH_PER_POSITIONS = {
         155, // Symbol
-        165, // Lot_Time
+        160, // Lot_Time
         80, // Q
         50, //line
         40, // OCE
-        165, // OCE_Time
+        160, // OCE_Time
         25, // LS
         70, // Qori
         90, // Adj_Price
@@ -44,8 +48,8 @@ public interface ITableConstants {
         45, // Basis
         40, // How
         20, // wash
+        55, //ksflag
         55, // Codes
-        55, // ksflag
         65, // Account
         65, // L_codes
         58, // SecType
@@ -58,27 +62,47 @@ public interface ITableConstants {
         60, // filecode
         62, // inputLine
         50}; // post_id
+    
+    // column width percent constants
+    public static final float[] COL_WIDTH_PER_ALLOCATIONS = {
+        30,  //id
+        55, // Symbol
+        160, // trade_Time
+        80, // tradeQ
+        80, // tradePrice
+        80, // method
+        80, // mathQ
+        100, // mathProceeds
+        160, // lot_Time
+        40, // line
+        90, // price_adj
+        75, // matchBasis
+        90, // realize_PL
+        50, // term
+        65}; // account
 
     public static final float[] COL_WIDTH_PER_TRADES = {
-        60,  // T_Group
         40,  // id
         160, // Trade_Time
         30, // OC
+        80, // LS
         155, // Symbol
         85, // Q
-        90, // TotalQ
         85, // Price
         80, // CommTax
-        75, // Proceeds
+        90, // Proceeds
         75, // Basis
+        80, //Price_adj
         80, // Processed
-        85, // Realized_PL
-        175, // Lot_Time
+        160, // Lot_Time
+        90, // Realized_PL
         65, // Codes
+        60, // ksflag
         55, // Notes
         65, // Account
         60, // filecode
         70, // inputLine
+        60, // Locked
         65, // SecType
         40, // Multi
         85, // Underlying
@@ -89,7 +113,11 @@ public interface ITableConstants {
         60, // strategy
         85, // Xchange
         50, // order
-        30}; // fill
+        30, // fill
+        50, // TotalQ
+        60, // T_Group
+        50, // Matching
+        50}; //Method 
     
      public static final float[] COL_WIDTH_PER_TRADES_VIEW = {
         45,  // T_Group
@@ -100,15 +128,15 @@ public interface ITableConstants {
         85, // Q
         85, // Price
         80, // CommTax
-        85, // Proceeds
+        90, // Proceeds
         80, // Basis
-        85, // Realized_PL
-        175, // Lot_Time
+        90, // Realized_PL
+        160, // Lot_Time
         65, // Codes
         65, // Account
         40, // order
         30}; // fill
      
-    public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
+//    public static final float[] COL_WIDTH_PER_ALLOCATIONS = {35, 65, 80, 70, 99, 99};
 
 }
