@@ -1502,24 +1502,38 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         System.out.println(tabs.get(getSelectedTabName()).get(TRADES_TABLE_NAME).isTableSelected());
         JLabel tradesTableViewState = (JLabel) evt.getComponent();
         String tableName = "";
+        String preTableName = "";
+
+        String tabName = getSelectedTabName();
+        
         if (tradesTableViewState.getText().toLowerCase().contains("view")) {
             tableName = TRADES_TABLE_NAME;
+            preTableName = TRADES_TABLE_VIEW_NAME;
             btnTableDisplayState.setText("All Fields");
             menuItemTrades.setSelected(true);
         } else if (tradesTableViewState.getText().toLowerCase().contains("all fields")) {
             tableName = TRADES_TABLE_VIEW_NAME;
+            preTableName = TRADES_TABLE_NAME;
             btnTableDisplayState.setText("Defaut Views");
             menuItemTrades.setSelected(false);
         }
         if (tabs.get(getSelectedTabName()).get(TRADES_TABLE_VIEW_NAME).isTableSelected()
                 || tabs.get(getSelectedTabName()).get(TRADES_TABLE_NAME).isTableSelected()) {
-            String tabName = getSelectedTabName();
+
+//            TableFilter prefilter = tabs.get(tabName).get(preTableName).getFilter();
+//            TableFilter aftfilter = tabs.get(tabName).get(tableName).getFilter();
+//            for (int preTableCol : prefilter.getFilterItems().keySet()) {
+//                for (int aftTableCol =0; aftTableCol < tabs.get(tabName).
+//                        get(tableName).getTable().getColumnCount(); aftTableCol++) {
+//                    String name  = tabs.get(tabName).get(tableName).getTableColNames().elementAt(aftTableCol);
+//                    if (tabs.get(tabName).get(preTableName).getTableColNames()
+//                            .get(preTableCol).equalsIgnoreCase(name)) {
+//                        aftfilter.addFilterItems(aftTableCol, prefilter.getFilterItems().get(preTableCol));  
+//                    }
+//                }
+//            }
             // display correct table
             displayTable(tabName, tableName);  // shows the correct table depending on tab and button selected}
-        }
-        for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
-            String tabName = tabEntry.getKey();
-
         }
     }//GEN-LAST:event_btnTableDisplayStateMouseClicked
 
@@ -1562,12 +1576,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         for (Map.Entry<String, Map<String, AccountTable>> tabEntry : tabs.entrySet()) {
             String accountName = tabEntry.getKey();
-            System.out.println("1: " + accountName);
+//            System.out.println("1: " + accountName);
             Map<String, AccountTable> tables = tabs.get(accountName);
             for (Map.Entry<String, AccountTable> tableEntry : tables.entrySet()) {
 
                 String tableName = tableEntry.getKey();
-                System.out.println("2: " + tableName);
+//                System.out.println("2: " + tableName);
                 AccountTable tab = tables.get(tableName);
                 JTable table = tab.getTable();
 //                System.out.println(tableName + " " + accountName); 
@@ -1631,6 +1645,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         } catch (Exception ex) {
             System.out.println("error");
             LoggingAspect.afterThrown(ex);
+            return table;
         }
         try {
             columns = metaData.getColumnCount();
@@ -1763,9 +1778,15 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
                 tableColumnI.setCellRenderer(new FourDecimalFormatRenderer());
 
-            } else if (table.getColumnName(i).toLowerCase().equals("q")) {
+            } else if (table.getColumnName(i).equalsIgnoreCase("q")
+                    || table.getColumnName(i).equalsIgnoreCase("totalq")) {
                 tableColumnI.setCellRenderer(new TwoDecimalFormatRenderer());
+            } else if (table.getColumnClass(i).getName().toLowerCase().contains("decimal")
+                    || table.getColumnClass(i).getName().toLowerCase().contains("integer")) {
+                tableColumnI.setCellRenderer(new CommaFormatRenderer());
+//                System.out.println(i + " " + table.getColumnName(i));
             }
+//            System.out.println(i + " " + table.getColumnName(i) + ": " + table.getColumnClass(i));
         }
     }
 
@@ -1818,7 +1839,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         for (int i = 0; i < table.getColumnCount(); i++) {
 
             if (table.getColumnName(i).toLowerCase().contains("time")) {
-//                System.out.println(i + " " + table.getColumnName(i));
+//                System.out.println(i + " " + table.getColumnSystemName(i));
 
                 table.getColumnModel().getColumn(i).setCellRenderer(new DataRenderer());
 
@@ -1891,7 +1912,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      */
     private static class TwoDecimalFormatRenderer extends DefaultTableCellRenderer {
 
-        private static final DecimalFormat formatter = new DecimalFormat("#.00");
+        private static final DecimalFormat formatter = new DecimalFormat("###,###.00");
 
         public TwoDecimalFormatRenderer() {
             super();
@@ -1921,9 +1942,41 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      *
      * @author Xiaoqian Fu
      */
+    private static class CommaFormatRenderer extends DefaultTableCellRenderer {
+
+        private static final DecimalFormat formatter = new DecimalFormat("###,###.##");
+
+        public CommaFormatRenderer() {
+            super();
+            setHorizontalAlignment(JLabel.RIGHT);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int col) {
+
+            Double doubleValue = 0.0;
+
+            if (value != null) {
+                doubleValue = Double.parseDouble(value.toString());
+                value = formatter.format((Number) doubleValue);
+            }
+
+            return super.getTableCellRendererComponent(table,
+                    value, isSelected, hasFocus, row, col);
+        }
+
+    }
+
+    /**
+     * DecimalFormatRenderer This is the decimal format renderer
+     *
+     * @author Xiaoqian Fu
+     */
     private static class FourDecimalFormatRenderer extends DefaultTableCellRenderer {
 
-        private static final DecimalFormat formatter = new DecimalFormat("#.0000");
+        private static final DecimalFormat formatter = new DecimalFormat("###,###.0000");
 
         public FourDecimalFormatRenderer() {
             super();

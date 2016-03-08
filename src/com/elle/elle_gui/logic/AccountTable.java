@@ -140,9 +140,6 @@ public class AccountTable implements ITableConstants {
     }
 
     public Vector<String> getTableColNames() {
-        for(String a : tableColNames){
-            System.out.println("colName: " + a);
-        }
         return tableColNames;
     }
     

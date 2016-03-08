@@ -82,6 +82,7 @@ public class EditableTableModel extends DefaultTableModel {
 
         int indexOfDotInClassName = columnClassName.indexOf(".", 5)+1;
         columnClassName = columnClassName.substring(indexOfDotInClassName).toLowerCase();
+//        System.out.println(col + " " + columnClassName);
         
         switch(columnClassName){
             case "string":
@@ -90,7 +91,7 @@ public class EditableTableModel extends DefaultTableModel {
                 return Integer.class;
             case "date":
                 return Date.class;
-            case "decimal":
+            case "bigdecimal":
                 return BigDecimal.class;
             case "timestamp":
                 return Timestamp.class;
