@@ -352,6 +352,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuItemShowMatches = new javax.swing.JMenuItem();
         menuItemIB8949 = new javax.swing.JMenuItem();
         menuItemTL8949 = new javax.swing.JMenuItem();
+        menuItemBackup = new javax.swing.JMenuItem();
         menuLoad = new javax.swing.JMenu();
         menuItemLoadFile = new javax.swing.JMenuItem();
         menuView = new javax.swing.JMenu();
@@ -817,6 +818,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
         menuTools.add(menuItemTL8949);
+
+        menuItemBackup.setText("Backup Tables");
+        menuItemBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemBackupActionPerformed(evt);
+            }
+        });
+        menuTools.add(menuItemBackup);
 
         menuBar.add(menuTools);
 
@@ -1537,6 +1546,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             displayTable(tabName, tableName);  // shows the correct table depending on tab and button selected}
         }
     }//GEN-LAST:event_btnTableDisplayStateMouseClicked
+
+    private void menuItemBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBackupActionPerformed
+        // open new connection
+        DBConnection.close(); // connection might be timed out on server
+        if (DBConnection.open()) {  // open a new connection
+            BackupDBTablesDialog backupDBTables = new BackupDBTablesDialog(DBConnection.getConnection(), this);
+        } else {
+            JOptionPane.showMessageDialog(this, "Could not connect to Database");
+        }
+    }//GEN-LAST:event_menuItemBackupActionPerformed
 
     /**
      * initTotalRowCounts called once to initialize the total rowIndex counts of
@@ -2546,6 +2565,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAViewATrades;
     private javax.swing.JMenuItem menuItemAWS;
+    private javax.swing.JMenuItem menuItemBackup;
     private javax.swing.JCheckBoxMenuItem menuItemCheckBoxLog;
     private javax.swing.JCheckBoxMenuItem menuItemCheckBoxSQL;
     private javax.swing.JMenuItem menuItemConnection;

@@ -19,8 +19,8 @@ import java.util.Map;
 public interface ITableConstants {
 
     // Edit the version and date it was created for new archives and jars
-    public static final String CREATION_DATE = "2016-03-02";
-    public static final String VERSION = "0.9.6";
+    public static final String CREATION_DATE = "2016-03-10";
+    public static final String VERSION = "0.9.7";
 
     // account names
     public static final String IB9048_ACCOUNT_NAME = "IB9048";
