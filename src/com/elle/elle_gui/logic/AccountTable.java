@@ -1,6 +1,8 @@
 package com.elle.elle_gui.logic;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JTable;
 
@@ -19,7 +21,7 @@ public class AccountTable implements ITableConstants {
     private String tableName;                    // name of the JTable
     private JTable table;                        // the JTable on the tab
     private TableFilter filter;                  // filter used for the table
-    private float[] colWidthPercent;             // column width for each column
+    private Map<String, Integer> colWidthPercent;             // column width for each column
     private int totalRecords;                    // total records in table model
     private int recordsShown;                    // number of records shown on table
     private Vector<String> tableColNames;              // column header names
@@ -49,6 +51,7 @@ public class AccountTable implements ITableConstants {
         addRecordsBtnVisible = false;
         batchEditBtnVisible = false;
         tableSelected = false;
+        colWidthPercent = new HashMap<String, Integer>();
     }
 
     /**
@@ -66,6 +69,7 @@ public class AccountTable implements ITableConstants {
         filter = new TableFilter(table);
         ColumnPopupMenu = new ColumnPopupMenu(filter);
         tableSelected = false;
+        colWidthPercent = new HashMap<String, Integer>();
 
         // store the column names for the table
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -94,11 +98,11 @@ public class AccountTable implements ITableConstants {
         this.filter = filter;
     }
 
-    public float[] getColWidthPercent() {
+    public Map<String, Integer> getColWidthPercent() {
         return colWidthPercent;
     }
 
-    public void setColWidthPercent(float[] colWidthPercent) {
+    public void setColWidthPercent(Map<String,Integer> colWidthPercent) {
         this.colWidthPercent = colWidthPercent;
     }
 
