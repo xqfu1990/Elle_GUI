@@ -76,7 +76,7 @@ public class EditableTableModel extends DefaultTableModel {
     public Vector<Object> getColumnAt(int col) {
         Vector colData = new Vector(this.getRowCount());
         for (int i = 0; i < this.getRowCount(); i++) {
-            colData.add(this.getValueAt(col, i));
+            colData.add(this.getValueAt(i, col));
         }
         return colData;
     }

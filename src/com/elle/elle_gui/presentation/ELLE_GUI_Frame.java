@@ -1886,15 +1886,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         Vector<String> columnName = new Vector<String>();
         Vector<String> columnClass = new Vector<String>();
 
+        Map<String, Integer> tableViewColNames = tabView.getColWidthPercent();
+
         try {
             EditableTableModel tableModel = (EditableTableModel) table.getModel();
-
-            Map<String, Integer> tableViewColNames = tabView.getColWidthPercent();
 
             for (int modelCol = 0; modelCol < table.getColumnCount(); modelCol++) {
                 String tableColName = table.getColumnName(modelCol);
                 for (String name : tableViewColNames.keySet()) {
                     if (tableColName.equalsIgnoreCase(name)) {
+//                        System.out.println(name);
                         tableVerticalViewData.addElement(tableModel.getColumnAt(modelCol));
                         columnName.addElement(tableModel.getColumnName(modelCol));
                         columnClass.addElement(tableModel.getColumnClass(modelCol).toString());
@@ -1910,16 +1911,18 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         Vector<Vector> tableHorizontalViewData = new Vector<Vector>();
         for (int rIndex = 0; rIndex < table.getRowCount(); rIndex++) {
             Vector tableRowData = new Vector();
-            for (int cIndex = 0; cIndex < table.getColumnCount(); cIndex++) {
+            for (int cIndex = 0; cIndex < tableViewColNames.size(); cIndex++) {
+//                System.out.println(rIndex + " " + cIndex);
                 tableRowData.addElement(tableVerticalViewData.elementAt(cIndex).elementAt(rIndex));
             }
             tableHorizontalViewData.addElement(tableRowData);
         }
+
         EditableTableModel tableViewModel = new EditableTableModel(tableHorizontalViewData, columnName, columnClass);
         tableView.setModel(tableViewModel);
         // check that the filter items are initialized
-        AccountTable tab = tabs.get(accountName).get(tableName);
-        TableFilter filter = tab.getFilter();
+//        AccountTable tab = tabs.get(accountName).get(tableName);
+        TableFilter filter = tabView.getFilter();
         if (filter.getFilterItems() == null) {
             filter.initFilterItems();
         }
@@ -1928,20 +1931,20 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         filter.applyColorHeaders();
 
         // load all checkbox items for the checkbox column pop up filter
-        ColumnPopupMenu columnPopupMenu = tab.getColumnPopupMenu();
+        ColumnPopupMenu columnPopupMenu = tabView.getColumnPopupMenu();
         columnPopupMenu.loadAllCheckBoxItems();
 
         // set column format
-        Map<String, Integer> colWidthPercent = tab.getColWidthPercent();
+        Map<String, Integer> colWidthPercent = tabView.getColWidthPercent();
 
 //        if (colWidthPercent.length != table.getColumnCount()) {
 //            colWidthPercent = new float[table.getColumnCount()];
 //            Arrays.fill(colWidthPercent, 80);
 //        }
-        setColumnFormat(colWidthPercent, table);
+        setColumnFormat(colWidthPercent, tableView);
 
         // set the listeners for the table
-        setTableListeners(tab);
+        setTableListeners(tabView);
 
         System.out.println("Table loaded succesfully");
         return tableView;
@@ -2345,19 +2348,10 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             String tableColName = table.getColumnName(index);
             int colWidth = 80;
             if (colWidths.get(tableColName) != null) {
-                System.out.println(table.getName() + " " + tableColName);
+//                System.out.println(table.getName() + " " + tableColName);
                 colWidth = colWidths.get(tableColName);
-            } else //            System.out.println(colWidths.get("Symbol"));
-            //            for (String Name : colWidths.keySet()) {
-            //                if (Name.equalsIgnoreCase(tableColName)) {
-            //                    colWidth = colWidths.get(index);
-            //                } else {
-            //
-            //                }
-            //            }
-            {
-                column.setPreferredWidth(colWidth);
             }
+            column.setPreferredWidth(colWidth);
             column.setMinWidth(colWidth);
         }
     }

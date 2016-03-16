@@ -29,7 +29,7 @@ public interface ITableConstants {
 
     // table names
     public static final String POSITIONS_TABLE_NAME = "positions";
-    public static final String TRADES_TABLE_NAME = "trades";
+    public static final String TRADES_TABLE_NAME = "tradesALL";
     public static final String TRADES_TABLE_VIEW_NAME = "Trades_DefaultView";
     public static final String ALLOCATIONS_TABLE_NAME = "allocations";
 
@@ -39,7 +39,6 @@ public interface ITableConstants {
     public static final Map<String, Integer> COL_WIDTH_PER_POSITIONS
             = Collections.unmodifiableMap(new HashMap<String, Integer>() {
                 {
-                    System.out.println("***********In static block***********");
                     put("symbol", 155);
                     put("lot_Time", 160);
                     put("Q", 80);
@@ -52,12 +51,12 @@ public interface ITableConstants {
                     put("basis_adj", 75);
                     put("price", 45);
                     put("basis", 45);
-                    put("how", 40);
-                    put("wash", 20);
+                    put("How", 40);
+                    put("W", 20);
                     put("ksflag", 55);
                     put("codes", 55);
                     put("account", 65);
-                    put("l_codes", 65);
+                    put("L_codes", 40);
                     put("secType", 58);
                     put("multi", 40);
                     put("underlying", 85);
@@ -67,10 +66,8 @@ public interface ITableConstants {
                     put("notes", 55);
                     put("filecode", 60);
                     put("inputLine", 62);
-                    put("post_id", 50);
+                    put("pos_id", 50);
                     put("grp", 20);
-//                    System.out.println(COL_WIDTH_PER_POSITIONS.get("filecode"));
-                    System.out.println("***********In static block***********");
                 }
             });
 
@@ -80,7 +77,6 @@ public interface ITableConstants {
     public static final Map<String, Integer> COL_WIDTH_PER_ALLOCATIONS = 
             Collections.unmodifiableMap(new HashMap<String, Integer>() {
         {
-            System.out.println("***********In static block***********");
             put("id", 30);
             put("symbol", 55);
             put("Trade_Time", 160);
@@ -104,9 +100,8 @@ public interface ITableConstants {
     public static final Map<String, Integer> COL_WIDTH_PER_TRADES  = 
             Collections.unmodifiableMap(new HashMap<String, Integer>() {
         {
-            System.out.println("***********In static block***********");
             put("id", 40);
-            put("Trade_Time", 160);
+            put("trade_Time", 160);
             put("OC", 30);
             put("LS", 80);
             put("Symbol", 155);
@@ -150,15 +145,14 @@ public interface ITableConstants {
     public static final Map<String, Integer> COL_WIDTH_PER_TRADES_VIEW = 
             Collections.unmodifiableMap(new HashMap<String, Integer>() {
         {
-            System.out.println("***********In static block***********");
-            put("T_Group", 60);
+//            put("T_Group", 60);
             put("id", 40);
             put("Trade_Time", 160);
             put("OC", 30);
             put("Symbol", 155);
             put("Q", 85);
             put("Price", 80);
-            put("CommTax", 80);
+//            put("CommTax", 80);
             put("Proceeds", 90);
             put("Basis", 75);
             put("Realized_PL", 90);
