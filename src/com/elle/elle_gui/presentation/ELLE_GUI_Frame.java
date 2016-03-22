@@ -345,6 +345,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         menuItemSave = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
         menuItemConnection = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuFind = new javax.swing.JMenu();
         menuReports = new javax.swing.JMenu();
         menuTools = new javax.swing.JMenu();
@@ -776,6 +777,14 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
         menuEdit.add(menuItemConnection);
+
+        jMenuItem1.setText("Manage DB");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuEdit.add(jMenuItem1);
 
         menuBar.add(menuEdit);
 
@@ -1554,6 +1563,12 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             JOptionPane.showMessageDialog(this, "Could not connect to Database");
         }
     }//GEN-LAST:event_menuItemBackupActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        EditDatabaseWindow editDBWindow = new EditDatabaseWindow();
+        editDBWindow.setLocationRelativeTo(this);
+        editDBWindow.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * initTotalRowCounts called once to initialize the total rowIndex counts of
@@ -2547,6 +2562,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnTrades;
     private javax.swing.JCheckBox checkBoxDateRange;
     private javax.swing.JCheckBox checkBoxSymbol;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel labelHyphen;
     private javax.swing.JLabel labelRecords;
     private javax.swing.JMenuBar menuBar;
