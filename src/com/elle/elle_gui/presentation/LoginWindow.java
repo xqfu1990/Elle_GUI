@@ -6,8 +6,10 @@
  */
 package com.elle.elle_gui.presentation;
 
-import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.database.DBConnection;
+import com.elle.elle_gui.admissions.Authorization;
+import com.elle.elle_gui.database.Database;
+import com.elle.elle_gui.database.Server;
 import com.elle.elle_gui.logic.LoggingAspect;
 import static com.elle.elle_gui.presentation.LogWindow.HYPHENS;
 import javax.swing.*;
@@ -16,10 +18,10 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class LoginWindow extends JFrame {
 
@@ -33,41 +35,13 @@ public class LoginWindow extends JFrame {
     private ELLE_GUI_Frame elle_gui;
     private EditDatabaseWindow editDatabaseList;
     private LogWindow logWindow;
+    private ArrayList<Server> servers;
 
-    /**
-     * CONSTRUCTOR This is used to initialize the application
-     */
     public LoginWindow() {
 
-        // initialize
         initComponents();
-        logWindow = new LogWindow(); // this is for reporting connections to log
-
-        // load selectedDB selections from the text file for the combobox
-        // loadDBList();  // this loads from a file which is not really used (it's for use with edit database window)
-//        comboBoxDatabase.setSelectedIndex(2);
-        comboBoxServer.setSelectedIndex(0);
-
-        // show window
         this.setTitle("Log in");
-        Authorization.authorize(this);
-    }
-
-    /**
-     * CONSTRUCTOR This is used when an instance of ELLE_GUI is already created
-     * to create a new instance of ELLE_GUI from the connections menu item
-     * options.
-     */
-    public LoginWindow(ELLE_GUI_Frame elle_gui) {
-
-        // initialize
-        initComponents();
-        this.elle_gui = elle_gui;
-        logWindow = elle_gui.getLogWindow(); // this is for reporting connections to log
-
-        // show window
-        this.setTitle("Log in");
-
+        loadServers();
     }
 
     /**
@@ -166,7 +140,7 @@ public class LoginWindow extends JFrame {
 
         jLabel5.setText("Database");
 
-        comboBoxDatabase.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pupone_dummy" }));
+        comboBoxDatabase.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dummy", "Elle2015", "pupone_dummy", "pupone_Analyster" }));
         comboBoxDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxDatabaseActionPerformed(evt);
@@ -317,6 +291,11 @@ public class LoginWindow extends JFrame {
 
     private void comboBoxServerActionPerformed(ActionEvent evt) {//GEN-FIRST:event_comboBoxServerActionPerformed
 
+        String selectedServer;
+        selectedServer = comboBoxServer.getSelectedItem().toString();
+        comboBoxDatabase.setModel(getDatabasesCBModel(selectedServer));
+        int server = comboBoxServer.getSelectedIndex();
+        comboBoxDatabase.setSelectedIndex(getDefaultDatabase(server));
     }//GEN-LAST:event_comboBoxServerActionPerformed
 
     private void btnEditDBActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnEditDBActionPerformed
@@ -336,59 +315,13 @@ public class LoginWindow extends JFrame {
     }//GEN-LAST:event_passwordFieldPWActionPerformed
     public String getUserName() {
         // local host testing or if does not contain pupone
-        if (userName.startsWith("pupone")) {
+        if(userName.startsWith("pupone")){
             String userNameToAL = userName.substring(7);
             return userNameToAL;
-        } else {
+        }
+        else{
             return userName;
         }
-    }
-
-    /**
-     * Loads the names of the databases from a text file this is if the actual
-     * selectedDB list is edited in EditDatabaseWindow then it updates the
-     * combobox with the new values in LoginWindow.
-     */
-    public void loadDBList() {
-        String temp = null;
-        List<String> dbList = new ArrayList<String>();
-        String dbFile = "database.txt";
-        boolean hasContent = false; // has a local text file and the file has contents
-
-        // Read text file of databases' names
-        BufferedReader buf = null;
-        try {
-            buf = new BufferedReader(new FileReader(dbFile));
-            // buf = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            while ((temp = buf.readLine()) != null) {
-//                if (temp.equals(server)) {
-//                    while ((temp = buf.readLine()) != null && !temp.equals("-1")) {
-                if (!temp.equals("")) {   // remove extra lines
-                    dbList.add(temp);
-                    hasContent = true;
-                }
-//                    }
-//                    break;
-//                }
-            }
-            if (!hasContent) {
-
-            } else {
-                String[] arr = dbList.toArray(new String[dbList.size()]);
-                comboBoxDatabase.setModel(new DefaultComboBoxModel(arr));
-            }
-        } catch (Exception e) {
-            LoggingAspect.afterThrown(e);
-        } finally {
-            if (buf != null) {
-                try {
-                    buf.close();
-                } catch (IOException e) {
-                    LoggingAspect.afterThrown(e);
-                }
-            }
-        }
-
     }
 
     /**
@@ -402,33 +335,28 @@ public class LoginWindow extends JFrame {
         userName = textFieldUsername.getText();
         char[] pw = passwordFieldPW.getPassword();
         userPassword = String.valueOf(pw);
-
+        
         // logwindow
-        logWindow = new LogWindow();
-        logWindow.setUserLogFileDir(this.getUserName()); // needs Impl
+        logWindow = new LogWindow(); 
+        logWindow.setUserLogFileDir(this.getUserName());
         // write to log file
         String date = logWindow.dateFormat.format(new Date());
         logWindow.addMessage(HYPHENS + date + HYPHENS);
         logWindow.readMessages(); // read log messages from the log file
-
+        
         // connect to database
-        LoggingAspect.afterReturn("Start to connect local database...");
+        logWindow.addMessageWithDate("Start to connect local database...");
         if (DBConnection.connect(selectedServer, selectedDB, userName, userPassword)) {
-            LoggingAspect.afterReturn("Connect successfully!");
+            logWindow.addMessageWithDate("Connect successfully!");
 
             // authorize user
-            if (!Authorization.getInfoFromDB()) {
-
+            if(!Authorization.getInfoFromDB()){
+                
                 logWindow.addMessageWithDate("This user has not been authorized!"
-                        + "\n Access denied!");
+                                          + "\n Access denied!");
                 JOptionPane.showMessageDialog(this, "You have not been authorized. Default user access.");
             }
-
-            // if elle gui existed make sure it gets disposed
-            if (elle_gui != null) {
-                elle_gui.dispose();
-            }
-
+                
             // create an Analyster object
             elle_gui = new ELLE_GUI_Frame();
 
@@ -445,11 +373,12 @@ public class LoginWindow extends JFrame {
 
             // terminate this object
             this.dispose(); // returns used resources
-        }
-        else{
 
-            JOptionPane.showMessageDialog(null,
-                    "Invalid password. Try again.",
+            
+        } else {
+
+            JOptionPane.showMessageDialog(this,
+                    "There was an error.\n Please try again or contact support if you need further assistance.",
                     "Error Message",
                     JOptionPane.ERROR_MESSAGE);
 
@@ -457,11 +386,241 @@ public class LoginWindow extends JFrame {
         }
     }
 
+    public String getSelectedServer() {
+        return selectedServer;
+    }
+
+    public void setSelectedServer(String selectedServer) {
+        this.selectedServer = selectedServer;
+    }
+
+    public String getSelectedDB() {
+        return selectedDB;
+    }
+
+    public void setSelectedDB(String selectedDB) {
+        this.selectedDB = selectedDB;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public ELLE_GUI_Frame getElleGui() {
+        return elle_gui;
+    }
+
+    public void setElleGui(ELLE_GUI_Frame elle_gui) {
+        this.elle_gui = elle_gui;
+    }
+
+    public EditDatabaseWindow getEditDatabaseList() {
+        return editDatabaseList;
+    }
+
+    public void setEditDatabaseList(EditDatabaseWindow editDatabaseList) {
+        this.editDatabaseList = editDatabaseList;
+    }
+
+    public LogWindow getLogWindow() {
+        return logWindow;
+    }
+
+    public void setLogWindow(LogWindow logWindow) {
+        this.logWindow = logWindow;
+    }
+
+    public JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public void setBtnCancel(JButton btnCancel) {
+        this.btnCancel = btnCancel;
+    }
+
+    public JButton getBtnEditDB() {
+        return btnEditDB;
+    }
+
+    public void setBtnEditDB(JButton btnEditDB) {
+        this.btnEditDB = btnEditDB;
+    }
+
+    public JButton getBtnLogin() {
+        return btnLogin;
+    }
+
+    public void setBtnLogin(JButton btnLogin) {
+        this.btnLogin = btnLogin;
+    }
+
+    public JComboBox getComboBoxDatabase() {
+        return comboBoxDatabase;
+    }
+
+    public void setComboBoxDatabase(JComboBox comboBoxDatabase) {
+        this.comboBoxDatabase = comboBoxDatabase;
+    }
+
     public JComboBox getComboBoxServer() {
         return comboBoxServer;
     }
 
+    public void setComboBoxServer(JComboBox comboBoxServer) {
+        this.comboBoxServer = comboBoxServer;
+    }
 
+    public JPanel getjButtonPanel() {
+        return jButtonPanel;
+    }
+
+    public void setjButtonPanel(JPanel jButtonPanel) {
+        this.jButtonPanel = jButtonPanel;
+    }
+
+    public JPanel getjInputPanel() {
+        return jInputPanel;
+    }
+
+    public void setjInputPanel(JPanel jInputPanel) {
+        this.jInputPanel = jInputPanel;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    public JLabel getjLabel5() {
+        return jLabel5;
+    }
+
+    public void setjLabel5(JLabel jLabel5) {
+        this.jLabel5 = jLabel5;
+    }
+
+    public JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public void setjPanel2(JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    public JPanel getjTextPanel() {
+        return jTextPanel;
+    }
+
+    public void setjTextPanel(JPanel jTextPanel) {
+        this.jTextPanel = jTextPanel;
+    }
+
+    public JPasswordField getPasswordFieldPW() {
+        return passwordFieldPW;
+    }
+
+    public void setPasswordFieldPW(JPasswordField passwordFieldPW) {
+        this.passwordFieldPW = passwordFieldPW;
+    }
+
+    public JTextField getTextFieldUsername() {
+        return textFieldUsername;
+    }
+
+    public void setTextFieldUsername(JTextField textFieldUsername) {
+        this.textFieldUsername = textFieldUsername;
+    }
+
+    private DefaultComboBoxModel getServersCBModel() {
+        Vector serverNames = new Vector();
+        for(Server server: servers){
+            serverNames.addElement(server.getName());
+        }
+        if(serverNames.isEmpty()){
+            serverNames.addElement("");
+        }
+        return new DefaultComboBoxModel(serverNames);
+    }
+
+    private DefaultComboBoxModel getDatabasesCBModel(String serverName) {
+        Vector databases = new Vector();
+        for(Server server: servers){
+            if(server.getName().equals(serverName)){
+                for(Database db: server.getDatabases()){
+                    databases.addElement(db.getName());
+                }
+            }
+        }
+        if(databases.isEmpty()){
+            databases.addElement("");
+        }
+        return new DefaultComboBoxModel(databases);
+    }
+    
+    public void loadServers() {
+        servers = DBConnection.readServers();
+        // set comboboxes for servers and databases
+        comboBoxServer.setModel(getServersCBModel());
+        comboBoxDatabase.setModel(getDatabasesCBModel(servers.get(0).getName()));
+        comboBoxServer.setSelectedIndex(getDefaultServer());
+        int server = comboBoxServer.getSelectedIndex();
+        comboBoxDatabase.setSelectedIndex(getDefaultDatabase(server));
+    }
+    
+    private int getDefaultServer() {
+        int server = 0;
+        for(int i = 0; i < servers.size(); i++){
+            if(servers.get(i).isDefaultSelection()){
+                server = i;
+                break;
+            }
+        }
+        return server;
+    }
+
+    private int getDefaultDatabase(int server) {
+        int database = 0;
+        ArrayList<Database> databases = servers.get(server).getDatabases();
+        for(int i = 0; i < databases.size(); i++){
+            if(databases.get(i).isDefaultSelection()){
+                database = i;
+                break;
+            }
+        }
+        return database;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEditDB;
