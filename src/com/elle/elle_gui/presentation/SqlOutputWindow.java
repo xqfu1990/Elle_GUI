@@ -1,6 +1,7 @@
 package com.elle.elle_gui.presentation;
 
 import com.elle.elle_gui.dao.SqlOutputWindowDAO;
+import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -14,19 +15,31 @@ import javax.swing.table.DefaultTableModel;
 public class SqlOutputWindow extends JFrame {
 
     SqlOutputWindowDAO sqlOutputWindowDAO;
+    Component parentComponent;
             
+    public SqlOutputWindow(String sqlCommand){
+        this(sqlCommand,null);
+    }
+    
     /**
      * Creates new form SqlOutputWindow
      */
-    public SqlOutputWindow(String sqlCommand) {
+    public SqlOutputWindow(String sqlCommand, Component parentComponent) {
         initComponents();
         setTitle("SQL Output");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        sqlOutputWindowDAO = new SqlOutputWindowDAO();
-        setTableModel(sqlCommand);
+        this.parentComponent = parentComponent;
+        setLocationRelativeTo(parentComponent);
+        sqlOutputWindowDAO = new SqlOutputWindowDAO(parentComponent);
+        if(setTableModel(sqlCommand)){
+            setVisible(true);
+        }
+        else{
+            dispose();
+        }
     }
     
-    private void setTableModel(String sqlCommand) {
+    private boolean setTableModel(String sqlCommand) {
         DefaultTableModel model = sqlOutputWindowDAO.getTableModel(sqlCommand);
         if(model != null){
             tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
@@ -35,9 +48,11 @@ public class SqlOutputWindow extends JFrame {
             if(tableOutput.getPreferredSize().width < scrollPaneOutput.getWidth()){
                 tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
             }
+            return true;
         }
         else{
-            this.dispose();
+            //this.dispose();
+            return false;
         }
     }
 
@@ -148,17 +163,20 @@ public class SqlOutputWindow extends JFrame {
 
     private void btnShowTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTablesActionPerformed
         String sqlCommand = "show tables;";
+        sqlOutputWindowDAO.setParentComponent(this);
         setTableModel(sqlCommand);
         
     }//GEN-LAST:event_btnShowTablesActionPerformed
 
     private void btnDescribeTableTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescribeTableTradesActionPerformed
         String sqlCommand = "describe test_trades;";
+        sqlOutputWindowDAO.setParentComponent(this);
         setTableModel(sqlCommand);
     }//GEN-LAST:event_btnDescribeTableTradesActionPerformed
 
     private void btnSelectFromTradesLimit100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFromTradesLimit100ActionPerformed
         String sqlCommand = "select * from test_trades limit 100;";
+        sqlOutputWindowDAO.setParentComponent(this);
         setTableModel(sqlCommand);
     }//GEN-LAST:event_btnSelectFromTradesLimit100ActionPerformed
 

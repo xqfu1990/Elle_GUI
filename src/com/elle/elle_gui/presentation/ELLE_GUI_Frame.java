@@ -1269,9 +1269,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
         String command = textAreaSQL.getText().substring(commandStart);
         if (command.toLowerCase().contains("select")) {
-            SqlOutputWindow output = new SqlOutputWindow(command);
-            output.setLocationRelativeTo(this);
-            output.setVisible(true);
+            new SqlOutputWindow(command,this);
         }
 
     }//GEN-LAST:event_btnEnterSQLActionPerformed

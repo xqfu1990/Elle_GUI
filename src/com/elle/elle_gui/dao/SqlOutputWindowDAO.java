@@ -4,10 +4,12 @@ package com.elle.elle_gui.dao;
 import com.elle.elle_gui.database.DBConnection;
 import com.elle.elle_gui.logic.EditableTableModel;
 import com.elle.elle_gui.logic.LoggingAspect;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,6 +19,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SqlOutputWindowDAO {
 
+    private Component parentComponent;
+    
+    public SqlOutputWindowDAO(){
+        this(null);
+    }
+    
+    public SqlOutputWindowDAO(Component parentComponent){
+        this.parentComponent = parentComponent;
+    }
+    
     public DefaultTableModel getTableModel(String sqlCommand){
         
         DefaultTableModel tableModel = null;
@@ -34,6 +46,8 @@ public class SqlOutputWindowDAO {
             rs = DBConnection.getStatement().executeQuery(sqlCommand);
             metaData = rs.getMetaData();
         } catch (Exception ex) {
+            String msg = "There was an error: \n" + ex.getMessage();
+            JOptionPane.showMessageDialog(parentComponent, msg);
             LoggingAspect.afterThrown(ex);
             return tableModel;
         }
@@ -52,6 +66,8 @@ public class SqlOutputWindowDAO {
             rs.close();
 
         } catch (SQLException ex) {
+            String msg = "There was an error: \n" + ex.getMessage();
+            JOptionPane.showMessageDialog(parentComponent, msg);
             LoggingAspect.afterThrown(ex);
         }
 
@@ -59,4 +75,14 @@ public class SqlOutputWindowDAO {
         
         return tableModel;
     }
+
+    public Component getParentComponent() {
+        return parentComponent;
+    }
+
+    public void setParentComponent(Component parentComponent) {
+        this.parentComponent = parentComponent;
+    }
+    
+    
 }
