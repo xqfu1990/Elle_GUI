@@ -1245,26 +1245,35 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
      */
     private void btnEnterSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterSQLActionPerformed
 
+//        int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
+//        String command = textAreaSQL.getText().substring(commandStart);
+//        if (command.toLowerCase().contains("select")) {
+//
+//            // display on current showingtable
+//            AccountTable tab = getSelectedTab();
+//            JTable table = tab.getTable();
+//            String tableName = table.getName();
+//            String accountName = getSelectedTabName();
+//
+//            loadTable(command, table, tableName, accountName);
+//        } else {
+//            try {
+//                statement.executeUpdate(command);
+//            } catch (SQLException e) {
+//                LoggingAspect.afterThrown(e);
+//            } catch (Exception e) {
+//                LoggingAspect.afterThrown(e);
+//            }
+//        }
+
         int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
         String command = textAreaSQL.getText().substring(commandStart);
         if (command.toLowerCase().contains("select")) {
-
-            // display on current showingtable
-            AccountTable tab = getSelectedTab();
-            JTable table = tab.getTable();
-            String tableName = table.getName();
-            String accountName = getSelectedTabName();
-
-            loadTable(command, table, tableName, accountName);
-        } else {
-            try {
-                statement.executeUpdate(command);
-            } catch (SQLException e) {
-                LoggingAspect.afterThrown(e);
-            } catch (Exception e) {
-                LoggingAspect.afterThrown(e);
-            }
+            SqlOutputWindow output = new SqlOutputWindow(command);
+            output.setLocationRelativeTo(this);
+            output.setVisible(true);
         }
+
     }//GEN-LAST:event_btnEnterSQLActionPerformed
 
     private void btnClearSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSQLActionPerformed
