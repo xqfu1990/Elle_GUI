@@ -39,7 +39,7 @@ public class SqlOutputWindow extends JFrame {
         }
     }
     
-    private boolean setTableModel(String sqlCommand) {
+    public boolean setTableModel(String sqlCommand) {
         DefaultTableModel model = sqlOutputWindowDAO.getTableModel(sqlCommand);
         if(model != null){
             tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
@@ -51,7 +51,6 @@ public class SqlOutputWindow extends JFrame {
             return true;
         }
         else{
-            //this.dispose();
             return false;
         }
     }
@@ -68,124 +67,40 @@ public class SqlOutputWindow extends JFrame {
         panelOutput = new javax.swing.JPanel();
         scrollPaneOutput = new javax.swing.JScrollPane();
         tableOutput = new org.jdesktop.swingx.JXTable();
-        jPanel1 = new javax.swing.JPanel();
-        btnShowTables = new javax.swing.JButton();
-        btnDescribeTableTrades = new javax.swing.JButton();
-        btnSelectFromTradesLimit100 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         scrollPaneOutput.setViewportView(tableOutput);
-
-        btnShowTables.setText("show tables");
-        btnShowTables.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowTablesActionPerformed(evt);
-            }
-        });
-
-        btnDescribeTableTrades.setText("describe table trades");
-        btnDescribeTableTrades.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescribeTableTradesActionPerformed(evt);
-            }
-        });
-
-        btnSelectFromTradesLimit100.setText("select * from trades limit 100");
-        btnSelectFromTradesLimit100.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectFromTradesLimit100ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(btnShowTables)
-                .addGap(55, 55, 55)
-                .addComponent(btnDescribeTableTrades)
-                .addGap(123, 123, 123)
-                .addComponent(btnSelectFromTradesLimit100)
-                .addContainerGap(151, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnShowTables)
-                    .addComponent(btnDescribeTableTrades)
-                    .addComponent(btnSelectFromTradesLimit100))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout panelOutputLayout = new javax.swing.GroupLayout(panelOutput);
         panelOutput.setLayout(panelOutputLayout);
         panelOutputLayout.setHorizontalGroup(
             panelOutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOutputLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelOutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPaneOutput)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(scrollPaneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelOutputLayout.setVerticalGroup(
             panelOutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelOutputLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(scrollPaneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(panelOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(panelOutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnShowTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTablesActionPerformed
-        String sqlCommand = "show tables;";
-        sqlOutputWindowDAO.setParentComponent(this);
-        setTableModel(sqlCommand);
-        
-    }//GEN-LAST:event_btnShowTablesActionPerformed
-
-    private void btnDescribeTableTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescribeTableTradesActionPerformed
-        String sqlCommand = "describe test_trades;";
-        sqlOutputWindowDAO.setParentComponent(this);
-        setTableModel(sqlCommand);
-    }//GEN-LAST:event_btnDescribeTableTradesActionPerformed
-
-    private void btnSelectFromTradesLimit100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFromTradesLimit100ActionPerformed
-        String sqlCommand = "select * from test_trades limit 100;";
-        sqlOutputWindowDAO.setParentComponent(this);
-        setTableModel(sqlCommand);
-    }//GEN-LAST:event_btnSelectFromTradesLimit100ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDescribeTableTrades;
-    private javax.swing.JButton btnSelectFromTradesLimit100;
-    private javax.swing.JButton btnShowTables;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelOutput;
     private javax.swing.JScrollPane scrollPaneOutput;
     private org.jdesktop.swingx.JXTable tableOutput;

@@ -33,6 +33,9 @@ public class SqlOutputWindowDAO {
         
         DefaultTableModel tableModel = null;
         
+        if (sqlCommand.toLowerCase().trim().startsWith("select")
+                || sqlCommand.toLowerCase().trim().startsWith("show")
+                || sqlCommand.toLowerCase().trim().startsWith("describe")) {
         Vector data = new Vector();
         Vector columnNames = new Vector();
         int columns;
@@ -74,6 +77,12 @@ public class SqlOutputWindowDAO {
         tableModel = new DefaultTableModel(data, columnNames);
         
         return tableModel;
+        }
+        else{
+            String msg = "Only select, show, or describe commands are allowed.";
+            JOptionPane.showMessageDialog(parentComponent, msg);
+            return tableModel;
+        }
     }
 
     public Component getParentComponent() {
