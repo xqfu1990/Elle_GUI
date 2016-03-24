@@ -81,6 +81,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private LoginWindow loginWindow;
     private ATrade aTradeInView;
     private ViewATradeWindow viewATradeWindow;
+    private SqlOutputWindow sqlOutputWindow;
 
     // button colors
     private Color colorBtnDefault;
@@ -321,6 +322,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         textAreaSQL = new javax.swing.JTextArea();
         btnEnterSQL = new javax.swing.JButton();
         btnClearSQL = new javax.swing.JButton();
+        btnShowTables = new javax.swing.JButton();
         panelAccounts = new javax.swing.JPanel();
         tabbedPaneAccounts = new javax.swing.JTabbedPane();
         panelIB9048 = new javax.swing.JPanel();
@@ -555,20 +557,30 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
+        btnShowTables.setText("show tables");
+        btnShowTables.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowTablesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelSQLLayout = new javax.swing.GroupLayout(panelSQL);
         panelSQL.setLayout(panelSQLLayout);
         panelSQLLayout.setHorizontalGroup(
             panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSQLLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneSQL)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSQLLayout.createSequentialGroup()
-                .addGap(455, 455, 455)
-                .addComponent(btnEnterSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(426, 426, 426))
+                .addGroup(panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSQLLayout.createSequentialGroup()
+                        .addComponent(scrollPaneSQL)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSQLLayout.createSequentialGroup()
+                        .addComponent(btnShowTables)
+                        .addGap(350, 350, 350)
+                        .addComponent(btnEnterSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(426, 426, 426))))
         );
         panelSQLLayout.setVerticalGroup(
             panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -578,7 +590,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEnterSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnClearSQL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnShowTables))
                 .addGap(14, 14, 14))
         );
 
@@ -1247,24 +1260,16 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         int commandStart = textAreaSQL.getText().lastIndexOf(">>") + 2;
         String command = textAreaSQL.getText().substring(commandStart);
-        if (command.toLowerCase().contains("select")) {
-
-            // display on current showingtable
-            AccountTable tab = getSelectedTab();
-            JTable table = tab.getTable();
-            String tableName = table.getName();
-            String accountName = getSelectedTabName();
-
-            loadTable(command, table, tableName, accountName);
-        } else {
-            try {
-                statement.executeUpdate(command);
-            } catch (SQLException e) {
-                LoggingAspect.afterThrown(e);
-            } catch (Exception e) {
-                LoggingAspect.afterThrown(e);
-            }
+        if(sqlOutputWindow == null){
+            sqlOutputWindow = new SqlOutputWindow(command,this); 
         }
+        else{
+            sqlOutputWindow.setLocationRelativeTo(this);
+            sqlOutputWindow.toFront();
+            sqlOutputWindow.setTableModel(command);
+            sqlOutputWindow.setVisible(true);
+        }
+
     }//GEN-LAST:event_btnEnterSQLActionPerformed
 
     private void btnClearSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSQLActionPerformed
@@ -1569,6 +1574,21 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         editDBWindow.setLocationRelativeTo(this);
         editDBWindow.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnShowTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTablesActionPerformed
+        String sqlCommand = "show tables;";
+
+        System.out.println("sql output window = " + sqlOutputWindow);
+        if(sqlOutputWindow == null){
+            sqlOutputWindow = new SqlOutputWindow(sqlCommand,this); 
+        }
+        else{
+            sqlOutputWindow.setLocationRelativeTo(this);
+            sqlOutputWindow.toFront();
+            sqlOutputWindow.setTableModel(sqlCommand);
+            sqlOutputWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_btnShowTablesActionPerformed
 
     /**
      * initTotalRowCounts called once to initialize the total rowIndex counts of
@@ -2557,6 +2577,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
     private javax.swing.JButton btnDateRange;
     private javax.swing.JButton btnEnterSQL;
     private javax.swing.JButton btnPositions;
+    private javax.swing.JButton btnShowTables;
     private javax.swing.JButton btnSymbol;
     private javax.swing.JLabel btnTableDisplayState;
     private javax.swing.JButton btnTrades;
