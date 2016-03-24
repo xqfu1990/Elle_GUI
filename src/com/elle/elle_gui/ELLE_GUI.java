@@ -3,6 +3,8 @@ package com.elle.elle_gui;
 
 import com.elle.elle_gui.presentation.ELLE_GUI_Frame;
 import com.elle.elle_gui.presentation.LoginWindow;
+import java.awt.Dimension;
+import javax.swing.UIManager;
 
 /**
  *
@@ -43,6 +45,7 @@ public class ELLE_GUI {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        UIManager.getLookAndFeelDefaults().put("ScrollBar.minimumThumbSize", new Dimension(30, 30));
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
