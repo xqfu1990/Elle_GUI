@@ -34,7 +34,6 @@ public class SqlOutputWindowDAO {
             rs = DBConnection.getStatement().executeQuery(sqlCommand);
             metaData = rs.getMetaData();
         } catch (Exception ex) {
-            System.out.println("error");
             LoggingAspect.afterThrown(ex);
             return tableModel;
         }

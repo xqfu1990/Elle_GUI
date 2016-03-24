@@ -3,6 +3,7 @@ package com.elle.elle_gui.presentation;
 import com.elle.elle_gui.dao.SqlOutputWindowDAO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,8 +20,10 @@ public class SqlOutputWindow extends JFrame {
      */
     public SqlOutputWindow(String sqlCommand) {
         initComponents();
+        setTitle("SQL Output");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         sqlOutputWindowDAO = new SqlOutputWindowDAO();
+        tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         setTableModel(sqlCommand);
     }
     
@@ -28,6 +31,7 @@ public class SqlOutputWindow extends JFrame {
         DefaultTableModel model = sqlOutputWindowDAO.getTableModel(sqlCommand);
         if(model != null){
             tableOutput.setModel(model);
+            tableOutput.packAll();
         }
         else{
             this.dispose();
@@ -45,7 +49,7 @@ public class SqlOutputWindow extends JFrame {
 
         panelOutput = new javax.swing.JPanel();
         scrollPaneOutput = new javax.swing.JScrollPane();
-        tableOutput = new javax.swing.JTable();
+        tableOutput = new org.jdesktop.swingx.JXTable();
         jPanel1 = new javax.swing.JPanel();
         btnShowTables = new javax.swing.JButton();
         btnDescribeTableTrades = new javax.swing.JButton();
@@ -53,17 +57,6 @@ public class SqlOutputWindow extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableOutput.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         scrollPaneOutput.setViewportView(tableOutput);
 
         btnShowTables.setText("show tables");
@@ -174,7 +167,7 @@ public class SqlOutputWindow extends JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelOutput;
     private javax.swing.JScrollPane scrollPaneOutput;
-    private javax.swing.JTable tableOutput;
+    private org.jdesktop.swingx.JXTable tableOutput;
     // End of variables declaration//GEN-END:variables
 
 }
