@@ -23,15 +23,18 @@ public class SqlOutputWindow extends JFrame {
         setTitle("SQL Output");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         sqlOutputWindowDAO = new SqlOutputWindowDAO();
-        tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         setTableModel(sqlCommand);
     }
     
     private void setTableModel(String sqlCommand) {
         DefaultTableModel model = sqlOutputWindowDAO.getTableModel(sqlCommand);
         if(model != null){
+            tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
             tableOutput.setModel(model);
             tableOutput.packAll();
+            if(tableOutput.getPreferredSize().width < scrollPaneOutput.getWidth()){
+                tableOutput.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+            }
         }
         else{
             this.dispose();
