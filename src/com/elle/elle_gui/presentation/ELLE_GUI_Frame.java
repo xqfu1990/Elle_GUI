@@ -557,7 +557,7 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
             }
         });
 
-        btnShowTables.setText("show tables");
+        btnShowTables.setText("Show Tables");
         btnShowTables.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowTablesActionPerformed(evt);

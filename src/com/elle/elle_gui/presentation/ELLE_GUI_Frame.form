@@ -618,7 +618,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnShowTables">
           <Properties>
-            <Property name="text" type="java.lang.String" value="show tables"/>
+            <Property name="text" type="java.lang.String" value="Show Tables"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowTablesActionPerformed"/>
