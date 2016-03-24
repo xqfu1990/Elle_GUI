@@ -7,7 +7,7 @@
     <import file="nbproject/build-impl.xml"/>
     
     <!-- set the version of ELLE_GUI here -->
-    <property name="version" value="ELLE_GUI-0.9.8"/>
+    <property name="version" value="ELLE_GUI-0.9.9"/>
     
     <!-- This creates the jar that we want with the included dependancies -->
     <!-- There should be no need to edit this code -->
@@ -19,6 +19,7 @@
       <jar jarfile="target/${version}.jar">
         <zipfileset src="${dist.jar}" excludes="META-INF/*" />
         <zipfileset src="lib/mysql-connector-java-5.1.30-bin.jar" excludes="META-INF/*" />
+        <zipfileset src="lib/swingx-all-1.6.4.jar" excludes="META-INF/*" />
         <manifest>
             <attribute name="Main-Class" value="com.elle.elle_gui.ELLE_GUI"/>
         </manifest>
