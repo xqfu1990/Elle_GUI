@@ -52,7 +52,7 @@ public interface ITableConstants {
                     put("price", 45);
                     put("basis", 45);
                     put("How", 40);
-                    put("W", 20);
+                    put("wash", 20);
                     put("ksflag", 55);
                     put("codes", 55);
                     put("account", 65);
@@ -79,17 +79,17 @@ public interface ITableConstants {
         {
             put("id", 30);
             put("symbol", 55);
-            put("Trade_Time", 160);
+            put("trade_Time", 160);
             put("tradeQ", 60);
             put("tradePrice", 85);
             put("method", 80);
             put("mathQ", 80);
             put("mathProceeds", 90);
-            put("Lot_Time", 160);
+            put("lot_Time", 160);
             put("line", 50);
             put("price_adj", 30);
             put("matchBasis", 75);
-            put("Realized_PL", 90);
+            put("realized_PL", 90);
             put("term", 55);
             put("account", 65);
         }
@@ -104,28 +104,28 @@ public interface ITableConstants {
             put("trade_Time", 160);
             put("OC", 30);
             put("LS", 80);
-            put("Symbol", 155);
+            put("symbol", 155);
             put("Q", 85);
-            put("Price", 80);
-            put("CommTax", 80);
-            put("Proceeds", 90);
-            put("Basis", 75);
-            put("Price_adj", 90);
-            put("Processed", 80);
-            put("Lot_Time", 160);
-            put("Realized_PL", 90);
-            put("Codes", 55);
+            put("price", 80);
+            put("comm", 80);
+            put("proceeds", 90);
+            put("basis", 75);
+            put("price_adj", 90);
+            put("processed", 80);
+            put("lot_Time", 160);
+            put("realized_PL", 90);
+            put("codes", 55);
             put("ksflag", 55);
-            put("Notes", 55);
-            put("Account", 65);
+            put("notes", 55);
+            put("account", 65);
             put("filecode", 60);
             put("inputLine", 62);
-            put("Locked", 60);
-            put("SecType", 58);
-            put("Multi", 40);
-            put("Underlying", 85);
-            put("Expiry", 88);
-            put("Strike", 75);
+            put("locked", 60);
+            put("secType", 58);
+            put("multi", 40);
+            put("underlying", 85);
+            put("expiry", 88);
+            put("strike", 75);
             put("O_Type", 55);
             put("Lnotes", 55);
             put("strategy", 60);
@@ -133,9 +133,9 @@ public interface ITableConstants {
             put("order", 50);
             put("fill", 30);
             put("TotalQ", 50);
-            put("T_Group", 60);
-            put("Matching", 50);
-            put("Method", 50);
+            put("t_grp", 60);
+            put("matching", 50);
+            put("method", 50);
         }
     });
 
@@ -147,18 +147,18 @@ public interface ITableConstants {
         {
 //            put("T_Group", 60);
             put("id", 40);
-            put("Trade_Time", 160);
+            put("trade_Time", 160);
             put("OC", 30);
-            put("Symbol", 155);
+            put("symbol", 155);
             put("Q", 85);
-            put("Price", 80);
+            put("price", 80);
 //            put("CommTax", 80);
-            put("Proceeds", 90);
-            put("Basis", 75);
-            put("Realized_PL", 90);
-            put("Lot_Time", 160);
-            put("Codes", 55);
-            put("Account", 65);
+            put("proceeds", 90);
+            put("basis", 75);
+            put("realized_PL", 90);
+            put("lot_Time", 160);
+            put("codes", 55);
+            put("account", 65);
             put("order", 50);
             put("fill", 30);
         }
