@@ -134,15 +134,16 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
      * @param Map<Integer, ArrayList<Object>>
      */
     public void addFilterItem(Map<Integer, ArrayList<Object>> filter) {
-        for( int col : filter.keySet()){
+        for (int col : filter.keySet()) {
             this.addFilterItems(col, filter.get(col));
         }
     }
-        /**
-         * removeDistinctItems
-         *
-         * @param col
-         */
+
+    /**
+     * removeDistinctItems
+     *
+     * @param col
+     */
     public void removeFilterItems(int col) {
 
         filterItems.get(col).clear();
@@ -507,8 +508,14 @@ public class TableFilter extends RowFilter<TableModel, Integer> {
                 } else {
                     // search for a match and ignore case
                     for (Object distinctItem : distinctItems) {
-                        if (cellValue.toString().equalsIgnoreCase(distinctItem.toString())) {
-                            itemsFound++;
+                        if (col == 1) {
+                            if (cellValue.toString().toLowerCase().contains(distinctItem.toString().toLowerCase())) {
+                                itemsFound++;
+                            }
+                        } else {
+                            if (cellValue.toString().equalsIgnoreCase(distinctItem.toString())) {
+                                itemsFound++;
+                            }
                         }
                     }
                 }

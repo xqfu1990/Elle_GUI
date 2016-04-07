@@ -42,6 +42,9 @@ public class LoginWindow extends JFrame {
         initComponents();
         this.setTitle("Log in");
         loadServers();
+        comboBoxServer.setSelectedIndex(1);
+        textFieldUsername.setText("pupone_Xiao");
+        passwordFieldPW.setText("XiaoXXXX8");
     }
 
     /**
@@ -315,11 +318,10 @@ public class LoginWindow extends JFrame {
     }//GEN-LAST:event_passwordFieldPWActionPerformed
     public String getUserName() {
         // local host testing or if does not contain pupone
-        if(userName.startsWith("pupone")){
+        if (userName.startsWith("pupone")) {
             String userNameToAL = userName.substring(7);
             return userNameToAL;
-        }
-        else{
+        } else {
             return userName;
         }
     }
@@ -335,28 +337,28 @@ public class LoginWindow extends JFrame {
         userName = textFieldUsername.getText();
         char[] pw = passwordFieldPW.getPassword();
         userPassword = String.valueOf(pw);
-        
+
         // logwindow
-        logWindow = new LogWindow(); 
+        logWindow = new LogWindow();
         logWindow.setUserLogFileDir(this.getUserName());
         // write to log file
         String date = logWindow.dateFormat.format(new Date());
         logWindow.addMessage(HYPHENS + date + HYPHENS);
         logWindow.readMessages(); // read log messages from the log file
-        
+
         // connect to database
         logWindow.addMessageWithDate("Start to connect local database...");
         if (DBConnection.connect(selectedServer, selectedDB, userName, userPassword)) {
             logWindow.addMessageWithDate("Connect successfully!");
 
             // authorize user
-            if(!Authorization.getInfoFromDB()){
-                
+            if (!Authorization.getInfoFromDB()) {
+
                 logWindow.addMessageWithDate("This user has not been authorized!"
-                                          + "\n Access denied!");
+                        + "\n Access denied!");
                 JOptionPane.showMessageDialog(this, "You have not been authorized. Default user access.");
             }
-                
+
             // create an Analyster object
             elle_gui = new ELLE_GUI_Frame();
 
@@ -374,7 +376,6 @@ public class LoginWindow extends JFrame {
             // terminate this object
             this.dispose(); // returns used resources
 
-            
         } else {
 
             JOptionPane.showMessageDialog(this,
@@ -564,10 +565,10 @@ public class LoginWindow extends JFrame {
 
     private DefaultComboBoxModel getServersCBModel() {
         Vector serverNames = new Vector();
-        for(Server server: servers){
+        for (Server server : servers) {
             serverNames.addElement(server.getName());
         }
-        if(serverNames.isEmpty()){
+        if (serverNames.isEmpty()) {
             serverNames.addElement("");
         }
         return new DefaultComboBoxModel(serverNames);
@@ -575,19 +576,19 @@ public class LoginWindow extends JFrame {
 
     private DefaultComboBoxModel getDatabasesCBModel(String serverName) {
         Vector databases = new Vector();
-        for(Server server: servers){
-            if(server.getName().equals(serverName)){
-                for(Database db: server.getDatabases()){
+        for (Server server : servers) {
+            if (server.getName().equals(serverName)) {
+                for (Database db : server.getDatabases()) {
                     databases.addElement(db.getName());
                 }
             }
         }
-        if(databases.isEmpty()){
+        if (databases.isEmpty()) {
             databases.addElement("");
         }
         return new DefaultComboBoxModel(databases);
     }
-    
+
     public void loadServers() {
         servers = DBConnection.readServers();
         // set comboboxes for servers and databases
@@ -597,11 +598,11 @@ public class LoginWindow extends JFrame {
         int server = comboBoxServer.getSelectedIndex();
         comboBoxDatabase.setSelectedIndex(getDefaultDatabase(server));
     }
-    
+
     private int getDefaultServer() {
         int server = 0;
-        for(int i = 0; i < servers.size(); i++){
-            if(servers.get(i).isDefaultSelection()){
+        for (int i = 0; i < servers.size(); i++) {
+            if (servers.get(i).isDefaultSelection()) {
                 server = i;
                 break;
             }
@@ -612,15 +613,15 @@ public class LoginWindow extends JFrame {
     private int getDefaultDatabase(int server) {
         int database = 0;
         ArrayList<Database> databases = servers.get(server).getDatabases();
-        for(int i = 0; i < databases.size(); i++){
-            if(databases.get(i).isDefaultSelection()){
+        for (int i = 0; i < databases.size(); i++) {
+            if (databases.get(i).isDefaultSelection()) {
                 database = i;
                 break;
             }
         }
         return database;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEditDB;
