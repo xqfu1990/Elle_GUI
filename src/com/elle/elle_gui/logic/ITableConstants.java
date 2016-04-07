@@ -52,7 +52,7 @@ public interface ITableConstants {
                     put("price", 45);
                     put("basis", 45);
                     put("How", 40);
-                    put("W", 20);
+                    put("wash", 20);
                     put("ksflag", 55);
                     put("codes", 55);
                     put("account", 65);
@@ -104,7 +104,7 @@ public interface ITableConstants {
             put("trade_Time", 160);
             put("OC", 30);
             put("LS", 80);
-            put("Symbol", 155);
+            put("symbol", 155);
             put("Q", 85);
             put("Price", 80);
             put("CommTax", 80);
@@ -147,18 +147,18 @@ public interface ITableConstants {
         {
 //            put("T_Group", 60);
             put("id", 40);
-            put("Trade_Time", 160);
+            put("trade_Time", 160);
             put("OC", 30);
-            put("Symbol", 155);
+            put("symbol", 155);
             put("Q", 85);
-            put("Price", 80);
+            put("price", 80);
 //            put("CommTax", 80);
-            put("Proceeds", 90);
-            put("Basis", 75);
-            put("Realized_PL", 90);
-            put("Lot_Time", 160);
-            put("Codes", 55);
-            put("Account", 65);
+            put("proceeds", 90);
+            put("basis", 75);
+            put("realized_PL", 90);
+            put("lot_Time", 160);
+            put("codes", 55);
+            put("account", 65);
             put("order", 50);
             put("fill", 30);
         }
