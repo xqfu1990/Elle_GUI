@@ -1,7 +1,6 @@
 /build/
 /target/
 /dist
-/src/com/elle/elle_gui/database/servers.xml
 /.data/
 /classes/com/elle/elle_gui/database/servers.xml
 /log.txt
