@@ -65,6 +65,7 @@ public class EditableTableModel extends DefaultTableModel {
         this.cellEditable = cellEditable;
     }
     
+    
     public Vector<Object> getRowAt(int row) {
         Vector rowData = new Vector(columnClass.size());
         for (int i = 0; i < columnClass.size(); i++) {

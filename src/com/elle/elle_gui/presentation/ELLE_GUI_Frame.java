@@ -1970,10 +1970,6 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
         // set column format
         Map<String, Integer> colWidthPercent = tabView.getColWidthPercent();
 
-//        if (colWidthPercent.length != table.getColumnCount()) {
-//            colWidthPercent = new float[table.getColumnCount()];
-//            Arrays.fill(colWidthPercent, 80);
-//        }
         setColumnFormat(colWidthPercent, tableView);
 
         // set the listeners for the table

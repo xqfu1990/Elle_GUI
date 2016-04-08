@@ -4,6 +4,7 @@ package com.elle.elle_gui.presentation;
 import com.elle.elle_gui.admissions.Authorization;
 import com.elle.elle_gui.logic.LogMessage;
 import com.elle.elle_gui.logic.LoggingAspect;
+import com.elle.elle_gui.logic.ShortCutSetting;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -49,7 +50,8 @@ public class LogWindow extends JFrame{
 
         logText = new JTextArea(5, 30);
         logText.setEditable(false);
-        logText.setLineWrap(true);
+        logText.setLineWrap(true); 
+        ShortCutSetting.copyAndPasteShortCut(logText.getInputMap());
 
         //was testing the JList
         // I need a no horizontal scroll and a wrap
