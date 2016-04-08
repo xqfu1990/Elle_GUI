@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -394,6 +395,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         btnSymbol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
         btnSymbol.setText(" ");
+        btnSymbol.setBorder(BorderFactory.createEmptyBorder());
+        btnSymbol.setContentAreaFilled(false);
         btnSymbol.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSymbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,6 +406,8 @@ public class ELLE_GUI_Frame extends JFrame implements ITableConstants {
 
         btnDateRange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/elle/elle_gui/images/filter.png"))); // NOI18N
         btnDateRange.setText(" ");
+        btnDateRange.setBorder(BorderFactory.createEmptyBorder());
+        btnDateRange.setContentAreaFilled(false);
         btnDateRange.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDateRange.setIconTextGap(0);
         btnDateRange.addActionListener(new java.awt.event.ActionListener() {
